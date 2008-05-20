@@ -180,6 +180,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CCharacter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CGUITexturedSkin.cpp"
 				>
 			</File>
@@ -222,10 +226,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CCharacter.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\CCharacter.h"
 				>
 			</File>
@@ -251,6 +251,10 @@
 			</File>
 			<File
 				RelativePath=".\LevelOneState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LevelTwoState.h"
 				>
 			</File>
 			<File
