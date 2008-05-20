@@ -1,6 +1,6 @@
 /*
 ***********************************************
-* Character control
+* Health and Mana Bar 
 * *********************************************
 * file name: GUIHealthStatusBar.h
 * encoding: UTF-8
@@ -8,14 +8,14 @@
 * indentation: 4
 * created on: 6:31 PM 5/20/2008
 * init code by: eMgz, Irrlicht Forum
-* created by: FOSP Team
-* copyright: FOS Project
 */
 #ifndef GUI_HEALTH_STATUS_BAR_H_
 #define GUI_HEALTH_STATUS_BAR_H_
 
 using namespace irr;
-class GUIHealthStatusBar {
+class GUIHealthStatusBar : public irr::gui::IGUIElement 
+
+{
 
 private:
 	video::IVideoDriver* driver;
@@ -32,10 +32,9 @@ private:
 	video::ITexture* GUITextures[10];
 
 public:
-
-	GUIHealthStatusBar(video::IVideoDriver* videoDriver, int x1, int y1, int x2, int y2, int maxHealthValue, int maxManaValue); //constructor
+	GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, irr::gui::IGUIEnvironment* env, irr::gui::IGUIElement* parent);
 	~GUIHealthStatusBar(); //destructor :O
-	void renderGUIGame(); //render the GUI, must be called AFTER the 3D draw, or it  wont show
+	virtual void draw(); //render the GUI, must be called AFTER the 3D draw, or it  wont show
 	void setHealthBarValue(int healthValue); //change bar values
 	void setManaBarValue(int manaValue);
 
