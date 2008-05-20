@@ -39,11 +39,11 @@ public:
 				worldViewProj = driver->getTransform(video::ETS_PROJECTION);			
 				worldViewProj *= driver->getTransform(video::ETS_VIEW);
 				worldViewProj *= driver->getTransform(video::ETS_WORLD);
-				services->setVertexShaderConstant("gl_ModelViewProjectionMatrix", &worldViewProj.M[0], 16);
+				/*services->setVertexShaderConstant("gl_ModelViewProjectionMatrix", &worldViewProj.M[0], 16);
 				core::matrix4 worldView;
 				worldView = driver->getTransform(video::ETS_VIEW);
 				worldView *= driver->getTransform(video::ETS_WORLD);
-				services->setVertexShaderConstant("gl_ModelViewMatrix", &worldView.M[0], 16);
+				services->setVertexShaderConstant("gl_ModelViewMatrix", &worldView.M[0], 16);*/
 			}
 		}
     }
