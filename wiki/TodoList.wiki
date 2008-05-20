@@ -1,11 +1,11 @@
-#summary One-sentence summary of this page.
+#summary Trang này chứ những việc cần làm của dự án
 
-= Introduction =
+= Giới thiệu =
 
-To-do list on an article's talk page shows the list of improvements suggested for the engine.
+To-do list on an wiki page shows the list of improvements suggested for the engine.
+Thành viên dự án đệ trình hoặc ghi chú những việc phải làm của mình và người khác.
 
-
-= Details =
+= Chi tiết =
 
 **Khẩn cấp*
   * Tạo demo play âm thanh với irrKlang (chưa phân công)
