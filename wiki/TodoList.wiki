@@ -1,0 +1,17 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+To-do list on an article's talk page shows the list of improvements suggested for the engine.
+
+
+= Details =
+
+**Khẩn cấp*
+  * Tạo demo play âm thanh với irrKlang (chưa phân công)
+  * Tạo demo giao diện người dùng (Khánh)
+
+**Bình thường*
+  * Tạo demo HDR (Huy)
+  * Tích hợp AI (Huy)
+  * Tích hợp vật lý (Bách)
