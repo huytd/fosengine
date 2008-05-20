@@ -10,7 +10,7 @@
 			>
 			<DebugSettings
 				Command="$(TargetPath)"
-				WorkingDirectory="D:\King\King\FOS-P1\Code\DemoD4_src\debug"
+				WorkingDirectory="Z:\Code\DemoD4\debug"
 				CommandArguments=""
 				Attach="false"
 				DebuggerType="3"

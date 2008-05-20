@@ -6,8 +6,6 @@
 #include "LevelOneState.h"
 #include "LevelTwoState.h"
 
-ShaderGroup* hdr = 0;
-
 Application::Application() :
 	device(0)
 #ifdef _SOUND
