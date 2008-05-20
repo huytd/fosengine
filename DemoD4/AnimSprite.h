@@ -87,7 +87,7 @@ public:
     // \param divX - number of frames along X axis
     // \param divY - number of frames along Y axis
 
-	void Create(IrrlichtDevice *idevice, video::ITexture *itexture, s32 divX = 1, s32 divY = 1)
+	virtual void Create(IrrlichtDevice *idevice, video::ITexture *itexture, s32 divX = 1, s32 divY = 1)
     {
         Device = idevice;
         
@@ -147,7 +147,7 @@ public:
         Device = other.Device;
     }
 
-	void Clone(AnimSprite &other)
+	virtual void Clone(AnimSprite &other)
     {
         texture = other.texture;
         
