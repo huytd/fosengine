@@ -10,7 +10,7 @@
 			>
 			<DebugSettings
 				Command="$(TargetPath)"
-				WorkingDirectory="C:\Documents and Settings\nVidia\Desktop\DemoD4_src\debug"
+				WorkingDirectory="D:\King\King\FOS-P1\Code\DemoD4_src\debug"
 				CommandArguments=""
 				Attach="false"
 				DebuggerType="3"
