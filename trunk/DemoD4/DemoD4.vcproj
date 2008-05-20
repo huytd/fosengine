@@ -196,6 +196,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GUIHealthStatusBar.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -222,6 +226,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\AnimSprite.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Application.h"
 				>
 			</File>
@@ -246,15 +254,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GUIHealthStatusBar.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HUD.h"
+				>
+			</File>
+			<File
 				RelativePath=".\IntroState.h"
 				>
 			</File>
 			<File
-				RelativePath=".\LevelOneState.h"
+				RelativePath=".\IntroStateLoader.h"
 				>
 			</File>
 			<File
-				RelativePath=".\LevelTwoState.h"
+				RelativePath=".\LevelOneState.h"
 				>
 			</File>
 			<File
