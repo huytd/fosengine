@@ -1,6 +1,6 @@
 /*
 ***********************************************
-* Character control
+* Health and Mana Bar 
 * *********************************************
 * file name: GUIHealthStatusBar.cpp
 * encoding: UTF-8
@@ -14,26 +14,30 @@
 #include <irrlicht.h>
 #include "GUIHealthStatusBar.h"
 
-GUIHealthStatusBar::GUIHealthStatusBar(video::IVideoDriver* videoDriver, int x1, int y1, int x2, int y2, int maxHealthValue, int maxManaValue){
+GUIHealthStatusBar::~GUIHealthStatusBar()
+{}
+GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, irr::gui::IGUIEnvironment* env, irr::gui::IGUIElement* parent)
+: 	irr::gui::IGUIElement(irr::gui::EGUIET_ELEMENT, env, parent, -1, rect)
+{
 	//class constructor
-	driver = videoDriver;
+	irr::video::IVideoDriver* driver = env->getVideoDriver();
 
 	//health and mana bars size
-	x1Bar = x1;
-	y1Bar = y1;
-	x2Bar = x2;
-	y2Bar = y2;
+	x1Bar = 100;
+	y1Bar = 100;
+	x2Bar = 200;
+	y2Bar = 200;
 
 	//max bar values
-	maxHealthBarValue = maxHealthValue;
-	maxManaBarValue = maxManaValue;
+	maxHealthBarValue = 100;
+	maxManaBarValue = 100;
 
 	//current bar values
-	healthBarValue = maxHealthValue;
-	manaBarValue = maxManaValue;
+	healthBarValue = 100;
+	manaBarValue = 100;
 
-	deltaHealthBar = healthBarValue;
-	deltaManaBar = manaBarValue;
+	deltaHealthBar = 100;
+	deltaManaBar = 100;
 
 	//load textures
 
@@ -53,7 +57,10 @@ GUIHealthStatusBar::GUIHealthStatusBar(video::IVideoDriver* videoDriver, int x1,
 	GUITextures[7] = driver->getTexture("media\\images\\gui\\healthbar\\icon_firenova.bmp");
 } 
 
-void GUIHealthStatusBar::renderGUIGame(){
+void GUIHealthStatusBar::draw(){
+
+	irr::video::IVideoDriver* driver = Environment->getVideoDriver();  
+
 
 	float delta; //status bar variation
 	core::dimension2d<s32> screenSize = driver->getScreenSize();
@@ -121,11 +128,12 @@ void GUIHealthStatusBar::renderGUIGame(){
 
 	//draw the spells bar and the icons on it according to the iconSpace
 	driver->draw2DImage(GUITextures[0], core::position2d<s32>(x+3, y), core::rect<s32>(0,0,456,73), 0, video::SColor(255,255,255,255), true);
-
+	
 	for (int i=5; i<=7; i++){
 		driver->draw2DImage(GUITextures[i], iconPos);
 		iconPos.X += iconSpace;
 	}
+
 } 
 
 void GUIHealthStatusBar::setHealthBarValue(int healthValue){
