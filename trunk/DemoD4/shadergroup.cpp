@@ -49,8 +49,6 @@ public:
     }
 };
 
-
-
 ShaderGroup::ShaderGroup(IrrlichtDevice* m_device, scene::ISceneManager* m_smgr)
 {
     range = 1.5f;  // 1.5, 9.9
@@ -76,20 +74,20 @@ ShaderGroup::ShaderGroup(IrrlichtDevice* m_device, scene::ISceneManager* m_smgr)
 
 	video::E_DRIVER_TYPE driverType = driver->getDriverType();
 	if (driverType == video::EDT_OPENGL) {
-		vertPost	= "Data\\shaders\\glsl\\post.vert";
-		vertRender	= "Data\\shaders\\glsl\\render.vert";
-		fragRender	= "Data\\shaders\\glsl\\render.frag";
-		fragBlur0	= "Data\\shaders\\glsl\\blur0.frag";
-		fragBlur1	= "Data\\shaders\\glsl\\blur1.frag";
-		fragCombine	= "Data\\shaders\\glsl\\combine.frag";
+		vertPost	= "shaders\\glsl\\post.vert";
+		vertRender	= "shaders\\glsl\\render.vert";
+		fragRender	= "shaders\\glsl\\render.frag";
+		fragBlur0	= "shaders\\glsl\\blur0.frag";
+		fragBlur1	= "shaders\\glsl\\blur1.frag";
+		fragCombine	= "shaders\\glsl\\combine.frag";
 	} else {
 		// driverType == video::EDT_DIRECT3D9
-		vertPost	= "Data\\shaders\\hlsl\\post.vs";
-		vertRender	= "Data\\shaders\\hlsl\\render.vs";
-		fragRender	= "Data\\shaders\\hlsl\\render.ps";
-		fragBlur0	= "Data\\shaders\\hlsl\\blur0.ps";
-		fragBlur1	= "Data\\shaders\\hlsl\\blur1.ps";
-		fragCombine	= "Data\\shaders\\hlsl\\combine.ps";
+		vertPost	= "shaders\\hlsl\\post.vs";
+		vertRender	= "shaders\\hlsl\\render.vs";
+		fragRender	= "shaders\\hlsl\\render.ps";
+		fragBlur0	= "shaders\\hlsl\\blur0.ps";
+		fragBlur1	= "shaders\\hlsl\\blur1.ps";
+		fragCombine	= "shaders\\hlsl\\combine.ps";
 	}
 
     distance = new ShaderMaterial(device, vertRender, fragRender, 0, mc);

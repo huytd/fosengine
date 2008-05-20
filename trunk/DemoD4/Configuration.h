@@ -26,6 +26,8 @@ private:
 	///For Irrlicht device creation.
 	irr::SIrrlichtCreationParameters params;
 
+	irr::core::stringw noidungUnicode;
+
 #ifdef _SOUND
 	///True if user wants to hear sound.
 	bool soundEnabled;
@@ -75,6 +77,9 @@ public:
 
 	inline const bool getHDREnable() const
 	{ return this->enableHDR; }
+
+	inline const irr::core::stringw getNoidung() const
+	{ return this->noidungUnicode; }
 
 	//setter
 	inline const void setIrrlichtParams(const irr::SIrrlichtCreationParameters& params)
