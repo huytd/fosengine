@@ -29,6 +29,15 @@ const bool Application::init()
 		return false;
 	}
 	
+#ifdef _SOUND
+	// init irrKlang engine
+	this->soundEngine = irrklang::createIrrKlangDevice();
+	if (!soundEngine)
+	{
+		printf("Could not startup irrKlang.\n");
+		this->configuration.setSoundEnabled(false);
+	}
+#endif
 	
 
 	return true;
