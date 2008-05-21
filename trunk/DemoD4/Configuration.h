@@ -35,9 +35,7 @@ private:
 	///Transparency of gui.
 	irr::u32 guiTransparency;
 	
-	//player setup
-	irr::core::stringw playerName;
-	irr::video::SColor shipColor;
+
 
 	///Change this to alter the sensitivity of the mouselook.
 	irr::f32 cursorSensitivity;
@@ -67,11 +65,7 @@ public:
 	inline const irr::u32 getGuiTransparency() const
 	{ return this->guiTransparency; }
 	
-	inline const irr::core::stringw& getPlayerName() const
-	{ return this->playerName; }
 
-	inline const irr::video::SColor& getShipColor() const
-	{ return this->shipColor; }
 
 	inline const irr::f32 getCursorSensitivity() const
 	{ return this->cursorSensitivity; }
@@ -92,11 +86,7 @@ public:
 	inline const void setGuiTransparency(const irr::u32 transparency)
 	{ this->guiTransparency = transparency; }	
 	
-	inline const void setPlayerName(const irr::core::stringw& name)
-	{ this->playerName = name; }
-	
-	inline const void setShipColor(const irr::video::SColor& color)
-	{ this->shipColor = color; }
+
 };
 
 #endif /*CONFIGURATION_H_*/
