@@ -13,14 +13,13 @@
 #define GUI_HEALTH_STATUS_BAR_H_
 
 using namespace irr;
+
 class GUIHealthStatusBar : public irr::gui::IGUIElement 
-
 {
-
 private:
 	video::IVideoDriver* driver;
 	
-	int x1Bar, y1Bar, x2Bar, y2Bar;
+	int x1Bar, y1Bar, x2Bar, y2Bar;	//Bar position
 
 	int   maxHealthBarValue; //bar size
 	double deltaHealthBar;   //interpolation
@@ -34,13 +33,12 @@ private:
 
 public:
 	GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, irr::gui::IGUIEnvironment* env, irr::gui::IGUIElement* parent);
-	~GUIHealthStatusBar(); //destructor :O
-	virtual void draw(); //render the GUI, must be called AFTER the 3D draw, or it  wont show
-	void setHealthBarValue(int healthValue); //change bar values for health status
-	void setManaBarValue(int manaValue);//change bar values for mana status
-	void setHealthBarPosition(int xValue, int yValue); //change health bar position
-	void setManaBarPosition(int xValue, int yValue); //change mana bar position
+	~GUIHealthStatusBar(); //Empty destructor 
+	virtual void draw();   //render the GUI
+	void setHealthBarValue(int healthValue); 			//change bar values for health status
+	void setManaBarValue(int manaValue);          		//change bar values for mana status
+	void setHealthBarPosition(int xValue, int yValue); 	//change health bar position
+	void setManaBarPosition(int xValue, int yValue); 	//change mana bar position
 }; 
 
-
-#endif /*GUIHEALTHSTATUSBAR_H_*/
+#endif /*GUI_HEALTH_STATUS_BAR_H_*/
