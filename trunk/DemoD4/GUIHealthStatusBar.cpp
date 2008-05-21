@@ -15,18 +15,21 @@
 #include "GUIHealthStatusBar.h"
 
 GUIHealthStatusBar::~GUIHealthStatusBar()
-{}
+{
+
+}
+
 GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, irr::gui::IGUIEnvironment* env, irr::gui::IGUIElement* parent)
 : 	irr::gui::IGUIElement(irr::gui::EGUIET_ELEMENT, env, parent, -1, rect)
 {
 	//class constructor
 	irr::video::IVideoDriver* driver = env->getVideoDriver();
 
-	//health and mana bars size
-	x1Bar = 100;
-	y1Bar = 100;
-	x2Bar = 200;
-	y2Bar = 200;
+	//health and mana bars  default size
+	x1Bar = 52;
+	y1Bar = 37;
+	x2Bar = 58;
+	y2Bar = 53;
 
 	//max bar values
 	maxHealthBarValue = 100;
@@ -57,8 +60,8 @@ GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, ir
 	GUITextures[7] = driver->getTexture("media\\images\\gui\\healthbar\\icon_firenova.bmp");
 } 
 
-void GUIHealthStatusBar::draw(){
-
+void GUIHealthStatusBar::draw()
+{
 	irr::video::IVideoDriver* driver = Environment->getVideoDriver();  
 
 
@@ -136,10 +139,24 @@ void GUIHealthStatusBar::draw(){
 
 } 
 
-void GUIHealthStatusBar::setHealthBarValue(int healthValue){
+void GUIHealthStatusBar::setHealthBarValue(int healthValue)
+{
    deltaHealthBar = healthValue;
 }
 
-void GUIHealthStatusBar::setManaBarValue(int manaValue){
+void GUIHealthStatusBar::setManaBarValue(int manaValue)
+{
    deltaManaBar = manaValue;
 } 
+
+void GUIHealthStatusBar::setHealthBarPosition(int xValue, int yValue)
+{
+	x1Bar = xValue;
+	y1Bar = yValue;
+}
+
+void GUIHealthStatusBar::setManaBarPosition(int xValue, int yValue)
+{
+	x2Bar = xValue;
+	y2Bar = yValue;
+}
