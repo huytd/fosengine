@@ -1,0 +1,14 @@
+#Chuẩn lập trình của nhóm.
+
+= Giới thiệu =
+
+Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và định dạng mã nguồn
+
+
+= Chi tiết =
+
+== Quy tắc đặt tên ==
+=== Tên lớp ===
+=== Tên phương thức ===
+=== Tên biến ===
+=== Tên con trỏ ===
