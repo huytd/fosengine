@@ -1,10 +1,9 @@
-#summary Trang này chứ những việc cần làm của dự án
+#summary Trang này chứa danh sách những việc cần làm của dự án
 #labels Featured,Deprecated,Phase-Requirements
 
 = Giới thiệu =
 
-To-do list on an wiki page shows the list of improvements suggested for the engine.
-Thành viên dự án đệ trình hoặc ghi chú những việc phải làm của mình và người khác.
+Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú những việc phải làm của bản thân và người khác.
 
 = Chi tiết =
 
@@ -15,6 +14,8 @@ Thành viên dự án đệ trình hoặc ghi chú những việc phải làm c�
   * Tích hợp AI (Huy)
   * *Urgent*: Tích hợp vật lý (Bách)
   * Hiệu chỉnh lớp play 2D animation (Khánh)
+  * Đề ra quy định và sửa lại comment để tích hợp với hệ thống sinh tài liệu khi code còn ít (Khánh)
+  * Triển khai demo mã D3 trên engine mới (Huy)
 
 **Đã hoàn thành*
   * Tạo demo HDR (Huy)
