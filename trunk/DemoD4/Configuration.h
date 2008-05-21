@@ -43,8 +43,7 @@ private:
 	irr::f32 cursorSensitivity;
 	
 public:
-	///The constructor sets up sane default values.
-	
+	///The constructor sets up sane default values.	
 	Configuration();
 
 	///Reads the configuration from an xml file.
@@ -59,10 +58,12 @@ public:
 
 	inline const irr::SIrrlichtCreationParameters& getIrrlichtParams() const
 	{ return this->params; }
+	
 #ifdef _SOUND
 	inline const bool isSoundEnabled() const
 	{ return this->soundEnabled; }
 #endif
+
 	inline const irr::u32 getGuiTransparency() const
 	{ return this->guiTransparency; }
 	
@@ -96,8 +97,6 @@ public:
 	
 	inline const void setShipColor(const irr::video::SColor& color)
 	{ this->shipColor = color; }
-	
-	
 };
 
 #endif /*CONFIGURATION_H_*/
