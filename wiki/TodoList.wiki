@@ -1,4 +1,5 @@
 #summary Trang này chứ những việc cần làm của dự án
+#labels Featured,Deprecated,Phase-Requirements
 
 = Giới thiệu =
 
@@ -9,9 +10,12 @@ Thành viên dự án đệ trình hoặc ghi chú những việc phải làm c�
 
 **Khẩn cấp*
   * Tạo demo play âm thanh với irrKlang (chưa phân công)
-  * Tạo demo giao diện người dùng (Khánh)
 
 **Bình thường*
-  * Tạo demo HDR (Huy)
   * Tích hợp AI (Huy)
-  * Tích hợp vật lý (Bách)
+  * *Urgent*: Tích hợp vật lý (Bách)
+  * Hiệu chỉnh lớp play 2D animation (Khánh)
+
+**Đã hoàn thành*
+  * Tạo demo HDR (Huy)
+  * Tạo demo giao diện người dùng (Khánh)
