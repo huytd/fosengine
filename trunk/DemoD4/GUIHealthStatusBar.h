@@ -8,6 +8,8 @@
 * indentation: 4
 * created on: 6:31 PM 5/20/2008
 * init code by: eMgz, Irrlicht Forum
+* created by: FOSP Team
+* copyright: FOS Project
 */
 #ifndef GUI_HEALTH_STATUS_BAR_H_
 #define GUI_HEALTH_STATUS_BAR_H_
