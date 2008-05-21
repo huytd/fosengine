@@ -1,12 +1,10 @@
 #include "CGUITexturedSkin.h"
 
-
 using namespace irr;
 using namespace core;
 using namespace video;
 using namespace io;
 using namespace gui;
-
 
 namespace irr {
 namespace gui {
