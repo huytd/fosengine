@@ -9,6 +9,29 @@ Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và
 
 == Quy tắc đặt tên ==
 === Tên lớp ===
+    * Sử dụng chữ cái in hoa như dấu cách, phần còn lại chữ thường
+    * Ký tự đầu tiên phải viết hoa
+    * Không sử dụng dấu gạch dưới ('_') 
+    * _Ví dụ_: BigDog, Character
+
 === Tên phương thức ===
+    * Áp dụng quy tắc giống tên lớp *trừ việc chữ cái đầu tiên viết thường*
+    * _Ví dụ_: doIt(), handleError();
+
 === Tên biến ===
+    * Áp dụng quy tắc giống tên lớp *trừ việc chữ cái đầu tiên viết thường*
+    * _Ví dụ_: currentHealth, lastLevel
+
 === Tên con trỏ ===
+    * tên con trỏ *nên* được bắt đầu bằng 'p' 
+    * Vị trí đặt dấu * ở gần kiểu con trỏ hơn là biến 
+    * _Ví dụ_: Health* currentHealth, Health* pCurrentHealth là đúng, Health *currentHealth là sai
+
+=== Tệp mã nguồn ===
+    * Tên tệp mã nguồn đặt trùng tên lớp
+    * Tệp mã nguồn gồm tệp 
+      #Tệp .h cho include và khai báo nguyên mẫu hàm, phương thức, thuộc tính
+      #Tệp .cpp cho triển khai cụ thể các phương thức
+
+
+    
