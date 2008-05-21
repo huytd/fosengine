@@ -20,3 +20,4 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
 **Đã hoàn thành*
   * Tạo demo HDR (Huy)
   * Tạo demo giao diện người dùng (Khánh)
+  * Sửa phần tích hợp âm thanh
