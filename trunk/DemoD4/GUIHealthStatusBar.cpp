@@ -1,6 +1,6 @@
 /*
 ***********************************************
-* Health and Mana Bar 
+* Health and Mana Bar  
 * *********************************************
 * file name: GUIHealthStatusBar.cpp
 * encoding: UTF-8
@@ -63,7 +63,6 @@ GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, ir
 void GUIHealthStatusBar::draw()
 {
 	irr::video::IVideoDriver* driver = Environment->getVideoDriver();  
-
 
 	float delta; //status bar variation
 	core::dimension2d<s32> screenSize = driver->getScreenSize();
