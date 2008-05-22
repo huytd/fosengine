@@ -16,14 +16,14 @@ private:
 	///Holds the name of the game.
 	irr::core::stringw projectName;
 
-	//versioning
+	///versioning
 	irr::u32 majorVersion;
 	irr::u32 minorversion;
 
-	//stuff user can change
+	///stuff user can change
 	bool enableHDR;
 	
-	//Full screen software anti alias option
+	///Full screen software anti alias option
 	bool antiAliasEnabled;
 
 	///For Irrlicht device creation.
