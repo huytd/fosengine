@@ -22,6 +22,9 @@ private:
 
 	//stuff user can change
 	bool enableHDR;
+	
+	//Full screen software anti alias option
+	bool antiAliasEnabled;
 
 	///For Irrlicht device creation.
 	irr::SIrrlichtCreationParameters params;
@@ -35,8 +38,6 @@ private:
 	///Transparency of gui.
 	irr::u32 guiTransparency;
 	
-
-
 	///Change this to alter the sensitivity of the mouselook.
 	irr::f32 cursorSensitivity;
 	
@@ -65,7 +66,10 @@ public:
 	inline const irr::u32 getGuiTransparency() const
 	{ return this->guiTransparency; }
 	
-
+	inline const bool getAntiAliasOption() conse
+	{
+		return this->antiAliasEnabled;
+	}
 
 	inline const irr::f32 getCursorSensitivity() const
 	{ return this->cursorSensitivity; }
@@ -79,13 +83,14 @@ public:
 	//setter
 	inline const void setIrrlichtParams(const irr::SIrrlichtCreationParameters& params)
 	{ this->params = params; }
+	
 #ifdef _SOUND
 	inline const void setSoundEnabled(const bool enabled)
 	{ this->soundEnabled = enabled; }
 #endif
+
 	inline const void setGuiTransparency(const irr::u32 transparency)
 	{ this->guiTransparency = transparency; }	
-	
 
 };
 
