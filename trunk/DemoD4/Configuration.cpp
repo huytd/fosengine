@@ -27,9 +27,9 @@ Configuration::Configuration() :
 	this->params.Stencilbuffer = true;
 	this->params.Vsync = false;
 
-	this->params.antiAliasEnabled = false;
-	this->params.enableHDR = false;
-	this->params.noidungUnicode = "";
+	this->antiAliasEnabled = false;
+	this->enableHDR = false;
+	this->noidungUnicode = "";
 }
 
 const void Configuration::read()
