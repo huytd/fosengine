@@ -48,8 +48,6 @@ void GlobalState::onUpdate(Game* game)
 	// render the scene
 	if (game->getDevice()->isWindowActive())
 	{
-		
-
 		game->getVideoDriver()->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
 		game->getSceneManager()->drawAll();
 		game->getGuiEnvironment()->drawAll();

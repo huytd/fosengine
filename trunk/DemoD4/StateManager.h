@@ -113,6 +113,9 @@ public:
 
 		if (this->currentState)
 			this->currentState->onUpdate(this->owner);
+
+		if (this->currentState)
+			this->currentState->onSecondUpdate(this->owner);
 	}
 
 	/*! Process an incoming message.

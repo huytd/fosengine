@@ -27,7 +27,7 @@ Configuration::Configuration() :
 	this->params.Stencilbuffer = true;
 	this->params.Vsync = false;
 
-	this->params.AntiAlias = true;
+	this->params.AntiAlias = false;
 	this->enableHDR = false;
 	this->noidungUnicode = "";
 }

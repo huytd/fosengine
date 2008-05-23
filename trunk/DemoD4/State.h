@@ -45,6 +45,14 @@ public:
 	{
 	}
 
+	/*! Update the entity after 1 update .
+	 *
+	 * \param entity The entity that is to be updated.
+	 */
+	virtual void onSecondUpdate(T* entity)
+	{
+	}
+
 	/*! Process a message.
 	 *
 	 * Called by the state machine when a message is to be processed for

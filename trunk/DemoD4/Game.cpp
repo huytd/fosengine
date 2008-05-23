@@ -47,6 +47,10 @@ Game::Game(
 	pNewSkin->drop();
 
 
+
+
+
+
 	//irr::u32 c;
 	//for (c = 0; c < irr::gui::EGDC_COUNT; ++c)
 	//{
