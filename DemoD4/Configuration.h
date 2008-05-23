@@ -66,7 +66,7 @@ public:
 	inline const irr::u32 getGuiTransparency() const
 	{ return this->guiTransparency; }
 	
-	inline const bool getAntiAliasOption() conse
+	inline const bool getAntiAliasOption() const
 	{
 		return this->antiAliasEnabled;
 	}
