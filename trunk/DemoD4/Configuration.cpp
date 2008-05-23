@@ -27,7 +27,8 @@ Configuration::Configuration() :
 	this->params.Stencilbuffer = true;
 	this->params.Vsync = false;
 
-	this->params.AntiAlias = false;
+
+	this->params.AntiAlias = true;
 	this->enableHDR = false;
 	this->noidungUnicode = "";
 }
@@ -40,7 +41,7 @@ const void Configuration::read()
 	 *	Load user dialog contents
 	*/
 	irr::io::IXMLReader* xmlu = 0;
-	xmlu = device->getFileSystem()->createXMLReader("config/noidung.xml");
+	xmlu = device->getFileSystem()->createXMLReader("config/content.xml");
 	if (xmlu == 0)
 	{
 		device->getLogger()->log(L"Cannot find dialog contents file. Falling back to defaults.");
@@ -50,7 +51,7 @@ const void Configuration::read()
 	}
 	while (xmlu && xmlu->read())
 	{
-		if (irr::core::stringw("loithoai") == xmlu->getNodeName())
+		if (irr::core::stringw("dialog") == xmlu->getNodeName())
 		{
 			this->noidungUnicode = xmlu->getAttributeValue(L"text");
 		}
