@@ -19,7 +19,7 @@ Game::Game(
 	soundEngine(soundEngine),
 #endif
 	font(0),
-
+	
 	timer(device->getTimer()),
 	then(timer->getTime()),
 	now(0),
