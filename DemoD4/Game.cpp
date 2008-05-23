@@ -46,20 +46,7 @@ Game::Game(
 	this->guiEnvironment->setSkin(pNewSkin);
 	pNewSkin->drop();
 
-
-
-
-
-
-	//irr::u32 c;
-	//for (c = 0; c < irr::gui::EGDC_COUNT; ++c)
-	//{
-	//	irr::video::SColor col = currentSkin->getColor(irr::gui::EGUI_DEFAULT_COLOR(c));
-	//	col.setAlpha(configuration.getGuiTransparency());
-	//	currentSkin->setColor(irr::gui::EGUI_DEFAULT_COLOR(c), col);
-	//}
-
-	////setup default game font
+	//setup default game font
 	setFont("media/fonts/myfont.xml");
 }
 
