@@ -19,7 +19,7 @@ Configuration::Configuration() :
 	
 {
 	//setup sane default values for irrlicht device in case of invalid / not readable configuration file
-	this->params.DriverType = irr::video::EDT_SOFTWARE;
+	this->params.DriverType = irr::video::EDT_DIRECT3D9;
 	this->params.WindowSize.Width = 800;
 	this->params.WindowSize.Height = 600;
 	this->params.Bits = 16;
@@ -27,7 +27,7 @@ Configuration::Configuration() :
 	this->params.Stencilbuffer = true;
 	this->params.Vsync = false;
 
-	this->antiAliasEnabled = false;
+	this->params.AntiAlias = true;
 	this->enableHDR = false;
 	this->noidungUnicode = "";
 }
