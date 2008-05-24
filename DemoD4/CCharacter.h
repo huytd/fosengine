@@ -58,6 +58,7 @@ public:
 	core::vector3df getRotate();
 	eState getState();
 	irr::scene::IAnimatedMeshSceneNode* getMesh();
+	irr::scene::IAnimatedMeshSceneNode* getNode();
 
 	void run();
 	void walk();
