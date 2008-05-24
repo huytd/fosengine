@@ -13,7 +13,7 @@
 #include "CCharacter.h"
 
 #include <irrlicht.h>
-
+#define ANIMATION_SPEED 5
 irr::scene::IAnimatedMeshSceneNode* CCharacter::getMesh()
 {
 	return node;
@@ -76,7 +76,7 @@ void CCharacter::run()
 {
 	setState(CCharacter::eState::Run);
 	
-	node->setAnimationSpeed(30);
+	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
 	node->setFrameLoop(1,14);
 }
@@ -85,7 +85,7 @@ void CCharacter::walk()
 {
 	setState(CCharacter::eState::Walk);
 	
-	node->setAnimationSpeed(40);
+	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
 	node->setFrameLoop(1,14);
 }
@@ -94,7 +94,7 @@ void CCharacter::idle()
 {
 	setState(CCharacter::eState::Idle);
 	
-	node->setAnimationSpeed(25);
+	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
 	node->setFrameLoop(206,300);
 }
@@ -107,7 +107,7 @@ void CCharacter::attack(eAttacktype attackType)
 	{
 		case eAttacktype::PowerAttack :
 		{	
-			node->setAnimationSpeed(20);
+			node->setAnimationSpeed(ANIMATION_SPEED);
 			node->setLoopMode(false);
 			node->setFrameLoop(45,59);
 			node->setAnimationEndCallback(this);
@@ -116,7 +116,7 @@ void CCharacter::attack(eAttacktype attackType)
 
 		case eAttacktype::DownswipeAttack:
 		{	
-			node->setAnimationSpeed(15);
+			node->setAnimationSpeed(ANIMATION_SPEED);
 			node->setLoopMode(false);
 			node->setFrameLoop(60,68);
 			node->setAnimationEndCallback(this);
@@ -125,7 +125,7 @@ void CCharacter::attack(eAttacktype attackType)
 
 		case eAttacktype::MagicAttack:
 		{	
-			node->setAnimationSpeed(15);
+			node->setAnimationSpeed(ANIMATION_SPEED);
 			node->setLoopMode(false);
 			node->setFrameLoop(69,72);
 			node->setAnimationEndCallback(this);
