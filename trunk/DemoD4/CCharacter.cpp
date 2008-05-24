@@ -191,3 +191,8 @@ void CCharacter::remove()
 {
 	node->remove();
 }
+
+irr::scene::IAnimatedMeshSceneNode* CCharacter::getNode()
+{
+	return node;	
+}
