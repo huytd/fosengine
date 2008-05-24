@@ -1,5 +1,5 @@
 #summary Quy tắc nên theo khi lập trình của nhóm.
-#labels Featured,Deprecated,Phase-QA
+#labels Featured,Phase-Requirements,Phase-QA
 
 = Giới thiệu =
 
