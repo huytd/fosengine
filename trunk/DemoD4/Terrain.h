@@ -22,6 +22,7 @@ public:
 		this->terrain->drop();
 	}
 	
+
 	inline irr::scene::ITerrainSceneNode* getTerrain() const { return this->terrain; }
 
 	
