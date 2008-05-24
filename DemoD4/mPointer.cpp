@@ -18,7 +18,7 @@ void mPointer::createMesh(irr::scene::ISceneManager *smgr, irr::video::IVideoDri
 {
 	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("media\\model\\pointer\\pointer.b3d"));
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
-	node->setScale(vector3df(.1,.1,.1));
+	node->setScale(vector3df(0.1f,0.1f,0.1f));
 	node->setMaterialTexture( 0, driver->getTexture("media\\model\\pointer\\point.bmp") );
 	
 	scene::ISceneNodeAnimator* anim=smgr->createRotationAnimator(vector3df(0,2,0));

@@ -67,11 +67,11 @@ void GUIHealthStatusBar::draw()
 	float delta; //status bar variation
 	core::dimension2d<s32> screenSize = driver->getScreenSize();
 
-	double x=17; //spell bar position
-	double y=screenSize.Height*0.85;;
+	float x=17; //spell bar position
+	float y=screenSize.Height*0.85;;
 
-	double iconSpace = 30;
-	core::position2d<s32> iconPos = core::position2d<s32>(x+50, y+23);
+	float iconSpace = 30;
+	core::position2d<s32> iconPos = core::position2d<s32>(x+50.0, y+23.0);
 
 	//here is some cool stuff, it changes the bar value from X to Y smoothly
 	if ((int)deltaHealthBar != (int)healthBarValue){
@@ -102,13 +102,13 @@ void GUIHealthStatusBar::draw()
 
 	driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+3, healthBarValue*5+x2Bar-3, y2Bar-3),
 
-		video::SColor(255, 255-healthBarValue*2.55, healthBarValue*2.55, 0),
+		video::SColor(255, 255-healthBarValue*2, healthBarValue*2, 0),
 
-		video::SColor(255, 255-healthBarValue*2.55, healthBarValue*2.55, 0),
+		video::SColor(255, 255-healthBarValue*2, healthBarValue*2, 0),
 
-		video::SColor(255, 255-healthBarValue*2.55, healthBarValue*2.55-150, 0),
+		video::SColor(255, 255-healthBarValue*2, healthBarValue*2-150, 0),
 
-		video::SColor(255, 255-healthBarValue*2.55, healthBarValue*2.55-150, 0));
+		video::SColor(255, 255-healthBarValue*2, healthBarValue*2-150, 0));
 
 	//mana bar
 	driver->draw2DRectangle(video::SColor(255, 100, 100, 100), core::rect<s32>(x1Bar, y1Bar+20, maxManaBarValue*5+x2Bar, y2Bar+20));
