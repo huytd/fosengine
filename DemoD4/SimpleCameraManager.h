@@ -15,7 +15,7 @@ class SimpleCameraManager
    public:
       // class constructor
       SimpleCameraManager(irr::scene::ISceneNode* targetNode, irr::scene::ISceneManager* smgr,
-                              irr::f32 height = 10.0f, irr::f32 leash = 20.0f, irr::f32 speed = 5.0f, irr::s32 id = -1);
+                              irr::f32 height = 10.0f, irr::f32 leash = 20.0f, irr::f32 speed = 0.5f, irr::s32 id = -1);
       // class destructor
       ~SimpleCameraManager();
       
