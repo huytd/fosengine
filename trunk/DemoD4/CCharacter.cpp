@@ -7,6 +7,7 @@
  * tab size: 8
  * indentation: 4
  * created on: 9:03 PM 3/17/2008
+ * init by: Do Quoc Khanh - doqkhanh
  * created by: FOSP Team
  * copyright: FOS Project
  */
@@ -30,6 +31,9 @@ CCharacter::CCharacter(IrrlichtDevice* device, irr::scene::ISceneManager *smgr,i
 	oldState = CCharacter::eState::Idle;
 
 	curAttackType = CCharacter::eAttacktype::MagicAttack;
+
+	node->setJointMode(irr::scene::EJUOR_CONTROL);
+	node->setTransitionTime(0.5);
 	
 	idle();
 }
@@ -175,6 +179,8 @@ void CCharacter::move(core::vector3df pos)
 		node->setRotation(	faceTarget(pos, node->getPosition()) );
 		moveto(node, core::vector3df(0,0,fSpeed));
 	}
+
+	this->node->animateJoints() ;
 }
 
 void CCharacter::update()
