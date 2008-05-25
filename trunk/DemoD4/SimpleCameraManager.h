@@ -1,8 +1,9 @@
+#include "Irrlicht.h"
+
+
 /*
  * Init code: Keless Irrlicht Forum
  */
-
-#include "Irrlicht.h"
 
 using namespace irr;
 class SimpleCameraManager
