@@ -175,11 +175,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\_CCameraRPGSceneNode.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Application.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\CCameraRPGSceneNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CCameraSceneNode.cpp"
 				>
 			</File>
 			<File
@@ -233,6 +241,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\_CCameraRPGSceneNode.h"
+				>
+			</File>
+			<File
 				RelativePath=".\AnimSprite.h"
 				>
 			</File>
@@ -242,6 +254,10 @@
 			</File>
 			<File
 				RelativePath=".\CCameraRPGSceneNode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CCameraSceneNode.h"
 				>
 			</File>
 			<File
