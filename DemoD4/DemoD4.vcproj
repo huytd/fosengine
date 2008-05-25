@@ -179,6 +179,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CCameraRPGSceneNode.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CCharacter.cpp"
 				>
 			</File>
@@ -215,6 +219,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SimpleCameraManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Terrain.cpp"
 				>
 			</File>
@@ -230,6 +238,10 @@
 			</File>
 			<File
 				RelativePath=".\Application.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CCameraRPGSceneNode.h"
 				>
 			</File>
 			<File
@@ -282,6 +294,10 @@
 			</File>
 			<File
 				RelativePath=".\shadermaterial.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SimpleCameraManager.h"
 				>
 			</File>
 			<File
