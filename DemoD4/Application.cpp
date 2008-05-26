@@ -1,3 +1,14 @@
+/*
+ * \summary Application manager
+ * \filename Application.cpp
+ * \encoding UTF-8
+ * \tabsize 8
+ * \indentation 4
+ * \created 18:15 2008/05/26
+ * \initialized Irrlicht Forum  - randomMesh
+ * \created FOSP Team
+ * \copyright FOS Project
+ */
 #include "Application.h"
 
 #include "Game.h"
@@ -14,6 +25,8 @@ Application::Application() :
 	
 }
 
+//! Init application
+//! \return Bool value, return false if cannot init application, return true if application inited
 const bool Application::init()
 {
 	//read the configuration file
@@ -42,16 +55,17 @@ const bool Application::init()
 	return true;
 }
 
+//! Start and run application
 const void Application::run()
 {	
-	//create global game state
+	//! create global game state
 	GlobalState global;
 
-	// create all other game states the game can be in
+	//! create all other game states the game can be in
 	IntroState intro;
 	LevelOneState levelone;
 
-	//create game (it's the state machine)
+	//! create game (it's the state machine)
 	Game game(
 		this->configuration,
 		this->device
@@ -60,33 +74,29 @@ const void Application::run()
 #endif
 	);
 
-	//drop irrlicht and irrklang device since game grabbed them
+	//! drop irrlicht and irrklang device since game grabbed them
 	this->device->drop();
 #ifdef _SOUND
 	this->soundEngine->drop();
 #endif
-	//if (ga
-	//{
-		//hdr = new ShaderGroup(this->device,game. );
-	//}
 	
-	//register game states
+	//! register game states
 	game.addGameState("intro", &intro);
 	game.addGameState("levelone", &levelone);
 	
-	// setup the state machine
+	//! setup the state machine
 	game.setGlobalState(&global);
 
-	// start the game with an intro
+	//! start the game with an intro
 	game.setState(&intro);
 	
-	//main loop
+	//! main loop
 	while (game.isRunning())
 	{
-		//update game timer
+		//! update game timer
 		game.tick();
 
-		//update the state machine (aka rendering and event receiving)
+		//! update the state machine (aka rendering and event receiving)
 		game.onUpdate();
 	}
 }
