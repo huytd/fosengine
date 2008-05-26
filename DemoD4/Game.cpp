@@ -1,3 +1,15 @@
+/*
+ * \summary Game manager content
+ * \filename game.cpp
+ * \encoding UTF-8
+ * \tabsize 8
+ * \indentation 4
+ * \created 18:29 2008/05/26
+ * \initialized Irrlicht Forum  - randomMesh
+ * \created FOSP Team
+ * \copyright FOS Project
+ */
+ 
 #include "Game.h"
 #include <IGUIEnvironment.h>
 #include <ICameraSceneNode.h>
@@ -52,7 +64,6 @@ Game::Game(
 
 Game::~Game()
 {
-
 	this->device->drop();
 #ifdef _SOUND
 	this->soundEngine->drop();
@@ -73,11 +84,11 @@ State<Game, irr::SEvent>* Game::findGameState(const char* name)
 	return 0;
 }
 
-/*
-* You can write screenshots in the following file formats:
-* PNG, BMP, TGA, PPM, JPG
-* Just change the extension of the filename. (really easy, isn't it?)
-*/
+/**
+  * \Summary You can write screenshots in the following file formats:
+  * PNG, BMP, TGA, PPM, JPG
+  * Just change the extension of the filename. (really easy, isn't it?)
+  */
 const void Game::makeScreenshot() const
 {
 	//get video::IImage from the last rendered frame
