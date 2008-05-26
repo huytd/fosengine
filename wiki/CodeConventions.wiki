@@ -1,38 +1,84 @@
 #summary Quy tắc nên theo khi lập trình của nhóm.
 #labels Featured,Phase-Requirements,Phase-QA
 
-= Giới thiệu =
+== Giới thiệu ==
 
 Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và định dạng mã nguồn
 
 
-= Chi tiết =
+== Chi tiết ==
 
-== Quy tắc đặt tên ==
-=== Tên lớp ===
+=== Quy tắc đặt tên ===
+==== Tên lớp ====
     * Sử dụng chữ cái in hoa như dấu cách, phần còn lại chữ thường
     * Ký tự đầu tiên phải viết hoa
     * Không sử dụng dấu gạch dưới ('_') 
     * _Ví dụ_: BigDog, Character
 
-=== Tên phương thức ===
+==== Tên phương thức ====
     * Áp dụng quy tắc giống tên lớp *trừ việc chữ cái đầu tiên viết thường*
     * _Ví dụ_: doIt(), handleError();
 
-=== Tên biến ===
+==== Tên biến ====
     * Áp dụng quy tắc giống tên lớp *trừ việc chữ cái đầu tiên viết thường*
     * _Ví dụ_: currentHealth, lastLevel
 
-=== Tên con trỏ ===
+==== Tên con trỏ ====
     * tên con trỏ *nên* được bắt đầu bằng 'p' 
     * Vị trí đặt dấu * ở gần kiểu con trỏ hơn là biến 
     * _Ví dụ_: Health* currentHealth, Health* pCurrentHealth là đúng, Health *currentHealth là sai
 
-=== Tệp mã nguồn ===
+==== Tệp mã nguồn ====
     * Tên tệp mã nguồn đặt trùng tên lớp
     * Tệp mã nguồn gồm tệp 
       #Tệp .h cho include và khai báo nguyên mẫu hàm, phương thức, thuộc tính
       #Tệp .cpp cho triển khai cụ thể các phương thức
 
+==== Quy tắc ghi chú thích ====
+    * Phần đầu mỗi file
+{{{
+/*
+ * /summary Character control
+ * /filename CCharacter.h
+ * /encoding UTF-8
+ * /tabsize 8
+ * /indentation 4
+ * /created 9:03 PM 3/17/2008
+ * /initialized Do Quoc Khanh - doqkhanh
+ * /created FOSP Team
+ * /copyright FOS Project
+ */
+}}}
 
+    * Quy tắc #ifndef
+{{{
+#ifndef __C_CHARACTER_H__
+#define __C_CHARACTER_H__
+
+//file content
+
+#endif //__C_CHARACTER_H__
+}}}
     
+    * Quy tắc ghi chú thích bất kì
+{{{
+//! constructor
+
+//! destructor
+}}}
+
+    * Quy tắc ghi chú thích một hàm
+{{{
+//! Sets the projection matrix of the camera. The core::matrix4 class has some methods
+		//! to build a projection matrix. e.g: core::matrix4::buildProjectionMatrixPerspectiveFovLH
+		//! \param projection: The new projection matrix of the camera. 
+		//! \return Return 1 if in debug mode, 0 if in release mode. 
+		virtual int setProjectionMatrix(const core::matrix4& projection);
+
+}}}
+
+    * Quy tắc định nghĩa todo, task
+{{{
+//! TODO : mouse control can rotate player and camera at higher speed
+//! TASK : edit this source code's style
+}}}
