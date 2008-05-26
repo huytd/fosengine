@@ -1,4 +1,4 @@
-/*
+/**
  * \Summary: Game configuration manager and helper
  * \Filename: configuration.h
  * \Encoding: UTF-8
