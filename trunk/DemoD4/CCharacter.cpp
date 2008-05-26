@@ -14,7 +14,7 @@
 #include "CCharacter.h"
 
 #include <irrlicht.h>
-#define ANIMATION_SPEED 5
+#define ANIMATION_SPEED 10
 irr::scene::IAnimatedMeshSceneNode* CCharacter::getMesh()
 {
 	return node;

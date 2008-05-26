@@ -46,7 +46,7 @@ Game::Game(
 #ifdef _SOUND
 	this->soundEngine->grab();
 #endif
-	camera->setFarValue(25000.0f);
+	camera->setFarValue(2500.0f);
 	
 	
 	// change gui transparency
