@@ -18,7 +18,7 @@ Terrain::Terrain(Game* game) :
 		irr::video::SColor ( 255, 255, 255, 255 ),	// vertexColor,
 		5,										// maxLOD
 		irr::scene::ETPS_17,					// patchSize
-		5										// smoothFactor
+		0									// smoothFactor
 	);
 
 	this->terrain->setMaterialType(irr::video::EMT_DETAIL_MAP);

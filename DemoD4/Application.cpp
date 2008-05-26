@@ -96,6 +96,7 @@ const void Application::run()
 		//! update game timer
 		game.tick();
 
+		//printf("     elapssed=%f",game.getElapsed());
 		//! update the state machine (aka rendering and event receiving)
 		game.onUpdate();
 	}
