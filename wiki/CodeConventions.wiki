@@ -37,16 +37,16 @@ Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và
 ==== Quy tắc ghi chú thích ====
     * Phần đầu mỗi file
 {{{
-/*
- * \summary Character animation and movement control
- * \filename CCharacter.h
- * \encoding UTF-8
- * \tabsize 8
- * \indentation 4
- * \created 9:03 PM 3/17/2008
- * \initialized Do Quoc Khanh - doqkhanh
- * \created FOSP Team
- * \copyright FOS Project
+/**
+ * \Summary: Game configuration manager and helper
+ * \Filename: configuration.h
+ * \Encoding: UTF-8
+ * \Tabsize: 8
+ * \Indentation: 4
+ * \CreatedDate: 18:33 2008/05/26
+ * \InitializedBy: Bob
+ * \CreatedBy: FOSP Team
+ * \Copyright: FOS Project
  */
 }}}
 
