@@ -13,7 +13,7 @@ Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và
     * Sử dụng chữ cái in hoa như dấu cách, phần còn lại chữ thường
     * Ký tự đầu tiên phải viết hoa
     * Không sử dụng dấu gạch dưới ('_') 
-    * _Ví dụ_: BigDog, Character
+    * _Ví dụ_: BigDog hoặc Character
 
 ==== Tên phương thức ====
     * Áp dụng quy tắc giống tên lớp *trừ việc chữ cái đầu tiên viết thường*
@@ -31,14 +31,14 @@ Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và
 ==== Tệp mã nguồn ====
     * Tên tệp mã nguồn đặt trùng tên lớp
     * Tệp mã nguồn gồm tệp 
-      #Tệp .h cho include và khai báo nguyên mẫu hàm, phương thức, thuộc tính
-      #Tệp .cpp cho triển khai cụ thể các phương thức
+      # Tệp .h cho include và khai báo nguyên mẫu hàm, phương thức, thuộc tính
+      # Tệp .cpp cho triển khai cụ thể các phương thức
 
 ==== Quy tắc ghi chú thích ====
     * Phần đầu mỗi file
 {{{
 /*
- * \summary Character control
+ * \summary Character animation and movement control
  * \filename CCharacter.h
  * \encoding UTF-8
  * \tabsize 8
