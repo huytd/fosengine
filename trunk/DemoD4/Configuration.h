@@ -1,3 +1,15 @@
+/*
+ * \Summary: Game configuration manager and helper
+ * \Filename: configuration.h
+ * \Encoding: UTF-8
+ * \Tabsize: 8
+ * \Indentation: 4
+ * \CreatedDate: 18:33 2008/05/26
+ * \InitializedBy: Irrlicht Forum  - randomMesh
+ * \CreatedBy: FOSP Team
+ * \Copyright: FOS Project
+ */
+
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
 
@@ -6,52 +18,52 @@
 #include <SIrrCreationParameters.h>
 
 /**
- * An object of this class holds all the variables the user may edit plus
+ * \Summary An object of this class holds all the variables the user may edit plus
  * some basic stuff like the name and version of the game.
  */
 class Configuration
 {
 private:
 
-	///Holds the name of the game.
+	//! Holds the name of the game.
 	irr::core::stringw projectName;
 
-	///versioning
+	//! versioning
 	irr::u32 majorVersion;
 	irr::u32 minorversion;
 
-	///stuff user can change
+	//! stuff user can change
 	bool enableHDR;
 	
-	///Full screen software anti alias option
+	//! Full screen software anti alias option
 	bool antiAliasEnabled;
 
-	///For Irrlicht device creation.
+	//! For Irrlicht device creation.
 	irr::SIrrlichtCreationParameters params;
 
 	irr::core::stringw noidungUnicode;
 
 #ifdef _SOUND
-	///True if user wants to hear sound.
+	//! True if user wants to hear sound.
 	bool soundEnabled;
 #endif
-	///Transparency of gui.
+	//! Transparency of gui.
 	irr::u32 guiTransparency;
 	
-	///Change this to alter the sensitivity of the mouselook.
+	//! Change this to alter the sensitivity of the mouselook.
 	irr::f32 cursorSensitivity;
 	
 public:
-	///The constructor sets up sane default values.	
+	//! The constructor sets up sane default values.	
 	Configuration();
 
-	///Reads the configuration from an xml file.
+	//! Reads the configuration from an xml file.
 	const void read();
 
-	///Writes the configuration to an xml file.
+	//! Writes the configuration to an xml file.
 	const void write() const;
 
-	// getter
+	//! getter
 	inline const irr::core::stringw& getProjectName() const
 	{ return this->projectName; }
 
@@ -80,7 +92,7 @@ public:
 	inline const irr::core::stringw getNoidung() const
 	{ return this->noidungUnicode; }
 
-	//setter
+	//! setter
 	inline const void setIrrlichtParams(const irr::SIrrlichtCreationParameters& params)
 	{ this->params = params; }
 	

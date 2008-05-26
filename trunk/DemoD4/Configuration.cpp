@@ -1,24 +1,36 @@
+/*
+ * \summary Game configuration manager and helper
+ * \filename configuration.cpp
+ * \encoding UTF-8
+ * \tabsize 8
+ * \indentation 4
+ * \created 18:33 2008/05/26
+ * \initialized Irrlicht Forum  - randomMesh
+ * \created FOSP Team
+ * \copyright FOS Project
+ */
+  
 #include "Configuration.h"
 #include <irrlicht.h>
 
 Configuration::Configuration() :
-	//setup name and versioning
+	//! setup name and versioning
 	projectName(L"FOS Project"),
 	majorVersion(0),
 	minorversion(1),
 
 #ifdef _SOUND
-	//sound
+	//! sound
 	soundEnabled(true),
 #endif
 
-	//gui transparency
+	//! gui transparency
 	guiTransparency(255),
 
 	cursorSensitivity(1.0f)
 	
 {
-	//setup sane default values for irrlicht device in case of invalid / not readable configuration file
+	//! setup sane default values for irrlicht device in case of invalid / not readable configuration file
 	this->params.DriverType = irr::video::EDT_DIRECT3D9;
 	this->params.WindowSize.Width = 800;
 	this->params.WindowSize.Height = 600;
@@ -37,9 +49,9 @@ const void Configuration::read()
 {
 	irr::IrrlichtDevice* device = irr::createDevice(irr::video::EDT_NULL);
 
-	/*
-	 *	Load user dialog contents
-	*/
+	
+	//! Load user dialog contents
+	
 	irr::io::IXMLReader* xmlu = 0;
 	xmlu = device->getFileSystem()->createXMLReader("config/content.xml");
 	if (xmlu == 0)
@@ -58,9 +70,8 @@ const void Configuration::read()
 	}
 	xmlu->drop();
 
-	/*
-	* 	create xml reader to load game setting
-	*/
+	
+	//! create xml reader to load game setting
 	irr::io::IXMLReader* xml = 0;
 	xml = device->getFileSystem()->createXMLReader("config/config.xml"); //create xmlreader
 
@@ -100,11 +111,11 @@ const void Configuration::read()
 			this->params.WindowSize.Width = xml->getAttributeValueAsInt(L"xres");
 			this->params.WindowSize.Height = xml->getAttributeValueAsInt(L"yres");
 			
-			///\todo Check resolution
+			//! Todo: Check resolution
 
 			this->params.Bits = xml->getAttributeValueAsInt(L"bits");
 			
-			//Check color depth.
+			//! Check color depth.
 			if ( (this->params.Bits != 16) || (this->params.Bits != 24))
 				this->params.Bits = 32;
 		}
@@ -120,7 +131,7 @@ const void Configuration::read()
 		{
 			this->guiTransparency = xml->getAttributeValueAsInt(L"transparency");
 
-			//check for sane values
+			//! check for sane values
 			if (this->guiTransparency > 255) this->guiTransparency = 255;
 			else if (this->guiTransparency < 0) this->guiTransparency = 0;
 		}
@@ -153,7 +164,7 @@ const void Configuration::write() const
 		device->getLogger()->log(L"Configuration file does not exist. Please create an empty file 'config/config.xml'.");
 
 	if (xmlw == 0)
-	{	//could not open file for writing
+	{	//! could not open file for writing
 		device->drop();
 		return;
 	}
@@ -167,7 +178,7 @@ const void Configuration::write() const
 	xmlw->writeLineBreak();
 	xmlw->writeLineBreak();
 
-	//write grafic driver config
+	//! write grafic driver config
 	xmlw->writeComment(L"Irrlicht device settings: driver can be 0 = DirectX, 1 = OPENGL, 2 = Burning's Video or 3 = Software");
 	xmlw->writeLineBreak();
 
@@ -189,7 +200,7 @@ const void Configuration::write() const
 	xmlw->writeLineBreak();
 	xmlw->writeLineBreak();
 
-	//write resolution and color depth
+	//! write resolution and color depth
 	xmlw->writeComment(L"Resolution and color depth settings");
 	xmlw->writeLineBreak();
 	xmlw->writeElement(L"resolution", true,
@@ -202,7 +213,7 @@ const void Configuration::write() const
 	xmlw->writeLineBreak();
 
 #ifdef _SOUND
-	//write sound config
+	//! write sound config
 	xmlw->writeComment(L"Sound settings: enabled = 0 or 1 ");
 	xmlw->writeLineBreak();
 	xmlw->writeElement(L"sound", true, L"enabled", irr::core::stringw(this->soundEnabled).c_str());
@@ -211,7 +222,7 @@ const void Configuration::write() const
 	xmlw->writeLineBreak();
 #endif
 
-	//write gui configuration
+	//! write gui configuration
 	xmlw->writeComment(L"Gui settings: transparency = from 0 to 255");
 	xmlw->writeLineBreak();
 	xmlw->writeElement(L"gui", true, L"transparency", irr::core::stringw(this->guiTransparency).c_str());
@@ -219,7 +230,7 @@ const void Configuration::write() const
 	xmlw->writeLineBreak();
 	xmlw->writeLineBreak();
 
-	//write anti alias configuration
+	//! write anti alias configuration
 	xmlw->writeComment(L"Anti alias settings: enabled =  0 or 1");
 	xmlw->writeLineBreak();
 	xmlw->writeElement(L"antialias", true, L"enabled", irr::core::stringw(this->antiAliasEnabled).c_str());
@@ -227,7 +238,7 @@ const void Configuration::write() const
 	xmlw->writeLineBreak();
 	xmlw->writeLineBreak();
 
-	//write hdr configuration
+	//! write hdr configuration
 	xmlw->writeComment(L"HDR settings: enabled =  0 or 1");
 	xmlw->writeLineBreak();
 	xmlw->writeElement(L"hdr", true, L"enabled", irr::core::stringw(this->enableHDR).c_str());
@@ -237,7 +248,7 @@ const void Configuration::write() const
 
 	xmlw->writeClosingTag(L"configuration");
 	
-	//clean up writer
+	//! clean up writer
 	xmlw->drop();
 	
 	device->getLogger()->log(L"Done.");
