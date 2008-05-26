@@ -168,7 +168,10 @@ void CCharacter::move(core::vector3df pos)
 {
 	// Avoid complex operation in next step
 	if(getState() != CCharacter::eState::Walk && getState() != CCharacter::eState::Run)
+	{
+		this->node->animateJoints() ;
 		return;
+	}
 
 	if (node->getPosition().getDistanceFrom(pos) < 4)
 	{
