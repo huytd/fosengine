@@ -14,7 +14,7 @@
 #define CONFIGURATION_H_
 
 #include <IVideoDriver.h>
-#include <IEventReceiver.h> //needed by SIrrCreationParameters.h
+#include <IEventReceiver.h> //! needed by SIrrCreationParameters.h
 #include <SIrrCreationParameters.h>
 
 /**

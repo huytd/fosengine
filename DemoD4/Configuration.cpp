@@ -1,13 +1,13 @@
 /*
- * \summary Game configuration manager and helper
- * \filename configuration.cpp
- * \encoding UTF-8
- * \tabsize 8
- * \indentation 4
- * \created 18:33 2008/05/26
- * \initialized Irrlicht Forum  - randomMesh
- * \created FOSP Team
- * \copyright FOS Project
+ * \Summary Game configuration manager and helper
+ * \Filename: configuration.cpp
+ * \Encoding: UTF-8
+ * \Tabsize: 8
+ * \Indentation: 4
+ * \CreatedDate: 18:33 2008/05/26
+ * \InitializedBy: Irrlicht Forum  - randomMesh
+ * \CreatedBy: FOSP Team
+ * \Copyright: FOS Project
  */
   
 #include "Configuration.h"
