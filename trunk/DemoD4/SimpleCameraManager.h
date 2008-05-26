@@ -17,10 +17,11 @@ class SimpleCameraManager
     irr::f32 m_leash;  //max distance object can be from camera before it moves
     irr::f32 m_speed;  //rate at which camera moves per Update()
    
+	irr::f32 oldCameraHeight; //old camera height
    public:
       // class constructor
       SimpleCameraManager(irr::scene::ISceneNode* targetNode, irr::scene::ISceneManager* smgr,
-                              irr::f32 height = 10.0f, irr::f32 leash = 30.0f, irr::f32 speed = 0.5f, irr::s32 id = -1);
+                              irr::f32 height = 20.0f, irr::f32 leash = 30.0f, irr::f32 speed = 0.5f, irr::s32 id = -1);
       // class destructor
       ~SimpleCameraManager();
       
