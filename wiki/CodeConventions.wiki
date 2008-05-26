@@ -52,12 +52,12 @@ Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và
 
     * Quy tắc #ifndef đối với file .h phải có 
 {{{
-#ifndef __C_CHARACTER_H__
-#define __C_CHARACTER_H__
+#ifndef C_CHARACTER_H_
+#define C_CHARACTER_H_
 
 //file content
 
-#endif //__C_CHARACTER_H__
+#endif /*C_CHARACTER_H_*/
 }}}
     
     * Quy tắc ghi chú thích bất kì
