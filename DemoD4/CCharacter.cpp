@@ -78,6 +78,8 @@ CCharacter::eState CCharacter::getState()
 
 void CCharacter::run()
 {
+	if(this->getState() == eState::Run) return;
+
 	setState(CCharacter::eState::Run);
 	
 	node->setAnimationSpeed(ANIMATION_SPEED);
@@ -87,8 +89,10 @@ void CCharacter::run()
 
 void CCharacter::walk()
 {
+	if(this->getState() == eState::Walk) return;
+
 	setState(CCharacter::eState::Walk);
-	
+
 	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
 	node->setFrameLoop(1,14);
