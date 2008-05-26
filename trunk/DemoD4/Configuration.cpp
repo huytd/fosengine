@@ -1,4 +1,4 @@
-/*
+/**
  * \Summary Game configuration manager and helper
  * \Filename: configuration.cpp
  * \Encoding: UTF-8

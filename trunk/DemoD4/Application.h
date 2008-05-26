@@ -1,14 +1,15 @@
-/*
- * \summary Application manager
- * \filename Application.h
- * \encoding UTF-8
- * \tabsize 8
- * \indentation 4
- * \created 18:15 2008/05/26
- * \initialized Irrlicht Forum  - randomMesh
- * \created FOSP Team
- * \copyright FOS Project
+/**
+ * \Summary Application manager
+ * \Filename: application.h
+ * \Encoding: UTF-8
+ * \Tabsize: 8
+ * \Indentation: 4
+ * \CreatedDate: 18:33 2008/05/26
+ * \InitializedBy: Irrlicht Forum  - randomMesh
+ * \CreatedBy: FOSP Team
+ * \Copyright: FOS Project
  */
+ 
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 

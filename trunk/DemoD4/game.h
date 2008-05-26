@@ -1,16 +1,16 @@
-/*
- * \summary Game manager header
- * \filename game.h
- * \encoding UTF-8
- * \tabsize 8
- * \indentation 4
- * \created 18:29 2008/05/26
- * \initialized Irrlicht Forum  - randomMesh
- * \created FOSP Team
- * \copyright FOS Project
+/**
+ * \Summary: Game manager content
+ * \Filename: game.h
+ * \Encoding: UTF-8
+ * \Tabsize: 8
+ * \Indentation: 4
+ * \CreatedDate: 18:33 2008/05/26
+ * \InitializedBy: Irrlicht Forum  - randomMesh
+ * \CreatedBy: FOSP Team
+ * \Copyright: FOS Project
  */
- 
-#ifndef GAME_H_
+
+ #ifndef GAME_H_
 #define GAME_H_
 
 #include "Irrlicht.h"
