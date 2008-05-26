@@ -70,11 +70,10 @@ Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và
     * Quy tắc ghi chú thích một hàm
 {{{
 //! Sets the projection matrix of the camera. The core::matrix4 class has some methods
-		//! to build a projection matrix. e.g: core::matrix4::buildProjectionMatrixPerspectiveFovLH
-		//! \param projection: The new projection matrix of the camera. 
-		//! \return Return 1 if in debug mode, 0 if in release mode. 
-		virtual int setProjectionMatrix(const core::matrix4& projection);
-
+//! to build a projection matrix. e.g: core::matrix4::buildProjectionMatrixPerspectiveFovLH
+//! \param projection: The new projection matrix of the camera. 
+//! \return Return 1 if in debug mode, 0 if in release mode. 
+virtual int setProjectionMatrix(const core::matrix4& projection);
 }}}
 
     * Quy tắc định nghĩa todo, task
