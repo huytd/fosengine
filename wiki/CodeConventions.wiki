@@ -38,15 +38,15 @@ Tài liệu này mô tả cách thức đặt tên, chú giải, trình bày và
     * Phần đầu mỗi file
 {{{
 /*
- * /summary Character control
- * /filename CCharacter.h
- * /encoding UTF-8
- * /tabsize 8
- * /indentation 4
- * /created 9:03 PM 3/17/2008
- * /initialized Do Quoc Khanh - doqkhanh
- * /created FOSP Team
- * /copyright FOS Project
+ * \summary Character control
+ * \filename CCharacter.h
+ * \encoding UTF-8
+ * \tabsize 8
+ * \indentation 4
+ * \created 9:03 PM 3/17/2008
+ * \initialized Do Quoc Khanh - doqkhanh
+ * \created FOSP Team
+ * \copyright FOS Project
  */
 }}}
 
