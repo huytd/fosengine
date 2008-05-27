@@ -14,16 +14,18 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
   * Tích hợp AI (Huy)
   * Hiệu chỉnh lớp play 2D animation (Khánh)
   * Hoàn chỉnh di chuyển bằng bàn phím (Huy)
-  * Giảm độ rung camera khi di chuyển bằng chuột (Khánh)
   * Tạo demo load và giải phóng resource trước và sau mỗi level
   * Tạo demo state giới thiệu nhóm (credit)
   * Tạo demo đầy đủ chức năng của HUD
+  * Tích hợp skydom (Huy)
+  * Làm hệ thống camera khác (Bách)
   
 **Đã hoàn thành*
   * Tạo demo HDR (Huy)
   * Tạo demo giao diện người dùng (Khánh)
   * Sửa phần tích hợp âm thanh
   * Đề ra quy định và sửa lại comment để tích hợp với hệ thống sinh tài liệu khi code còn ít (Khánh)
+  * Giảm độ rung camera khi di chuyển bằng chuột (Khánh)
 
 **Đã loại bỏ*
   * *Urgent*: Tích hợp vật lý (Bách)
