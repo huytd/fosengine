@@ -9,12 +9,12 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
 
 **Khẩn cấp*
   * Tạo demo play âm thanh với irrKlang (Khánh)
+  * Tạo demo load và giải phóng resource trước và sau mỗi level
+  * Hoàn chỉnh di chuyển bằng bàn phím (Huy)
 
 **Bình thường*
   * Tích hợp AI (Huy)
   * Hiệu chỉnh lớp play 2D animation (Khánh)
-  * Hoàn chỉnh di chuyển bằng bàn phím (Huy)
-  * Tạo demo load và giải phóng resource trước và sau mỗi level
   * Tạo demo state giới thiệu nhóm (credit)
   * Tạo demo đầy đủ chức năng của HUD
   * Tích hợp skydom (Huy)
