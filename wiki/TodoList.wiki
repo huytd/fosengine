@@ -15,7 +15,10 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
   * Hiệu chỉnh lớp play 2D animation (Khánh)
   * Hoàn chỉnh di chuyển bằng bàn phím (Huy)
   * Giảm độ rung camera khi di chuyển bằng chuột (Khánh)
-
+  * Tạo demo load và giải phóng resource trước và sau mỗi level
+  * Tạo demo state giới thiệu nhóm (credit)
+  * Tạo demo đầy đủ chức năng của HUD
+  
 **Đã hoàn thành*
   * Tạo demo HDR (Huy)
   * Tạo demo giao diện người dùng (Khánh)
