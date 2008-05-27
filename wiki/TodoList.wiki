@@ -6,13 +6,12 @@
 Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú những việc phải làm của bản thân và người khác.
 
 = Chi tiết =
-
-**Khẩn cấp*
+==Khẩn cấp==
   * Tạo demo play âm thanh với irrKlang (Khánh)
   * Tạo demo load và giải phóng resource trước và sau mỗi level
   * Hoàn chỉnh di chuyển bằng bàn phím (Huy)
 
-**Bình thường*
+==Bình thường==
   * Tích hợp AI (Huy)
   * Hiệu chỉnh lớp play 2D animation (Khánh)
   * Tạo demo state giới thiệu nhóm (credit)
@@ -20,7 +19,7 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
   * Tích hợp skydom (Huy)
   * Làm hệ thống camera khác (Bách)
   
-**Đã hoàn thành*
+==Đã hoàn thành==
   * Tạo demo HDR (Huy)
   * Tạo demo giao diện người dùng (Khánh)
   * Sửa phần tích hợp âm thanh
