@@ -281,6 +281,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MyGUIButon.h"
+				>
+			</File>
+			<File
 				RelativePath=".\shadergroup.h"
 				>
 			</File>
@@ -304,6 +308,58 @@
 				RelativePath=".\Terrain.h"
 				>
 			</File>
+			<Filter
+				Name="GUI"
+				>
+				<File
+					RelativePath=".\GUI\CConfigMap.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\CConfigMap.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\CConfigReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\CConfigReader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\CGUIProgressBar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\CGUIProgressBar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\CImageGUISkin.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\CImageGUISkin.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\clipRects.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\readme.txt"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\SkinLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GUI\SkinLoader.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

@@ -15,6 +15,7 @@
 #include "GlobalState.h"
 #include "IntroState.h"
 #include "LevelOneState.h"
+#include "IntroStateLoader.h"
 
 Application::Application() :
 	device(0)
@@ -62,8 +63,10 @@ const void Application::run()
 	GlobalState global;
 
 	//! create all other game states the game can be in
+	IntroStateLoader introloader;
 	IntroState intro;
 	LevelOneState levelone;
+
 
 	//! create game (it's the state machine)
 	Game game(
@@ -81,6 +84,7 @@ const void Application::run()
 #endif
 	
 	//! register game states
+	game.addGameState("introloader",&introloader);
 	game.addGameState("intro", &intro);
 	game.addGameState("levelone", &levelone);
 	
@@ -88,7 +92,7 @@ const void Application::run()
 	game.setGlobalState(&global);
 
 	//! start the game with an intro
-	game.setState(&intro);
+	game.setState(&introloader);
 	
 	//! main loop
 	while (game.isRunning())
