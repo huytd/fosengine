@@ -100,6 +100,8 @@ IntroStateLoader::~IntroStateLoader()
 
 void IntroStateLoader::onEnter(Game* game)
 {
+		game->setState(game->findGameState("intro"));
+	return;
 	isCompleted = false;
 	totalResource = 1;
 	currentResourceID = 0;
@@ -112,6 +114,7 @@ void IntroStateLoader::onEnter(Game* game)
 
 	game->getGuiEnvironment()->setSkin(skin);
 	skin->drop();
+	filesys->drop();
 
 
 
@@ -132,7 +135,7 @@ void IntroStateLoader::onUpdate(Game* game)
 	{
 
 printf("\n\n Loaded......... \n\n");
-		game->setState(game->findGameState("intro"));
+//	
 		
 	}
 
