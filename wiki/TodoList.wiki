@@ -21,6 +21,7 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
   * Tạo demo đầy đủ chức năng của HUD
   * Tích hợp skydom (Huy)
   * Làm hệ thống camera khác (Bách)
+  * Sửa làm cho hết warning khi biên dịch (Huy?)
   
 ==Đã hoàn thành==
   * Tạo demo HDR (Huy)
