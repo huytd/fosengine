@@ -95,7 +95,8 @@ IntroStateLoader::~IntroStateLoader()
 
 	if(progressBar)
 	{
-		delete progressBar;	
+		progressBar->remove();
+		progressBar->drop();	
 	}
 }
 
@@ -148,6 +149,7 @@ void IntroStateLoader::onLeave(Game* game)
 	if(progressBar)
 	{
 		progressBar->remove();
+		progressBar->drop();
 		progressBar = 0;
 	}
 }
