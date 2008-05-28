@@ -6,12 +6,15 @@
 Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú những việc phải làm của bản thân và người khác.
 
 = Chi tiết =
-==Khẩn cấp==
-  * Tạo demo play âm thanh với irrKlang (Khánh)
-  * Tạo demo load và giải phóng resource trước và sau mỗi level
+==Độ ưu tiên: Khẩn cấp==
+  * Tạo demo play âm thanh với irrKlang (Khánh - 80%)
+  * Tạo demo load và giải phóng resource trước và sau mỗi level (Khánh - 20%)
   * Hoàn chỉnh di chuyển bằng bàn phím (Huy)
 
-==Bình thường==
+==Độ ưu tiên: Cao hơn bình thường==
+  * Đổi lại toàn bộ các comment theo quy tắc mới
+
+==Độ ưu tiên: Bình thường==
   * Tích hợp AI (Huy)
   * Hiệu chỉnh lớp play 2D animation (Khánh)
   * Tạo demo state giới thiệu nhóm (credit)
