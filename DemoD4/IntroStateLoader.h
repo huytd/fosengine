@@ -89,9 +89,7 @@ IntroStateLoader::IntroStateLoader()
 
 IntroStateLoader::~IntroStateLoader()
 {
-	isCompleted = false;
-	totalResource = 1;
-	currentResourceID = 0;
+
 
 	if(progressBar)
 	{
@@ -102,6 +100,10 @@ IntroStateLoader::~IntroStateLoader()
 
 void IntroStateLoader::onEnter(Game* game)
 {
+	isCompleted = false;
+	totalResource = 1;
+	currentResourceID = 0;
+
 	//! Load new GUI system
 	io::IFileSystem* filesys = game->getDevice()->getFileSystem();
     gui::SImageGUISkinConfig guicfg = LoadGUISkinFromFile(filesys, game->getVideoDriver(), "media\\gui\\gui.cfg");
@@ -119,7 +121,7 @@ void IntroStateLoader::onEnter(Game* game)
 
 	progressBar = new gui::CGUIProgressBar(game->getGuiEnvironment()->getRootGUIElement(), game->getGuiEnvironment(), core::rect<s32>(10,150,210,180));
     progressBar->setProgress(0.0f);
-    progressBar->drop();
+
 }
 
 void IntroStateLoader::onUpdate(Game* game)
