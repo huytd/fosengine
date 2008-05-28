@@ -33,7 +33,7 @@ CCharacter::CCharacter(IrrlichtDevice* device, irr::scene::ISceneManager *smgr,i
 	curAttackType = CCharacter::eAttacktype::MagicAttack;
 
 	node->setJointMode(irr::scene::EJUOR_CONTROL);
-	node->setTransitionTime(0.5);
+	node->setTransitionTime(0.2);
 	
 	idle();
 }
@@ -115,7 +115,7 @@ void CCharacter::attack(eAttacktype attackType)
 	{
 		case eAttacktype::PowerAttack :
 		{	
-			node->setAnimationSpeed(ANIMATION_SPEED);
+			node->setAnimationSpeed(ANIMATION_SPEED*2);
 			node->setLoopMode(false);
 			node->setFrameLoop(45,59);
 			node->setAnimationEndCallback(this);
@@ -124,7 +124,7 @@ void CCharacter::attack(eAttacktype attackType)
 
 		case eAttacktype::DownswipeAttack:
 		{	
-			node->setAnimationSpeed(ANIMATION_SPEED);
+			node->setAnimationSpeed(ANIMATION_SPEED*2);
 			node->setLoopMode(false);
 			node->setFrameLoop(60,68);
 			node->setAnimationEndCallback(this);
@@ -133,7 +133,7 @@ void CCharacter::attack(eAttacktype attackType)
 
 		case eAttacktype::MagicAttack:
 		{	
-			node->setAnimationSpeed(ANIMATION_SPEED);
+			node->setAnimationSpeed(ANIMATION_SPEED*2);
 			node->setLoopMode(false);
 			node->setFrameLoop(69,72);
 			node->setAnimationEndCallback(this);
