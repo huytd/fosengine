@@ -44,7 +44,7 @@ public:
 	void loadResource();
 };
 
-IntroStateLoader::loadResource()
+IntroStateLoader::void loadResource()
 {
 	//switch(currentResourceID)
 	{
