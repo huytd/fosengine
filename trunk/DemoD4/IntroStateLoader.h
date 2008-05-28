@@ -19,18 +19,22 @@
 #include <IGUIEnvironment.h>
 #include <IGUIButton.h>
 
+#include "GUI/CGUIProgressBar.h"
+#include "GUI/CImageGUISkin.h"
+#include "GUI/SkinLoader.h"
+
 class IntroStateLoader : public State<Game, irr::SEvent>
 {
 
 private:
-	bool isCompleted = false;
+	bool isCompleted;
 
-	//unsigned int currentResourceID = 0;
+	unsigned int currentResourceID;
 
 	//! Get total resource to calculate loading percent loadingPercent = (currentResourceID / totalResource)/100
-	//unsigned int totalResource = n;
+	unsigned int totalResource;
 
-	//ProgressBar *progressBar;
+	gui::CGUIProgressBar* progressBar;
 
 public:
 	IntroStateLoader();
@@ -41,21 +45,21 @@ public:
 	virtual void onUpdate(Game* game);
 
 	//! Load resource one resource each called until all resources are loaded
-	void loadResource();
+	void loadResource(Game* game);
 };
 
-IntroStateLoader::void loadResource()
+void IntroStateLoader::loadResource(Game *game)
 {
-	//switch(currentResourceID)
+	switch(currentResourceID)
 	{
-		//case 0: 
+		case 0: 
 			{
-				//! TODO load resource dau tien;
-
+				//! load resource dau tien;
+				game->getSceneManager()->loadScene("media\\model\\intromap.irr");
 
 				//! Inscrese current resource id counter
-				//currentResourceID ++;
-				//break;
+				currentResourceID ++;
+				break;
 			}
 
 		//...
@@ -66,32 +70,55 @@ IntroStateLoader::void loadResource()
 				//! TODO load resource cuoi cung;
 
 
-				//! Danh dau la da load xong resource
-				//isCompleted = true;
+				
 				//break;
 			}
+	}
+	if(currentResourceID == totalResource)
+	{
+		//! Danh dau la da load xong resource
+		isCompleted = true;
 	}
 }
 
 IntroStateLoader::IntroStateLoader()  
-//										: progressBar(0)
+										: progressBar(0)
 {
-//	progressBar = new ProgressBar(init variable);
+
 }
 
 IntroStateLoader::~IntroStateLoader()
 {
-	//if(progressBar)
-	//{
-	//	delete progressBar;	
-	//}
+	isCompleted = false;
+	totalResource = 1;
+	currentResourceID = 0;
+
+	if(progressBar)
+	{
+		delete progressBar;	
+	}
 }
 
 void IntroStateLoader::onEnter(Game* game)
 {
+	//! Load new GUI system
+	io::IFileSystem* filesys = game->getDevice()->getFileSystem();
+    gui::SImageGUISkinConfig guicfg = LoadGUISkinFromFile(filesys, game->getVideoDriver(), "media\\gui\\gui.cfg");
+    gui::CImageGUISkin* skin = new gui::CImageGUISkin(game->getVideoDriver(), game->getGuiEnvironment()->getSkin());
+    skin->loadConfig(guicfg);
+
+	game->getGuiEnvironment()->setSkin(skin);
+	skin->drop();
+
+
+
 	//! TODO Display loading screen or some game intro image
 
 	//! TODO Init progress bar
+
+	progressBar = new gui::CGUIProgressBar(game->getGuiEnvironment()->getRootGUIElement(), game->getGuiEnvironment(), core::rect<s32>(10,150,210,180));
+    progressBar->setProgress(0.0f);
+    progressBar->drop();
 }
 
 void IntroStateLoader::onUpdate(Game* game)
@@ -107,7 +134,7 @@ void IntroStateLoader::onUpdate(Game* game)
 	//else
 	{
 		//! Call loading resource function
-		//loadResource();
+		loadResource(game);
 
 		//! TODO Update progress bar
 		//progressBar->update();
@@ -116,11 +143,11 @@ void IntroStateLoader::onUpdate(Game* game)
 
 void IntroStateLoader::onLeave(Game* game)
 {
-	/*if(progressBar)
+	if(progressBar)
 	{
 		delete progressBar;
 		progressBar = 0;
-	}*/
+	}
 }
 
 const bool IntroStateLoader::onEvent(Game* game, const irr::SEvent& event)
