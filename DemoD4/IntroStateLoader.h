@@ -127,8 +127,10 @@ void IntroStateLoader::onUpdate(Game* game)
 	//! TODO Change to introState if loading progress is completed
 	if(isCompleted)
 	{
+
+printf("\n\n Loaded......... \n\n");
 		game->setState(game->findGameState("intro"));
-		return;
+		
 	}
 
 	//else
@@ -145,7 +147,7 @@ void IntroStateLoader::onLeave(Game* game)
 {
 	if(progressBar)
 	{
-		delete progressBar;
+		progressBar->remove();
 		progressBar = 0;
 	}
 }
