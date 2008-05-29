@@ -99,8 +99,7 @@ IntroStateLoader::~IntroStateLoader()
 }
 
 void IntroStateLoader::onEnter(Game* game)
-{
-	
+{	
 	isCompleted = false;
 	totalResource = 1;
 	currentResourceID = 0;
@@ -112,16 +111,13 @@ void IntroStateLoader::onEnter(Game* game)
     skin->loadConfig(guicfg);
 
 	game->getGuiEnvironment()->setSkin(skin);
-	skin->drop();
-	filesys->drop();
+	
 
 	//! TODO Display loading screen or some game intro image
 
 	//! TODO Init progress bar
-
 	progressBar = new gui::CGUIProgressBar(game->getGuiEnvironment()->getRootGUIElement(), game->getGuiEnvironment(), core::rect<s32>(10,150,210,180));
     progressBar->setProgress(0.0f);
-
 }
 
 void IntroStateLoader::onUpdate(Game* game)
@@ -130,9 +126,7 @@ void IntroStateLoader::onUpdate(Game* game)
 	if(isCompleted)
 	{
 		printf("\n\n Loaded......... \n\n");
-		game->setState(game->findGameState("intro"));		
-		return;
-		
+		game->setState(game->findGameState("intro"));				
 	}
 	//else
 	{
