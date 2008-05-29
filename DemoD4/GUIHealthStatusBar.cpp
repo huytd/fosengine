@@ -64,14 +64,14 @@ void GUIHealthStatusBar::draw()
 {
 	irr::video::IVideoDriver* driver = Environment->getVideoDriver();  
 
-	float delta; //status bar variation
+	double delta; //status bar variation
 	core::dimension2d<s32> screenSize = driver->getScreenSize();
 
-	float x=17; //spell bar position
-	float y=screenSize.Height*0.85;;
+	int x=17; //spell bar position
+	int y= (int)floor(screenSize.Height*0.9);
 
 	float iconSpace = 30;
-	core::position2d<s32> iconPos = core::position2d<s32>(x+50.0, y+23.0);
+	core::position2d<s32> iconPos = core::position2d<s32>(x+50, y+23);
 
 	//here is some cool stuff, it changes the bar value from X to Y smoothly
 	if ((int)deltaHealthBar != (int)healthBarValue){
@@ -100,15 +100,15 @@ void GUIHealthStatusBar::draw()
 
 	driver->draw2DRectangle(video::SColor(255, 150, 150, 150), core::rect<s32>(x1Bar+3, y1Bar+3, maxHealthBarValue*5+x2Bar-3, y2Bar-3));
 
-	driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+3, healthBarValue*5+x2Bar-3, y2Bar-3),
+	driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+3, (long)healthBarValue*5+x2Bar-3, y2Bar-3),
 
-		video::SColor(255, 255-healthBarValue*2, healthBarValue*2, 0),
+		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2, 0),
 
-		video::SColor(255, 255-healthBarValue*2, healthBarValue*2, 0),
+		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2, 0),
 
-		video::SColor(255, 255-healthBarValue*2, healthBarValue*2-150, 0),
+		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2-150, 0),
 
-		video::SColor(255, 255-healthBarValue*2, healthBarValue*2-150, 0));
+		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2-150, 0));
 
 	//mana bar
 	driver->draw2DRectangle(video::SColor(255, 100, 100, 100), core::rect<s32>(x1Bar, y1Bar+20, maxManaBarValue*5+x2Bar, y2Bar+20));
@@ -117,7 +117,7 @@ void GUIHealthStatusBar::draw()
 
 	driver->draw2DRectangle(video::SColor(255, 150, 150, 150), core::rect<s32>(x1Bar+3, y1Bar+23, maxManaBarValue*5+x2Bar-3, y2Bar+17));
 
-	driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+23, manaBarValue*5+x2Bar-3, y2Bar+17),
+	driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+23,(long)manaBarValue*5+x2Bar-3, y2Bar+17),
 
 		video::SColor(255, 100, 100, 200),
 
@@ -133,7 +133,7 @@ void GUIHealthStatusBar::draw()
 	
 	for (int i=5; i<=7; i++){
 		driver->draw2DImage(GUITextures[i], iconPos);
-		iconPos.X += iconSpace;
+		iconPos.X += (long)iconSpace;
 	}
 
 } 
