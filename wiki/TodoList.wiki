@@ -8,23 +8,23 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
 = Chi tiết =
 ==Độ ưu tiên: Khẩn cấp==
   * Tạo demo play âm thanh với irrKlang (Khánh - 80%)
-  * Tạo demo load và giải phóng resource trước và sau mỗi level (Khánh - 20%)
   * Hoàn chỉnh di chuyển bằng bàn phím (Huy)
 
 ==Độ ưu tiên: Cao hơn bình thường==
-  * Đổi lại toàn bộ các comment theo quy tắc mới
+  * Đổi lại toàn bộ các comment theo quy tắc mới (?)
   * Tích hợp skydom (Huy)
 ** http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?t=20144&highlight=skybox
 
 ==Độ ưu tiên: Bình thường==
   * Tích hợp AI (Huy)
-  * Hiệu chỉnh lớp play 2D animation (Khánh)
-  * Tạo demo state giới thiệu nhóm (credit)
-  * Tạo demo đầy đủ chức năng của HUD
+  * Hiệu chỉnh lớp play 2D animation (Khánh - 0%)
+  * Tạo demo state giới thiệu nhóm (credit) (?)
+  * Tạo demo đầy đủ chức năng của HUD (?)
   * Làm hệ thống camera khác (Bách)
-  * Sửa làm cho hết warning khi biên dịch
   
 ==Đã hoàn thành==
+  * Sửa làm cho hết warning khi biên dịch (Khánh)
+  * Tạo demo load và giải phóng resource trước và sau mỗi level (Khánh - 100%)
   * Tạo demo HDR (Huy)
   * Tạo demo giao diện người dùng (Khánh)
   * Sửa phần tích hợp âm thanh
