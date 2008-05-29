@@ -13,15 +13,15 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
 
 ==Độ ưu tiên: Cao hơn bình thường==
   * Đổi lại toàn bộ các comment theo quy tắc mới
+  * Tích hợp skydom (Huy)
 
 ==Độ ưu tiên: Bình thường==
   * Tích hợp AI (Huy)
   * Hiệu chỉnh lớp play 2D animation (Khánh)
   * Tạo demo state giới thiệu nhóm (credit)
   * Tạo demo đầy đủ chức năng của HUD
-  * Tích hợp skydom (Huy)
   * Làm hệ thống camera khác (Bách)
-  * Sửa làm cho hết warning khi biên dịch (Huy?)
+  * Sửa làm cho hết warning khi biên dịch
   
 ==Đã hoàn thành==
   * Tạo demo HDR (Huy)
