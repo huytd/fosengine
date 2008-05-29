@@ -11,10 +11,11 @@
 * created by: FOSP Team
 * copyright: FOS Project
 */
-
+#include "windows.h"
 #include "Application.h"
 #pragma comment(lib, "Irrlicht.lib")
 
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 int main(int argc, char** argv)
 {	
 	Application app;
