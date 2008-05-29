@@ -14,6 +14,7 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
 ==Độ ưu tiên: Cao hơn bình thường==
   * Đổi lại toàn bộ các comment theo quy tắc mới
   * Tích hợp skydom (Huy)
+** http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?t=20144&highlight=skybox
 
 ==Độ ưu tiên: Bình thường==
   * Tích hợp AI (Huy)
