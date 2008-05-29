@@ -100,8 +100,7 @@ IntroStateLoader::~IntroStateLoader()
 
 void IntroStateLoader::onEnter(Game* game)
 {
-		game->setState(game->findGameState("intro"));
-	return;
+	
 	isCompleted = false;
 	totalResource = 1;
 	currentResourceID = 0;
@@ -116,8 +115,6 @@ void IntroStateLoader::onEnter(Game* game)
 	skin->drop();
 	filesys->drop();
 
-
-
 	//! TODO Display loading screen or some game intro image
 
 	//! TODO Init progress bar
@@ -129,16 +126,14 @@ void IntroStateLoader::onEnter(Game* game)
 
 void IntroStateLoader::onUpdate(Game* game)
 {
-
 	//! TODO Change to introState if loading progress is completed
 	if(isCompleted)
 	{
-
-printf("\n\n Loaded......... \n\n");
-//	
+		printf("\n\n Loaded......... \n\n");
+		game->setState(game->findGameState("intro"));		
+		return;
 		
 	}
-
 	//else
 	{
 		//! Call loading resource function
@@ -151,6 +146,8 @@ printf("\n\n Loaded......... \n\n");
 
 void IntroStateLoader::onLeave(Game* game)
 {
+	game->getGuiEnvironment()->clear();
+
 	if(progressBar)
 	{
 		progressBar->remove();

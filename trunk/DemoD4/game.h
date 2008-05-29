@@ -95,6 +95,8 @@ private:
 	//! TODO : Delele this unuse variable
 	irr::u32 playerHealth;
 
+	irr::f32 playerRotation;
+
 	
 public:
 	
@@ -142,6 +144,19 @@ public:
 	inline irr::scene::ICameraSceneNode* getCamera() const { return this->camera; }
 
 	inline irr::u32 getPlayerHealth() const { return this->playerHealth; }
+
+	inline irr::f32 getPlayerRotation() const { return this->playerRotation; }
+	
+	inline void setPlayerRotation(const irr::f32 newRotation)
+	{
+		if (newRotation <= 0)
+		{
+			//! die
+			return;
+		}
+		
+		this->playerRotation = newRotation;
+	}
 
 	inline void setPlayerHealth(const irr::u32 newHealth)
 	{
