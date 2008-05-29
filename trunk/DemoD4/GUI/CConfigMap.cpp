@@ -18,7 +18,7 @@ s32 CConfigMap::getConfigAsInt( const core::stringc& name )
         return 0;
 
     s32 x = 0;
-    sscanf( cfg.c_str(), "%d", &x );
+    sscanf_s( cfg.c_str(), "%d", &x );
 
     return x;
 }
@@ -31,7 +31,7 @@ f32 CConfigMap::getConfigAsFloat( const core::stringc& name )
         return 0;
 
     f32 x = 0.0f;
-    sscanf( cfg.c_str(), "%f", &x );
+    sscanf_s( cfg.c_str(), "%f", &x );
 
     return x;
 }
@@ -46,7 +46,7 @@ core::vector2df CConfigMap::getConfigAsVector2df( const core::stringc& name )
 
     core::vector2df vec;
 
-    sscanf( cfg.c_str(), "%f , %f", &vec.X, &vec.Y );
+    sscanf_s( cfg.c_str(), "%f , %f", &vec.X, &vec.Y );
 
     return vec;
 }
@@ -60,7 +60,7 @@ core::vector3df CConfigMap::getConfigAsVector3df( const core::stringc& name )
 
     core::vector3df vec;
 
-    sscanf( cfg.c_str(), "%f , %f , %f", &vec.X, &vec.Y, &vec.Z );
+    sscanf_s( cfg.c_str(), "%f , %f , %f", &vec.X, &vec.Y, &vec.Z );
 
     return vec;
 }

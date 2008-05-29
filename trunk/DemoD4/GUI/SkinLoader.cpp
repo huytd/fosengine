@@ -48,10 +48,10 @@ CConfigMap* LoadConfigFromFile( io::IFileSystem* fileSystem, const core::stringc
 static void ParseGUIElementStyle( video::IVideoDriver* driver, CConfigMap* cfg, gui::SImageGUIElementStyle& elem, const core::stringc& name, const core::stringc& context )
 {
     core::stringc s = cfg->getConfig(name+".SrcBorder");
-    sscanf( s.c_str(), "%d , %d , %d , %d", &elem.SrcBorder.Top, &elem.SrcBorder.Left, &elem.SrcBorder.Bottom, &elem.SrcBorder.Right );
+    sscanf_s( s.c_str(), "%d , %d , %d , %d", &elem.SrcBorder.Top, &elem.SrcBorder.Left, &elem.SrcBorder.Bottom, &elem.SrcBorder.Right );
 
     s = cfg->getConfig(name+".DstBorder");
-    sscanf( s.c_str(), "%d , %d , %d , %d", &elem.DstBorder.Top, &elem.DstBorder.Left, &elem.DstBorder.Bottom, &elem.DstBorder.Right );
+    sscanf_s( s.c_str(), "%d , %d , %d , %d", &elem.DstBorder.Top, &elem.DstBorder.Left, &elem.DstBorder.Bottom, &elem.DstBorder.Right );
 
     s = cfg->getConfig(name+".Texture");
     elem.Texture = driver->getTexture((context + s).c_str());
@@ -60,7 +60,7 @@ static void ParseGUIElementStyle( video::IVideoDriver* driver, CConfigMap* cfg, 
     if ( s != "" )
     {
         s32 a,r,g,b;
-        sscanf( s.c_str(), "%d , %d , %d , %d", &a, &r, &g, &b );
+        sscanf_s( s.c_str(), "%d , %d , %d , %d", &a, &r, &g, &b );
         elem.Color = video::SColor(a,r,g,b);
     }
 }
