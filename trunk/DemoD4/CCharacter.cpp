@@ -27,13 +27,13 @@ CCharacter::CCharacter(IrrlichtDevice* device, irr::scene::ISceneManager *smgr,i
 
 	fSpeed = 0.4f;
 
-	curState = CCharacter::eState::Idle;
-	oldState = CCharacter::eState::Idle;
+	curState =  Idle;
+	oldState = Idle;
 
-	curAttackType = CCharacter::eAttacktype::MagicAttack;
+	curAttackType = MagicAttack;
 
 	node->setJointMode(irr::scene::EJUOR_CONTROL);
-	node->setTransitionTime(0.2);
+	node->setTransitionTime((float)0.2);
 	
 	idle();
 }
@@ -78,9 +78,9 @@ CCharacter::eState CCharacter::getState()
 
 void CCharacter::run()
 {
-	if(this->getState() == eState::Run) return;
+	if(this->getState() == Run) return;
 
-	setState(CCharacter::eState::Run);
+	setState(CCharacter::Run);
 	
 	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
@@ -89,9 +89,9 @@ void CCharacter::run()
 
 void CCharacter::walk()
 {
-	if(this->getState() == eState::Walk) return;
+	if(this->getState() == Walk) return;
 
-	setState(CCharacter::eState::Walk);
+	setState(CCharacter::Walk);
 
 	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
@@ -100,7 +100,7 @@ void CCharacter::walk()
 
 void CCharacter::idle()
 {
-	setState(CCharacter::eState::Idle);
+	setState(CCharacter::Idle);
 	
 	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
@@ -110,10 +110,10 @@ void CCharacter::idle()
 
 void CCharacter::attack(eAttacktype attackType)
 {
-	setState(CCharacter::eState::Attack);
+	setState(CCharacter::Attack);
 	switch (attackType)
 	{
-		case eAttacktype::PowerAttack :
+		case PowerAttack :
 		{	
 			node->setAnimationSpeed(ANIMATION_SPEED*2);
 			node->setLoopMode(false);
@@ -122,7 +122,7 @@ void CCharacter::attack(eAttacktype attackType)
 			return;
 		} 	
 
-		case eAttacktype::DownswipeAttack:
+		case DownswipeAttack:
 		{	
 			node->setAnimationSpeed(ANIMATION_SPEED*2);
 			node->setLoopMode(false);
@@ -131,7 +131,7 @@ void CCharacter::attack(eAttacktype attackType)
 			return;
 		} 
 
-		case eAttacktype::MagicAttack:
+		case MagicAttack:
 		{	
 			node->setAnimationSpeed(ANIMATION_SPEED*2);
 			node->setLoopMode(false);
@@ -171,7 +171,7 @@ void moveto(irr::scene::ISceneNode *node, //node to move
 void CCharacter::move(core::vector3df pos)
 {
 	// Avoid complex operation in next step
-	if(getState() != CCharacter::eState::Walk && getState() != CCharacter::eState::Run)
+	if(getState() != CCharacter::Walk && getState() != CCharacter::Run)
 	{
 		this->node->animateJoints() ;
 		return;
