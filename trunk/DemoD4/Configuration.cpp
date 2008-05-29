@@ -56,7 +56,7 @@ const void Configuration::read()
 	xmlu = device->getFileSystem()->createXMLReader("config/content.xml");
 	if (xmlu == 0)
 	{
-		device->getLogger()->log(L"Cannot find dialog contents file. Falling back to defaults.");
+		device->getLogger()->log(L"Cannot find dialog contents file.");
 		device->drop();
 
 		return;
@@ -101,9 +101,9 @@ const void Configuration::read()
 			}
 
 			this->params.DriverType 	= driverType;
-			this->params.Fullscreen 	= xml->getAttributeValueAsInt(L"fullscreen");
-			this->params.Stencilbuffer 	= xml->getAttributeValueAsInt(L"stencilbuffer");
-			this->params.Vsync 			= xml->getAttributeValueAsInt(L"vsync");
+			this->params.Fullscreen 	= xml->getAttributeValueAsInt(L"fullscreen")!=0;
+			this->params.Stencilbuffer 	= xml->getAttributeValueAsInt(L"stencilbuffer")!=0;
+			this->params.Vsync 			= xml->getAttributeValueAsInt(L"vsync")!=0;
 		}
 
 		else if (irr::core::stringw("resolution") == xml->getNodeName()) 
@@ -138,12 +138,12 @@ const void Configuration::read()
 
 		else if (irr::core::stringw("hdr") == xml->getNodeName()) 
 		{
-			this->enableHDR = xml->getAttributeValueAsInt(L"enabled");
+			this->enableHDR = xml->getAttributeValueAsInt(L"enabled")!=0;
 		}
 
 		else if (irr::core::stringw("antialias") == xml->getNodeName()) 
 		{
-			this->antiAliasEnabled = xml->getAttributeValueAsInt(L"enabled");
+			this->antiAliasEnabled = xml->getAttributeValueAsInt(L"enabled")!=0;
 		}
 
 	}
