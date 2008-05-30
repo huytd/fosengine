@@ -45,8 +45,8 @@ GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, ir
 	//load textures
 
 	//load some texture for spellbar and make it transparent with ColorKey 0 (black) and put it into a texture array
-	GUITextures[0] = driver->getTexture("media\\images\\gui\\healthbar\\spellbar.bmp");
-	driver->makeColorKeyTexture(GUITextures[0], video::SColor(0,0,0,0));
+	GUITextures[0] = driver->getTexture("media\\images\\gui\\healthbar\\MainControler.png");
+	//driver->makeColorKeyTexture(GUITextures[0], video::SColor(0,0,0,0));
 
 	//same for the status bar (health and mana)
 	GUITextures[1] = driver->getTexture("media\\images\\gui\\healthbar\\statusbar.png");
@@ -67,8 +67,8 @@ void GUIHealthStatusBar::draw()
 	double delta; //status bar variation
 	core::dimension2d<s32> screenSize = driver->getScreenSize();
 
-	int x=17; //spell bar position
-	int y= (int)floor(screenSize.Height*0.9);
+	int x=0; //spell bar position
+	int y= screenSize.Height-47;
 
 	float iconSpace = 30;
 	core::position2d<s32> iconPos = core::position2d<s32>(x+50, y+23);
@@ -129,8 +129,8 @@ void GUIHealthStatusBar::draw()
 
 
 	//draw the spells bar and the icons on it according to the iconSpace
-	//driver->draw2DImage(GUITextures[0], core::position2d<s32>(x+3, y), core::rect<s32>(0,0,456,73), 0, video::SColor(255,255,255,255), true);
-	//
+	driver->draw2DImage(GUITextures[0], core::position2d<s32>(x, y), core::rect<s32>(0,0,801,47), 0, video::SColor(255,255,255,255), true);
+	
 	//for (int i=5; i<=7; i++){
 	//	driver->draw2DImage(GUITextures[i], iconPos);
 	//	iconPos.X += (long)iconSpace;
