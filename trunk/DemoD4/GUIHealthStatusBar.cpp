@@ -26,8 +26,8 @@ GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, ir
 	irr::video::IVideoDriver* driver = env->getVideoDriver();
 
 	//health and mana bars  default size
-	x1Bar = 52;
-	y1Bar = 37;
+	x1Bar = 0;
+	y1Bar = 0;
 	x2Bar = 58;
 	y2Bar = 53;
 
@@ -49,8 +49,8 @@ GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, ir
 	driver->makeColorKeyTexture(GUITextures[0], video::SColor(0,0,0,0));
 
 	//same for the status bar (health and mana)
-	GUITextures[1] = driver->getTexture("media\\images\\gui\\healthbar\\statusbar.bmp");
-	driver->makeColorKeyTexture(GUITextures[1], video::SColor(0,0,0,0));
+	GUITextures[1] = driver->getTexture("media\\images\\gui\\healthbar\\statusbar.png");
+	//driver->makeColorKeyTexture(GUITextures[1], video::SColor(0,0,0,0));
 
 	//load some icons for the spellbar
 	GUITextures[5] = driver->getTexture("media\\images\\gui\\healthbar\\icon_firebolt.bmp");
@@ -92,49 +92,49 @@ void GUIHealthStatusBar::draw()
 	}
 
 	//another cool stuff,  it draws the health bar according to its value (green for high, decreasing to yellow till red), and some others rectangles for a cool look
-	driver->draw2DImage(GUITextures[1], core::position2d<s32>(x1Bar-50, y1Bar-29), core::rect<s32>(0,0,605,94), 0, video::SColor(255,255,255,255), true);
+	driver->draw2DImage(GUITextures[1], core::position2d<s32>(x1Bar, y1Bar), core::rect<s32>(0,0,323,59), 0, video::SColor(255,255,255,255), true);
 
-	driver->draw2DRectangle(video::SColor(255, 100, 100, 100), core::rect<s32>(x1Bar, y1Bar, (maxHealthBarValue*5)+x2Bar, y2Bar));
+	//driver->draw2DRectangle(video::SColor(255, 100, 100, 100), core::rect<s32>(x1Bar, y1Bar, (maxHealthBarValue*5)+x2Bar, y2Bar));
 
-	driver->draw2DRectangle(video::SColor(255, 125, 125, 125), core::rect<s32>(x1Bar+1, y1Bar+1, maxHealthBarValue*5+x2Bar-1, y2Bar-1));
+	//driver->draw2DRectangle(video::SColor(255, 125, 125, 125), core::rect<s32>(x1Bar+1, y1Bar+1, maxHealthBarValue*5+x2Bar-1, y2Bar-1));
 
-	driver->draw2DRectangle(video::SColor(255, 150, 150, 150), core::rect<s32>(x1Bar+3, y1Bar+3, maxHealthBarValue*5+x2Bar-3, y2Bar-3));
+	//driver->draw2DRectangle(video::SColor(255, 150, 150, 150), core::rect<s32>(x1Bar+3, y1Bar+3, maxHealthBarValue*5+x2Bar-3, y2Bar-3));
 
-	driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+3, (long)healthBarValue*5+x2Bar-3, y2Bar-3),
+	//driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+3, (long)healthBarValue*5+x2Bar-3, y2Bar-3),
 
-		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2, 0),
+	//	video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2, 0),
 
-		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2, 0),
+	//	video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2, 0),
 
-		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2-150, 0),
+	//	video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2-150, 0),
 
-		video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2-150, 0));
+	//	video::SColor(255, 255-(long)healthBarValue*2, (long)healthBarValue*2-150, 0));
 
-	//mana bar
-	driver->draw2DRectangle(video::SColor(255, 100, 100, 100), core::rect<s32>(x1Bar, y1Bar+20, maxManaBarValue*5+x2Bar, y2Bar+20));
+	////mana bar
+	//driver->draw2DRectangle(video::SColor(255, 100, 100, 100), core::rect<s32>(x1Bar, y1Bar+20, maxManaBarValue*5+x2Bar, y2Bar+20));
 
-	driver->draw2DRectangle(video::SColor(255, 125, 125, 125), core::rect<s32>(x1Bar+1, y1Bar+21, maxManaBarValue*5+x2Bar-1, y2Bar+19));
+	//driver->draw2DRectangle(video::SColor(255, 125, 125, 125), core::rect<s32>(x1Bar+1, y1Bar+21, maxManaBarValue*5+x2Bar-1, y2Bar+19));
 
-	driver->draw2DRectangle(video::SColor(255, 150, 150, 150), core::rect<s32>(x1Bar+3, y1Bar+23, maxManaBarValue*5+x2Bar-3, y2Bar+17));
+	//driver->draw2DRectangle(video::SColor(255, 150, 150, 150), core::rect<s32>(x1Bar+3, y1Bar+23, maxManaBarValue*5+x2Bar-3, y2Bar+17));
 
-	driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+23,(long)manaBarValue*5+x2Bar-3, y2Bar+17),
+	//driver->draw2DRectangle(core::rect<s32>(x1Bar+3, y1Bar+23,(long)manaBarValue*5+x2Bar-3, y2Bar+17),
 
-		video::SColor(255, 100, 100, 200),
+	//	video::SColor(255, 100, 100, 200),
 
-		video::SColor(255, 100, 100, 200),
+	//	video::SColor(255, 100, 100, 200),
 
-		video::SColor(255, 0, 0, 100),
+	//	video::SColor(255, 0, 0, 100),
 
-		video::SColor(255, 0, 0, 100));
+	//	video::SColor(255, 0, 0, 100));
 
 
 	//draw the spells bar and the icons on it according to the iconSpace
-	driver->draw2DImage(GUITextures[0], core::position2d<s32>(x+3, y), core::rect<s32>(0,0,456,73), 0, video::SColor(255,255,255,255), true);
-	
-	for (int i=5; i<=7; i++){
-		driver->draw2DImage(GUITextures[i], iconPos);
-		iconPos.X += (long)iconSpace;
-	}
+	//driver->draw2DImage(GUITextures[0], core::position2d<s32>(x+3, y), core::rect<s32>(0,0,456,73), 0, video::SColor(255,255,255,255), true);
+	//
+	//for (int i=5; i<=7; i++){
+	//	driver->draw2DImage(GUITextures[i], iconPos);
+	//	iconPos.X += (long)iconSpace;
+	//}
 
 } 
 

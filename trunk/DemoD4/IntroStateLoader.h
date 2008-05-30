@@ -117,7 +117,7 @@ void IntroStateLoader::onEnter(Game* game)
 
 	//! TODO Init progress bar
 	progressBar = new gui::CGUIProgressBar(game->getGuiEnvironment()->getRootGUIElement(), game->getGuiEnvironment(), core::rect<s32>(10,150,210,180));
-    progressBar->setProgress(0.0f);
+    progressBar->setProgress(0.5f);
 }
 
 void IntroStateLoader::onUpdate(Game* game)
@@ -130,6 +130,7 @@ void IntroStateLoader::onUpdate(Game* game)
 	}
 	//else
 	{
+		//progressBar->setProgress(0.50f);
 		//! Call loading resource function
 		loadResource(game);
 
