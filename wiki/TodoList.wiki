@@ -13,6 +13,7 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
 ==Độ ưu tiên: Cao hơn bình thường==
   * Đổi lại toàn bộ các comment theo quy tắc mới (?)
   * Tích hợp skydom (Huy)
+  * Thiết kế và triển khai demo kiến trúc game mới (Bách)
 
 ==Độ ưu tiên: Bình thường==
   * Tích hợp AI (Huy)
@@ -20,7 +21,7 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
   * Tạo demo state giới thiệu nhóm (credit) (?)
   * Tạo demo đầy đủ chức năng của HUD (?)
   * Làm hệ thống camera khác (Bách)
-  * Tích hợp khả năng đổi màu font [http://www.wc3jass.com/asger/page.php?5 Here]
+  * Tích hợp khả năng đổi màu font [http://www.wc3jass.com/asger/page.php?5 Here] (?)
   
 ==Đã hoàn thành==
   * Sửa làm cho hết warning khi biên dịch (Khánh)
