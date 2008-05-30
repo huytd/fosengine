@@ -20,6 +20,7 @@ Trang này dành cho thành viên dự án để đệ trình hoặc ghi chú nh
   * Tạo demo state giới thiệu nhóm (credit) (?)
   * Tạo demo đầy đủ chức năng của HUD (?)
   * Làm hệ thống camera khác (Bách)
+  * Tích hợp khả năng đổi màu font [http://www.wc3jass.com/asger/page.php?5 Here]
   
 ==Đã hoàn thành==
   * Sửa làm cho hết warning khi biên dịch (Khánh)
