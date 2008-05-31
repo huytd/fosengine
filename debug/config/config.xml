@@ -6,7 +6,7 @@
   <graphic driver="0" fullscreen="0" stencilbuffer="0" vsync="0" />
 
   <!--Resolution and color depth settings-->
-  <resolution xres="800" yres="600" bits="32" />
+  <resolution xres="800" yres="600" bits="16" />
 
   <!--Sound setting: enabled = 1 or disabled = 0;-->
   <sound enabled="0" />
@@ -18,6 +18,6 @@
   <hdr enabled="0" />
 
   <!--AntiAlias setting : enabled = 1 or disabled = 0;-->
-  <antialias enable="0" />
+  <antialias enable="1" />
 
 </configuration>
