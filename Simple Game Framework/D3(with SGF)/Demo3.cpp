@@ -2,7 +2,7 @@
 #include "SGF.h"
 #include "Terrain.h"
 #include "Character.h"
-
+#include "StartMenu.h"
 using namespace irr;
 
 Demo3* Demo3::instance=NULL;
@@ -12,18 +12,19 @@ Demo3::Demo3()
 	Demo3::instance=this;//single instance
 	core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
 	core.init();//initialize the core
+	//set skin
+	core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
+	core.getGUISkin()->setFont(core.getGraphicDevice()->getGUIEnvironment()->getBuiltInFont(),gui::EGDF_TOOLTIP);
 	//display fps
 	sgfEvent<SFrameEvent>* frameEnd=core.getFrameEndEvent();
 	frameEnd->addDelegate(new sgfMethodDelegate<Demo3,SFrameEvent>(this,&Demo3::showFPS));
 	//register entity class
 	registerClass(Character);
 	registerClass(Terrain);
-	core.globalVars["Test"]="Abc";
-	printf(core.globalVars["Test"].getString());
 	//set up collision
 	core.globalVars["worldCollision"]=(void*)(core.getGraphicDevice()->getSceneManager()->createMetaTriangleSelector());
 	//load first level
-	core.getEntityManager()->loadLevel(new sgfIrrLevel("levels/start.irr"));
+	core.getEntityManager()->loadLevel(new StartMenu);
 }
 
 Demo3::~Demo3()

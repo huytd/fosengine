@@ -96,6 +96,8 @@ protected:
 	{
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/ninja/ninja.b3d"));
+		//temporary work around
+		//node->setScale(irr::core::vector3df(0.01,0.01,-0.01));
 		node->setPosition(startPos);
 		node->setMaterialFlag(irr::video::EMF_LIGHTING,false);
 		idle();

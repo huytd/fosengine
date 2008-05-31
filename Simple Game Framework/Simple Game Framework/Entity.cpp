@@ -30,6 +30,8 @@ void sgfEntity::onEvent(SEntityEvent& param)
 		case SEntityEvent::EST_LevelStart:
 			onLevelStart();
 		break;
+		//case SEntityEvent::EST_GameEnd:
+		//break;
 	}
 	//entityEvent(param);
 }
