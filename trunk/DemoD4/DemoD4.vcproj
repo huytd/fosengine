@@ -218,6 +218,10 @@
 				RelativePath=".\Terrain.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\ThayCung.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -296,6 +300,10 @@
 				RelativePath=".\Terrain.h"
 				>
 			</File>
+			<File
+				RelativePath=".\ThayCung.h"
+				>
+			</File>
 			<Filter
 				Name="GUI"
 				>
@@ -345,18 +353,6 @@
 				</File>
 				<File
 					RelativePath=".\GUI\SkinLoader.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Character"
-				>
-				<File
-					RelativePath=".\ThayCung.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\ThayCung.h"
 					>
 				</File>
 			</Filter>
