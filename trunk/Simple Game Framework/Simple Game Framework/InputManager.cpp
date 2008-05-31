@@ -63,5 +63,10 @@ bool sgfInputManager::OnEvent(const irr::SEvent& event)
 		SMouseEvent mouse(event.MouseInput.Event,event.MouseInput.Wheel,event.MouseInput.X,event.MouseInput.Y);//prepare the signal
 		mouseEvent(mouse);//emit it
 	}
+	else if(event.EventType==irr::EET_GUI_EVENT)
+	{
+		irr::SEvent::SGUIEvent guiEvent=event.GUIEvent;
+		core->getGUIEvent()->fire(guiEvent);
+	}
 	return false;
 }

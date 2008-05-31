@@ -32,7 +32,10 @@ CGUITexturedSkin::CGUITexturedSkin(IGUIEnvironment * pEnv, irr::io::IFileSystem 
 		setSpriteBank( bitfont->getSpriteBank() );
 
 	for (u32 i=0; i<EGDF_COUNT; ++i)
+	{
 		fonts[i] = 0;
+		setFont(builtinfont,(EGUI_DEFAULT_FONT)i);
+	}
 
 	colors[EGDC_3D_DARK_SHADOW]   = video::SColor(101,50,50,50);
 	colors[EGDC_3D_SHADOW]        = video::SColor(101,130,130,130);

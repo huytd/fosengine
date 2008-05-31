@@ -53,7 +53,7 @@ void sgfCore::updateGraphic(SFrameEvent& data)
 {
 	if(graphicDevice->isWindowActive())
 	{
-		vd->beginScene(true,true,SColor(0,0,0,0));
+		vd->beginScene(true,true,SColor(0,200,200,200));
 		smgr->drawAll();
 		env->drawAll();
 		vd->endScene();
@@ -94,7 +94,10 @@ sgfEvent<SFrameEvent>* sgfCore::getFrameEndEvent() const
 {
 	return const_cast<sgfEventRelay<SFrameEvent>*>(&frameEndEvent);
 }
-
+sgfEvent<irr::SEvent::SGUIEvent>* sgfCore::getGUIEvent() const
+{
+	return const_cast<sgfEvent<irr::SEvent::SGUIEvent>*>(&guiEvent);
+}
 irr::gui::CGUITexturedSkin* sgfCore::getGUISkin() const
 {
 	return guiSkin;

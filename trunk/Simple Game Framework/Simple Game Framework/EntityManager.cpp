@@ -67,14 +67,15 @@ void sgfEntityManager::update(SFrameEvent& arg)
 
 void sgfEntityManager::loadLevel(sgfLevel* level)
 {
+	sgfPtr<sgfLevel> levelToLoad(level);//fix for ref counting madness
+	generalEvent(SEntityEvent(SEntityEvent::EST_LevelEnd));
 	if(currentLevel.getPtr())
 	{
 		currentLevel->onExit(this);
 		previousLevel=currentLevel;
 	}
-	generalEvent(SEntityEvent(SEntityEvent::EST_LevelEnd));
 
-	currentLevel=level;
+	currentLevel=levelToLoad;
 	currentLevel->onEnter(this);
 	generalEvent(SEntityEvent(SEntityEvent::EST_LevelStart));
 }

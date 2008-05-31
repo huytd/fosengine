@@ -37,6 +37,7 @@ public:
 	///\return frame start event
 	sgfEvent<SFrameEvent>* getFrameStartEvent() const;
 	sgfEvent<SFrameEvent>* getFrameEndEvent() const;
+	sgfEvent<irr::SEvent::SGUIEvent>* getGUIEvent() const;
 	///\return inputManager
 	sgfInputManager* getInputManager() const;
 	///\return guiSkin
@@ -53,6 +54,7 @@ private:
 	sgfPtr<sgfEntityManager> entityManager;
 	irr::IrrlichtDevice* graphicDevice;
 	irr::io::IFileSystem* fileSystem;
+	sgfEvent<irr::SEvent::SGUIEvent> guiEvent;
 	sgfEvent<SFrameEvent> frameEvent;
 	sgfEventRelay<SFrameEvent> frameStartEvent;
 	sgfEventRelay<SFrameEvent> frameEndEvent;

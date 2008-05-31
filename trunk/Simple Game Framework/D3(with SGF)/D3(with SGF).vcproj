@@ -195,6 +195,26 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameLevel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GameLevel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MemMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MemMgr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StartMenu.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Terrain.h"
 				>
 			</File>

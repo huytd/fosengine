@@ -181,9 +181,10 @@ public:
 
 	void removeDelegate(sgfDelegate<T>* Delegate)
 	{
-		if((current->compare(Delegate))&&(iterating))
+		if(iterating)
 		{
-			needRemoval=true;
+			if(current->compare(Delegate))
+				needRemoval=true;
 		}
 		else
 		{

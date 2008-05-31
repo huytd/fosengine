@@ -29,8 +29,8 @@ public:
 	}
 	void onRemove()
 	{
+		manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::IMetaTriangleSelector*>()->removeTriangleSelector(node->getTriangleSelector());
 		node->remove();
-		Demo3::instance->worldCollision->removeTriangleSelector(node->getTriangleSelector());
 	}
 protected:
 	irr::scene::ITerrainSceneNode* node;
