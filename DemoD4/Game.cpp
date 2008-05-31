@@ -46,9 +46,8 @@ Game::Game(
 #ifdef _SOUND
 	this->soundEngine->grab();
 #endif
-	camera->setFarValue(2500.0f);
-	
-	
+	camera->setFarValue(12500.0f);
+		
 	// change gui transparency
 	irr::gui::IGUISkin* currentSkin = this->guiEnvironment->getSkin();
 

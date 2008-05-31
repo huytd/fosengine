@@ -145,28 +145,7 @@ void CCharacter::attack(eAttacktype attackType)
 }
 
 
-core::vector3df faceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos) {
 
-  core::vector3df posDiff = targetpos - nodepos;
-  f32 degree = nodepos.Y; //keep current rotation if nothing to do
-  posDiff.normalize();
-
-  if (posDiff.X != 0.0f || posDiff.Z != 0.0f)
-    degree = atan2(posDiff.X,posDiff.Z) * core::RADTODEG;
-
-  return core::vector3df(0,degree,0);
-} 
-
-
-void moveto(irr::scene::ISceneNode *node, //node to move
-            irr::core::vector3df vel) //velocity vector
-{
-    irr::core::matrix4 m;
-    m.setRotationDegrees(node->getRotation());
-    m.transformVect(vel);
-    node->setPosition(node->getPosition() + vel);
-    node->updateAbsolutePosition();
-} 
 
 void CCharacter::move(core::vector3df pos)
 {

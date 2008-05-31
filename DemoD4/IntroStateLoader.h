@@ -112,20 +112,20 @@ void IntroStateLoader::onEnter(Game* game)
 
 	game->getGuiEnvironment()->setSkin(skin);
 	
-
 	//! TODO Display loading screen or some game intro image
 
 	//! TODO Init progress bar
-	progressBar = new gui::CGUIProgressBar(game->getGuiEnvironment()->getRootGUIElement(), game->getGuiEnvironment(), core::rect<s32>(10,150,210,180));
-    progressBar->setProgress(0.5f);
+	progressBar = new gui::CGUIProgressBar(game->getGuiEnvironment()->getRootGUIElement(), game->getGuiEnvironment(), core::rect<s32>(300,450,500,480));
+    progressBar->setProgress(0.3f);
 }
 
 void IntroStateLoader::onUpdate(Game* game)
 {
 	//! TODO Change to introState if loading progress is completed
+	progressBar->setProgress(0.7f);
+
 	if(isCompleted)
 	{
-		printf("\n\n Loaded......... \n\n");
 		game->setState(game->findGameState("intro"));				
 	}
 	//else

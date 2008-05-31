@@ -53,11 +53,11 @@ GUIHealthStatusBar::GUIHealthStatusBar(const irr::core::rect<irr::s32>& rect, ir
 	//driver->makeColorKeyTexture(GUITextures[1], video::SColor(0,0,0,0));
 
 	//load some icons for the spellbar
-	GUITextures[5] = driver->getTexture("media\\images\\gui\\healthbar\\icon_firebolt.bmp");
+	/*GUITextures[5] = driver->getTexture("media\\images\\gui\\healthbar\\icon_firebolt.bmp");
 
 	GUITextures[6] = driver->getTexture("media\\images\\gui\\healthbar\\icon_fireblaze.bmp");
 
-	GUITextures[7] = driver->getTexture("media\\images\\gui\\healthbar\\icon_firenova.bmp");
+	GUITextures[7] = driver->getTexture("media\\images\\gui\\healthbar\\icon_firenova.bmp");*/
 } 
 
 void GUIHealthStatusBar::draw()
@@ -129,7 +129,7 @@ void GUIHealthStatusBar::draw()
 
 
 	//draw the spells bar and the icons on it according to the iconSpace
-	driver->draw2DImage(GUITextures[0], core::position2d<s32>(x, y), core::rect<s32>(0,0,801,47), 0, video::SColor(255,255,255,255), true);
+	driver->draw2DImage(GUITextures[0], core::position2d<s32>(x, y), core::rect<s32>(111,17,911,64), 0, video::SColor(255,255,255,255), true);
 	
 	//for (int i=5; i<=7; i++){
 	//	driver->draw2DImage(GUITextures[i], iconPos);
