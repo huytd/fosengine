@@ -54,12 +54,15 @@ public:
 	void setState(eState newState);
 	void setPosition(core::vector3df pos);
 	void setRotate(core::vector3df rot);
-	
+	void rotateTo(core::vector3df tpos);
+
 	core::vector3df getPosition();
 	core::vector3df getRotate();
 	eState getState();
 	irr::scene::IAnimatedMeshSceneNode* getMesh();
 	irr::scene::IAnimatedMeshSceneNode* getNode();
+
+	bool seePlayer(scene::ISceneNode* target);
 
 	void run();
 	void walk();

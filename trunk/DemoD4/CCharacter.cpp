@@ -15,6 +15,77 @@
 
 #include <irrlicht.h>
 #define ANIMATION_SPEED 10
+#define FOV_VALUE 150
+
+core::vector3df faceTargets(irr::core::vector3df targetpos, irr::core::vector3df nodepos) {
+
+  core::vector3df posDiff = targetpos - nodepos;
+  f32 degree = nodepos.Y; //keep current rotation if nothing to do
+  posDiff.normalize();
+
+  if (posDiff.X != 0.0f || posDiff.Z != 0.0f)
+    degree = atan2(posDiff.X,posDiff.Z) * core::RADTODEG;
+
+  return core::vector3df(0,degree,0);
+} 
+
+bool isFacingNode(irr::scene::ISceneNode* self, irr::scene::ISceneNode* other)
+   {
+      // get the point or points that represents the node 'other'
+      
+      // these coordinates need to be the world coordinate system,
+      // so you may need to use a transformation.
+      // get local coordinate position by  getPostion
+      // tranform to world coordinate
+      irr::core::vector3df otherPosition = other->getPosition();
+      other->getAbsoluteTransformation().transformVect(otherPosition);
+
+      //or simpler??
+      //otherPosition = other->getAbsolutePosition();
+
+      // get a transformation matrix to transform from world coordinates
+      // to 'self' coordinate system. Remember that the result of
+      // self->getAbsoluteTransformation() will transform from 'self'
+      // coordinate system to the world coordinate system. you want
+      // the inverse of that transformation.
+      irr::core::matrix4 selfTransformation = self->getAbsoluteTransformation();
+      irr::core::matrix4 invertTransformation;
+      selfTransformation.getInverse(invertTransformation);
+      
+      // transform the points that represent the node 'other' into
+      // 'self' coordinates using the matrix above
+      invertTransformation.transformVect(otherPosition);
+
+      // if the distance on the X axis is less than 0, then the given
+      // point is behind 'self'.
+
+      if(otherPosition.Z> 0) // if not behind
+      {         
+         float zXy = sqrtf(otherPosition.Y*otherPosition.Y + otherPosition.X*otherPosition.X);
+
+         float tanAnpha = zXy/otherPosition.Z;
+
+         // in the range [-pi, +pi] radians.
+         float anpha = abs(atan(tanAnpha));
+
+         // Hard code irr::core::PI/6 for testing purpose
+         if(anpha < irr::core::PI/6) return true;
+      }
+
+      return false;
+            
+   }
+
+void movetos(irr::scene::ISceneNode *node, //node to move
+            irr::core::vector3df vel) //velocity vector
+{
+    irr::core::matrix4 m;
+    m.setRotationDegrees(node->getRotation());
+    m.transformVect(vel);
+    node->setPosition(node->getPosition() + vel);
+    node->updateAbsolutePosition();
+} 
+
 irr::scene::IAnimatedMeshSceneNode* CCharacter::getMesh()
 {
 	return node;
@@ -85,6 +156,17 @@ void CCharacter::run()
 	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setLoopMode(true);
 	node->setFrameLoop(1,14);
+}
+
+bool CCharacter::seePlayer(scene::ISceneNode* target)
+{
+	bool result = false;
+
+	if ((node->getPosition().getDistanceFrom(target->getPosition()) <= FOV_VALUE)&&(isFacingNode(node, target)))
+	{
+		result = true;
+	}
+	return result;
 }
 
 void CCharacter::walk()
@@ -162,11 +244,16 @@ void CCharacter::move(core::vector3df pos)
 	}
 	else
 	{
-		node->setRotation(	faceTarget(pos, node->getPosition()) );
-		moveto(node, core::vector3df(0,0,fSpeed));
+		node->setRotation(	faceTargets(pos, node->getPosition()) );
+		movetos(node, core::vector3df(0,0,fSpeed));
 	}
 
 	this->node->animateJoints() ;
+}
+
+void CCharacter::rotateTo(core::vector3df tpos)
+{
+	node->setRotation(faceTargets(node->getPosition(),tpos));
 }
 
 void CCharacter::update()
@@ -188,3 +275,5 @@ irr::scene::IAnimatedMeshSceneNode* CCharacter::getNode()
 {
 	return node;	
 }
+
+
