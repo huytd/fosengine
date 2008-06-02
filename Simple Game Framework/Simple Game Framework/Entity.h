@@ -26,11 +26,6 @@ protected:
 	/// \brief destructor, you should not do deinitialization here.
 	virtual ~sgfEntity();
 public:
-	/// \brief This method is called every frame if the object is active
-	/// \see sgfEntityManager::setActive
-	virtual void update(int deltaTime);
-	/// \brief The event handler
-	virtual void onEvent(SEntityEvent& param);
 	/// \brief Get a component with a given name
 	/// \return The component or null if not found
 	//sgfEntityComponent* getComponent(const char* name) const;
@@ -43,6 +38,11 @@ public:
 	/// \return The current manager of this entity or NULL
 	sgfEntityManager* getManager() const;
 protected:
+	/// \brief The event handler
+	virtual void onEvent(SEntityEvent& param);
+	/// \brief This method is called every frame if the object is active
+	/// \see sgfEntityManager::setActive
+	virtual void update(float deltaTime);
 	/// \brief Called when an entity is added to the entityManager.
 	/// This is where initialization should be done.
 	virtual void onAdd()=0;

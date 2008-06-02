@@ -16,6 +16,7 @@
  */
 class sgfCore
 {
+friend class sgfGame;
 public:
 	sgfCore();
 	~sgfCore();
@@ -32,8 +33,6 @@ public:
 	sgfEntityManager* getEntityManager() const;
 	///\return the file system
 	irr::io::IFileSystem* getFileSystem() const;
-	///\return main frame event
-	sgfEvent<SFrameEvent>* getFrameEvent() const;
 	///\return frame start event
 	sgfEvent<SFrameEvent>* getFrameStartEvent() const;
 	sgfEvent<SFrameEvent>* getFrameEndEvent() const;
@@ -51,6 +50,7 @@ private:
 	virtual void updateGraphic(SFrameEvent& data);
 private:
 	bool inited;
+	sgfEvent<SFrameEvent>* getFrameEvent() const;
 	sgfPtr<sgfEntityManager> entityManager;
 	irr::IrrlichtDevice* graphicDevice;
 	irr::io::IFileSystem* fileSystem;

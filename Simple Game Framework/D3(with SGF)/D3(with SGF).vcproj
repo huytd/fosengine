@@ -203,11 +203,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\JointAnimator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\JointAnimator.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MemMgr.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\MemMgr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StandOnTerrainAnimator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\StandOnTerrainAnimator.h"
 				>
 			</File>
 			<File

@@ -9,7 +9,7 @@ Configuration::Configuration()
 	this->params.WindowSize.Height = 768;
 	this->params.Bits = 32;
 	this->params.Fullscreen = false;
-	this->params.Stencilbuffer = true;
+	this->params.Stencilbuffer = false;
 	this->params.Vsync = false;
 	this->params.AntiAlias = false;
 }

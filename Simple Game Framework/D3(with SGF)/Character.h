@@ -2,6 +2,8 @@
 #define _CHARACTER_H_
 
 #include "SGF.h"
+#include "JointAnimator.h"
+#include "StandOnTerrainAnimator.h"
 #include <irrlicht.h>
 
 class ThirdPersonCamera: public sgfEntity
@@ -33,18 +35,19 @@ private:
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
 		manager->setActive(this,true);
 	}
-	void update(int deltaTime)
+	void update(float deltaTime)
 	{
 		if(rotating)
 		{
 			float deltaY=cursor->getPosition().X-oldX;
 			//printf("%f %d\n",cursor->getRelativePosition().Y,oldY);
-			root->setRotation(root->getRotation()+irr::core::vector3df(0,deltaY/4*deltaTime/1000.0f,0));
+			root->setRotation(root->getRotation()+irr::core::vector3df(0.0f,deltaTime*(float)deltaY/50.0f,0.0f));
 		}
-		irr::core::vector3df target=targetNode->getAbsolutePosition();
+		irr::core::vector3df target=targetNode->getPosition();
 		//if((target-camera->getAbsolutePosition()).getLength()>5)
-			root->setPosition(target);
-		camera->setTarget(targetNode->getAbsolutePosition()+targetOffset);
+		root->setPosition(target);
+		camera->setTarget(targetNode->getPosition()+targetOffset);
+		
 	}
 	void onRemove()
 	{
@@ -80,7 +83,7 @@ public:
 
 	Character(irr::scene::ISceneNode* node)
 	{
-		speed=50;
+		speed=22.2f;
 		goalReached=false;
 		mouseDelegate.addRef();
 		mouseDelegate.bind(this,&Character::onMouse);
@@ -96,6 +99,11 @@ protected:
 	{
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/ninja/ninja.b3d"));
+		//node->setDebugDataVisible(irr::scene::EDS_FULL);
+		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
+		node->setTransitionTime(0.2f);
+		node->addAnimator(anim1);
+		anim1->drop();
 		//temporary work around
 		//node->setScale(irr::core::vector3df(0.01,0.01,-0.01));
 		node->setPosition(startPos);
@@ -105,12 +113,9 @@ protected:
 		const irr::core::aabbox3df& box = node->getBoundingBox();
 		irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 		
-		irr::scene::ISceneNodeAnimator* anim=smgr->createCollisionResponseAnimator(manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::ITriangleSelector*>(),
-			node,
-			radius,
-			irr::core::vector3df(0,-0.1f,0),
-			irr::core::vector3df(0,-(box.MaxEdge-box.getCenter()).Y,0)//,
-			//0.0009f
+		irr::scene::ISceneNodeAnimator* anim=new irr::scene::StandOnTerrainAnimator(manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::ITriangleSelector*>(),
+			manager->getCore()->getGraphicDevice()->getSceneManager()->getSceneCollisionManager(),
+			irr::core::vector3df(0,-1.0f,0)
 			);
 		node->addAnimator(anim);
 		anim->drop();
@@ -119,6 +124,8 @@ protected:
 		//add camera
 		ThirdPersonCamera* cam=new ThirdPersonCamera(node,irr::core::vector3df(0,10,-30),irr::core::vector3df(0,5,0));
 		manager->addEntity(cam);
+		//node->setVisible(false);
+		//manager->getCore()->getGraphicDevice()->getSceneManager()->addCameraSceneNodeFPS()->setPosition(startPos);
 	}
 	void idle()
 	{//will be rewritten
@@ -126,7 +133,7 @@ protected:
 	}
 	void walk()
 	{
-		node->setFrameLoop(0,13);
+		node->setFrameLoop(0,14);
 	}
 	void onMouse(SMouseEvent& args)
 	{
@@ -141,16 +148,20 @@ protected:
 				walk();
 				targetPos = collisionPoint;
 				goalReached=false;
+				node->setRotation(faceTarget(targetPos,node->getPosition()));
+
 				manager->setActive(this,true);//make update called every frame
 			}
 		}
 	}
-	void update(int deltaTime)
+	void update(float deltaTime)
 	{
-		irr::core::vector3df diffVect=node->getAbsolutePosition()-targetPos;
-		diffVect.Y=0;
+		//printf_s("%f\n",deltaTime);
+		//deltaTime=15;
+		irr::core::vector3df diffVect=node->getPosition()-targetPos;
+		diffVect.Y=0.0f;
 		float distance=diffVect.getLength();
-		if(distance<=(speed*deltaTime/1000))//reached target
+		if(distance<=(speed*deltaTime))//reached target
 		{
 			goalReached=true;
 			manager->setActive(this,false);//stop updating
@@ -158,9 +169,9 @@ protected:
 		}
 		else
 		{
-			node->setRotation(faceTarget(targetPos,node->getAbsolutePosition()));
-			moveto(irr::core::vector3df(0,0,speed*deltaTime/1000));
+			moveto(irr::core::vector3df(0,0,speed*deltaTime));
 		}
+
 	}
 
 	void onRemove()

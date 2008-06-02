@@ -38,9 +38,9 @@ void sgfEntityManager::addEntity(sgfEntity* entity)
 	generalEvent.addDelegate(new sgfMethodDelegate<sgfEntity,SEntityEvent>(entity,&sgfEntity::onEvent));
 }
 
-int sgfEntityManager::getNumEntity() const
+unsigned int sgfEntityManager::getNumEntity() const
 {
-	return entities.size();
+	return (unsigned int)(entities.size());
 }
 
 void sgfEntityManager::removeEntity(sgfEntity* entity)
