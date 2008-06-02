@@ -19,6 +19,7 @@ public:
 private:
 	bool rotating;
 	int oldX;
+	int nxY;
 	irr::gui::ICursorControl* cursor;
 	irr::core::vector3df posOffset;
 	irr::core::vector3df targetOffset;
@@ -47,6 +48,17 @@ private:
 		//if((target-camera->getAbsolutePosition()).getLength()>5)
 		root->setPosition(target);
 		camera->setTarget(targetNode->getPosition()+targetOffset);
+
+		irr::scene::ITerrainSceneNode* terr = manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();
+		if (camera->getPosition().Y < terr->getHeight(camera->getPosition().X, camera->getPosition().Z))
+		{
+			camera->setPosition(irr::core::vector3df(camera->getPosition().X, terr->getHeight(camera->getPosition().X, camera->getPosition().Z), camera->getPosition().Z));
+		}
+		//Change camera position by mouse wheel (smooth)
+		irr::core::vector3df camPos = camera->getPosition();
+		if (camPos.Y < nxY) camPos.Y += 0.25;
+		if (camPos.Y > nxY) camPos.Y -= 0.25;
+		camera->setPosition(camPos);
 		
 	}
 	void onRemove()
@@ -59,7 +71,19 @@ private:
 	{
 		if(args.mouseEvent==irr::EMIE_MOUSE_WHEEL)
 		{
-			camera->setPosition(camera->getPosition()+irr::core::vector3df(0,args.wheel,0));
+			nxY = camera->getPosition().Y + args.wheel*2;
+			/*if (curCY < nxY)
+			{
+				curCY += 1;
+				//camera->setPosition(camera->getPosition()+irr::core::vector3df(0,args.wheel,0));
+				camera->setPosition(camera->getPosition()+irr::core::vector3df(0,1,0));
+			}
+			if (curCY > nxY)
+			{
+				curCY -= 1;
+				//camera->setPosition(camera->getPosition()+irr::core::vector3df(0,args.wheel,0));
+				camera->setPosition(camera->getPosition()+irr::core::vector3df(0,-1,0));
+			}*/
 		}
 		else if(args.mouseEvent==irr::EMIE_MMOUSE_PRESSED_DOWN)
 		{
