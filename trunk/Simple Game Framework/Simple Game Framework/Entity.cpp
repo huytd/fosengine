@@ -36,7 +36,7 @@ void sgfEntity::onEvent(SEntityEvent& param)
 	//entityEvent(param);
 }
 
-void sgfEntity::update(int deltaTime)
+void sgfEntity::update(float deltaTime)
 {
 }
 

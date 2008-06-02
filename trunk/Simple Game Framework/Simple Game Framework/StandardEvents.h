@@ -4,12 +4,12 @@
 /// \brief Paramter type for frame event
 struct SFrameEvent
 {
-	SFrameEvent(unsigned long clock=0, int deltaTime=0)
+	SFrameEvent(unsigned int clock=0, float deltaTime=0.0f)
 		:clock(clock),deltaTime(deltaTime)
 	{
 	}
-	unsigned long clock;
-	int deltaTime;
+	unsigned int clock;
+	float deltaTime;
 };
 
 /// \brief Paramter type for entity event
@@ -25,10 +25,10 @@ struct SEntityEvent
 	EST_Remove
 	} type;
 
-	int deltaTime;
+	float deltaTime;
 
-	SEntityEvent(ESType type=EST_Update,int deltaTime=0)
-		:type(type),deltaTime(deltaTime)
+	SEntityEvent(ESType type=EST_Update,float deltaTime=0.0f)
+		:type(type), deltaTime(deltaTime)
 	{}
 };
 

@@ -21,7 +21,7 @@ public:
 	/// \see sgfEntity::onRemove
 	void removeEntity(sgfEntity* entity);
 	/// \return the number of entity
-	int getNumEntity() const;
+	unsigned int getNumEntity() const;
 	/// \brief Remove all entity
 	void clear();
 	/// \param entity The entity to check for activeness

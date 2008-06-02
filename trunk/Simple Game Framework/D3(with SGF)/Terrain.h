@@ -20,6 +20,7 @@ public:
 	void onAdd()
 	{
 		manager->getCore()->globalVars["terrain"]=(void*)node;
+		//node->setMaterialFlag(irr::video::EMF_WIREFRAME,true);
 		//node->
 		irr::scene::IMetaTriangleSelector* worldCollision=manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::IMetaTriangleSelector*>();
 		irr::scene::ITriangleSelector* tri=manager->getCore()->getGraphicDevice()->getSceneManager()->createTerrainTriangleSelector(node,0);

@@ -15,15 +15,19 @@ void sgfGame::run()
 	sgfEvent<SFrameEvent>* frameEvent=core.getFrameEvent();
 	irr::IrrlichtDevice* graphicDevice=core.getGraphicDevice();
 	irr::ITimer* timer=graphicDevice->getTimer();
-	unsigned int endTime=timer->getRealTime();
-	unsigned int deltaTime=0;
+	irr::video::IVideoDriver* vd=graphicDevice->getVideoDriver();
+	float deltaTime=0.0f;
+	unsigned int currentTime;
 	while(graphicDevice->run()&&running)
 	{
-		unsigned int startTime=timer->getRealTime();
-		SFrameEvent signal(startTime,deltaTime);
-		frameEvent->fire(signal);
-		endTime=timer->getRealTime();
-		deltaTime=endTime-startTime;
+		currentTime=timer->getRealTime();
+		int fps=vd->getFPS();
+		if(fps)
+		{
+			deltaTime=1.0f/(float)fps;
+			SFrameEvent signal(currentTime,deltaTime);
+			(*frameEvent)(signal);
+		}
 	}
 }
 
