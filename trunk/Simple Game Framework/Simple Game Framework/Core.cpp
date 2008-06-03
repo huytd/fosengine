@@ -29,6 +29,12 @@ void sgfCore::init()
 		config.write(tempDevice);// write it
 	tempDevice->drop();
 	graphicDevice=createDeviceEx(config.getIrrlichtParams());
+	//Script virtual machine
+	scriptVM=new sgfScriptVM(this,graphicDevice->getFileSystem());
+	//-------Standard binds----------------
+	sgfDynamicVar::any_ptr=scriptVM->GetTypeId("any_ptr");
+	globalVars.setTable(scriptVM,scriptVM->GetGlobals());
+	//-------------------------------------
 	//GUI
 	env=graphicDevice->getGUIEnvironment();
 	guiSkin=new irr::gui::CGUITexturedSkin(env,graphicDevice->getFileSystem());
@@ -101,4 +107,8 @@ sgfEvent<irr::SEvent::SGUIEvent>* sgfCore::getGUIEvent() const
 irr::gui::CGUITexturedSkin* sgfCore::getGUISkin() const
 {
 	return guiSkin;
+}
+sgfScriptVM* sgfCore::getScriptVM() const
+{
+	return scriptVM.getPtr();
 }

@@ -4,7 +4,7 @@
 #include <irrlicht.h>
 #include "EntityManager.h"
 #include "StandardEvents.h"
-//#include "ScriptVM.h"
+#include "ScriptVM.h"
 #include "Configuration.h"
 #include "sgfPtr.h"
 #include "InputManager.h"
@@ -41,7 +41,8 @@ public:
 	sgfInputManager* getInputManager() const;
 	///\return guiSkin
 	irr::gui::CGUITexturedSkin* getGUISkin() const;
-
+	///\return script machine
+	sgfScriptVM* getScriptVM() const;
 	/// \brief Multi-purpose varSet
 	sgfDynamicVarSet globalVars;
 	/// \brief Default configuration
@@ -49,8 +50,9 @@ public:
 private:
 	virtual void updateGraphic(SFrameEvent& data);
 private:
-	bool inited;
 	sgfEvent<SFrameEvent>* getFrameEvent() const;
+	bool inited;
+	sgfPtr<sgfScriptVM> scriptVM;
 	sgfPtr<sgfEntityManager> entityManager;
 	irr::IrrlichtDevice* graphicDevice;
 	irr::io::IFileSystem* fileSystem;

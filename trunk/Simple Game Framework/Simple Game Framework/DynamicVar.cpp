@@ -1,16 +1,17 @@
 #include "DynamicVar.h"
 
-sgfDynamicVar::sgfDynamicVar()
-	:ptr(0),num(0)
+gmType sgfDynamicVar::any_ptr=0;
+
+sgfDynamicVar::sgfDynamicVar(sgfDynamicVarSet* varSet,const char* name)
 {
+	this->name=name;
+	this->varSet=varSet;
 }
 
 sgfDynamicVar::sgfDynamicVar(const sgfDynamicVar& other)
 {
-	type=other.type;
-	num=other.num;
-	ptr=other.ptr;
-	str=other.str.c_str();
+	this->name=other.name;
+	this->varSet=other.varSet;	
 }
 
 sgfDynamicVar::~sgfDynamicVar()
@@ -19,52 +20,68 @@ sgfDynamicVar::~sgfDynamicVar()
 
 sgfDynamicVar& sgfDynamicVar::operator=(void* ptr)
 {
-	type=EDVT_POINTER;
-	this->ptr=ptr;
+	gmVariable var;
+	var.SetUser(varSet->vm,ptr,sgfDynamicVar::any_ptr);
+	varSet->table->Set(varSet->vm,name.c_str(),var);
 	return *this;
 }
 
 sgfDynamicVar& sgfDynamicVar::operator=(const char* str)
 {
-	type=EDVT_STRING;
-	this->str=str;
+	gmVariable var;
+	var.SetString(varSet->vm,str);
+	varSet->table->Set(varSet->vm,name.c_str(),var);
 	return *this;
 }
 
 sgfDynamicVar& sgfDynamicVar::operator=(float num)
 {
-	type=EDVT_NUMBER;
-	this->num=num;
+	gmVariable var(num);
+	varSet->table->Set(varSet->vm,name.c_str(),var);
+	return *this;
+}
+
+sgfDynamicVar& sgfDynamicVar::operator=(int num)
+{
+	gmVariable var(num);
+	varSet->table->Set(varSet->vm,name.c_str(),var);
 	return *this;
 }
 
 sgfDynamicVar& sgfDynamicVar::operator=(sgfDynamicVar& var)
 {
-	type=var.type;
-	num=var.num;
-	ptr=var.ptr;
-	str=var.str.c_str();
-	return *this;
+	varSet->table->Set(varSet->vm,name.c_str(),var.getVar());
+	return *this;	
 }
 
-E_DYNAMIC_VAR_TYPE sgfDynamicVar::getType() const
+gmVariable sgfDynamicVar::getVar() const
 {
-	return type;
+	return varSet->table->Get(varSet->vm,name.c_str());
+}
+
+gmType sgfDynamicVar::getType() const
+{
+	return getVar().m_type;
 }
 
 void* sgfDynamicVar::getPtr() const
 {
-	return ptr;
+	return ((gmUserObject*)(getVar().m_value.m_ref))->m_user;
 }
 
-float sgfDynamicVar::getNumber() const
+int sgfDynamicVar::getInt() const
 {
-	return num;
+	return getVar().GetIntSafe();
+}
+
+float sgfDynamicVar::getFloat() const
+{
+	return getVar().GetFloatSafe();
 }
 
 const char* sgfDynamicVar::getString() const
 {
-	return str.c_str();
+	return getVar().GetCStringSafe();
 }
 
 sgfDynamicVarSet::sgfDynamicVarSet()
@@ -73,20 +90,13 @@ sgfDynamicVarSet::sgfDynamicVarSet()
 sgfDynamicVarSet::~sgfDynamicVarSet()
 {
 }
-sgfDynamicVar& sgfDynamicVarSet::operator[](const char* name)
+sgfDynamicVar sgfDynamicVarSet::operator[](const char* name)
 {
-	irr::core::stringc str=name;
-	std::map<irr::core::stringc,sgfDynamicVar>::iterator i=varSet.find(str);
-	if(i==varSet.end())
-	{// not found
-		sgfDynamicVar var;
-		varSet.insert(std::make_pair<irr::core::stringc,sgfDynamicVar>(name,var));
-		i=varSet.find(str);
-	}
-	return (*i).second;
+	return sgfDynamicVar(this,name);
 }
 
-void sgfDynamicVarSet::clear()
+void sgfDynamicVarSet::setTable(sgfScriptVM* vm,gmTableObject* table)
 {
-	varSet.clear();
+	this->vm=vm;
+	this->table=table;
 }
