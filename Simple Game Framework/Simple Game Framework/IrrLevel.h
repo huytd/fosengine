@@ -4,7 +4,7 @@
 #include <map>
 #include <irrlicht.h>
 #include "Level.h"
-
+//! TODO: meshCache and texture cache cleaning
 class sgfEntity;
 class sgfEntityManager;
 

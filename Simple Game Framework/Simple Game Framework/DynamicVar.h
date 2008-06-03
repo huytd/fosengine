@@ -1,52 +1,65 @@
 #ifndef _SGF_DYNAMIC_VAR_H_
 #define _SGF_DYNAMIC_VAR_H_
 
-#include <irrlicht.h>
-#include <map>
+#include <string>
+#include "scriptVM.h"
+#include "sgfPtr.h"
 
-enum E_DYNAMIC_VAR_TYPE
-{
-	EDVT_NUMBER,
-	EDVT_STRING,
-	EDVT_POINTER
-};
-
+class sgfDynamicVarSet;
+//variable helper
 class sgfDynamicVar
 {
 public:
-	sgfDynamicVar();
+	sgfDynamicVar(sgfDynamicVarSet* varSet,const char* name);
 	sgfDynamicVar(const sgfDynamicVar& other);
 	~sgfDynamicVar();
 	sgfDynamicVar& operator=(sgfDynamicVar& var);
 	sgfDynamicVar& operator=(void* ptr);
 	sgfDynamicVar& operator=(const char* str);
 	sgfDynamicVar& operator=(float num);
-	E_DYNAMIC_VAR_TYPE getType() const;
+	sgfDynamicVar& operator=(int num);
+	gmType getType() const;
 	void* getPtr() const;
-	float getNumber() const;
+	int getInt() const;
+	float getFloat() const;
 	const char* getString() const;
+	template<typename T>
+	inline void setAs(T obj,gmType Type)
+	{
+		gmVariable var=CONVERT<GM_OBJ_PTR,T>::ToGm(obj,varSet->vm,Type);
+		varSet->table->Set(varSet->vm,name.c_str(),var);
+	}
+	template<typename T>
+	inline void setAs(T obj,const char* typeName)
+	{
+		gmType Type=varSet->vm->GetTypeId(typeName);
+		GM_ASSERT(Type);
+		gmVariable var=CONVERT<GM_OBJ_PTR,T>::ToGm(obj,varSet->vm,Type);
+		varSet->table->Set(varSet->vm,name.c_str(),var);
+	}
 	template<typename T>
 	inline T getAs()
 	{
-		return (T)ptr;
+		return (T)getPtr();
 	}
+	static gmType any_ptr;
 private:
-	E_DYNAMIC_VAR_TYPE type;
-	void* ptr;
-	float num;
-	irr::core::stringc str;
+	gmVariable getVar() const;
+	std::string name;
+	sgfDynamicVarSet* varSet;
 };
 
-class sgfDynamicVarSet
+class sgfDynamicVarSet// a table helper
 {
-
+friend class sgfDynamicVar;
 public:
 	sgfDynamicVarSet();
 	~sgfDynamicVarSet();
-	sgfDynamicVar& operator[](const char* name);
-	void clear();
+	sgfDynamicVar operator[](const char* name);
+	void setTable(sgfScriptVM* vm,gmTableObject* table);
 private:
-	std::map<irr::core::stringc,sgfDynamicVar> varSet;
+	sgfPtr<sgfScriptVM> vm;
+	gmTableObject* table;
 };
 
 #endif

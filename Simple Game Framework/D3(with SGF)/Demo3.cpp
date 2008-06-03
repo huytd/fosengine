@@ -3,21 +3,46 @@
 #include "Terrain.h"
 #include "Character.h"
 #include "StartMenu.h"
+#include <exception>
 using namespace irr;
 
 Demo3* Demo3::instance=NULL;
+void testException()
+{
+	throw std::exception("test exception");
+}
 
 Demo3::Demo3()
 {
 	Demo3::instance=this;//single instance
 	core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
 	core.init();//initialize the core
-	//set skin
-	core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
-	core.getGUISkin()->setFont(core.getGraphicDevice()->getGUIEnvironment()->getBuiltInFont(),gui::EGDF_TOOLTIP);
+	//set skin(use script to set skin)
+	//core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
 	//display fps
 	sgfEvent<SFrameEvent>* frameEnd=core.getFrameEndEvent();
 	frameEnd->addDelegate(new sgfMethodDelegate<Demo3,SFrameEvent>(this,&Demo3::showFPS));
+	//test script
+	sgfScriptVM* vm=core.getScriptVM();
+	vm->SetDebugMode(true);
+	//bind CGUITexturedSkin class
+#define Typename irr::gui::CGUITexturedSkin
+	gmType guiSkinType=vm->Bind(
+		CLASS("GUISkin"),
+		METHOD(setSkin),
+		END
+		);
+#undef Typename
+	vm->Bind(GLOBAL_NAMESPACE,FUNCTION(testException),END);
+	//vm->UpdateTypeIds();//since there's no cross-reference between classes, this is not necessary
+	//pass our instance to script
+	core.globalVars["skin"].setAs<irr::gui::CGUITexturedSkin*>(core.getGUISkin(),guiSkinType);
+	vm->ExecuteFile("testScript.gm");//a script can be executed directly, I just want to test compiling
+	//vm->CompileFile("testScript.gm","testScript.lib");
+	//vm->ExecuteLibFile("testScript.lib");
+	//call a script function from C++
+
+	vm->Call<const char*>(vm->GetFunction("scriptFunction"),"test");
 	//register entity class
 	registerClass(Character);
 	registerClass(Terrain);
