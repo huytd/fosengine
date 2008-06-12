@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Map.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\mPointer.cpp"
 				>
 			</File>
@@ -278,6 +282,10 @@
 			</File>
 			<File
 				RelativePath=".\LevelOneState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Map.h"
 				>
 			</File>
 			<File
