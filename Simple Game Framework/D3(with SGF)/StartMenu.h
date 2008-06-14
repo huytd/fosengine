@@ -2,6 +2,7 @@
 #define _START_MENU_H_
 
 #include <SGF.h>
+#include "Level01.h"
 #include "GameLevel.h"
 
 class StartMenu:public sgfLevel
@@ -23,7 +24,8 @@ public:
 		{
 			if(args.Caller->getID()==1)//start
 			{
-				emgr->loadLevel(new GameLevel("levels/start.irr"));
+				printf("Level01\n");
+				emgr->loadLevel(new Level01);
 			}
 			else if(args.Caller->getID()==2)
 			{
