@@ -203,11 +203,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HealthManaBar.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HealthManaBar.h"
+				>
+			</File>
+			<File
 				RelativePath=".\JointAnimator.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\JointAnimator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Level01.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Level01.h"
 				>
 			</File>
 			<File
