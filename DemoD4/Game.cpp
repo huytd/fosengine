@@ -115,13 +115,15 @@ const void Game::setFont(const irr::c8* filename)
 {
 	this->font = this->getGuiEnvironment()->getFont(filename);
 	if (this->font)
+	{
 		this->getGuiEnvironment()->getSkin()->setFont(this->font);
-
-	//leave built in font as tooltip font 
-	this->getGuiEnvironment()->getSkin()->setFont(
-		this->getGuiEnvironment()->getBuiltInFont(),
+		this->getGuiEnvironment()->getSkin()->setFont(
+		this->font,
 		irr::gui::EGDF_TOOLTIP
 	);
+	}
+	//leave built in font as tooltip font 
+	
 
 }
 

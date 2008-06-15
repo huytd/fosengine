@@ -179,10 +179,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CCharacter.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\CGUITexturedSkin.cpp"
 				>
 			</File>
@@ -242,10 +238,6 @@
 			</File>
 			<File
 				RelativePath=".\Application.h"
-				>
-			</File>
-			<File
-				RelativePath=".\CCharacter.h"
 				>
 			</File>
 			<File
