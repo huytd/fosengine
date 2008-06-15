@@ -64,11 +64,13 @@ void sgfCore::updateGraphic(SFrameEvent& data)
 		env->drawAll();
 		vd->endScene();
 	}
+	else
+		graphicDevice->yield();
 }
 
 sgfEntityManager* sgfCore::getEntityManager() const
 {
-	return entityManager.getPtr();
+	return entityManager;
 }
 
 IrrlichtDevice* sgfCore::getGraphicDevice() const
@@ -78,7 +80,7 @@ IrrlichtDevice* sgfCore::getGraphicDevice() const
 
 sgfInputManager* sgfCore::getInputManager() const
 {
-	return inputManager.getPtr();
+	return inputManager;
 }
 
 IFileSystem* sgfCore::getFileSystem() const
@@ -110,5 +112,5 @@ irr::gui::CGUITexturedSkin* sgfCore::getGUISkin() const
 }
 sgfScriptVM* sgfCore::getScriptVM() const
 {
-	return scriptVM.getPtr();
+	return scriptVM;
 }

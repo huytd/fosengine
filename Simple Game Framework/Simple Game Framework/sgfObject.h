@@ -1,7 +1,7 @@
 #ifndef _ISGF_OBJECT_H_
 #define _ISGF_OBJECT_H_
 
-#ifdef DEBUG
+#ifdef _DEBUG
 #include <exception>
 #endif
 /// \brief Base class for most objects in this framework
@@ -30,7 +30,7 @@ public:
 	void decRef()
 	{
 		--refCounter;
-#ifdef DEBUG
+#ifdef _DEBUG
 		if(refCounter<0)
 			throw std::exception("Bad reference counting");
 #endif

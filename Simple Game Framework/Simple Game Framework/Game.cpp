@@ -12,6 +12,7 @@ sgfGame::~sgfGame()
 void sgfGame::run()
 {
 	running=true;
+	core.game=this;
 	sgfEvent<SFrameEvent>* frameEvent=core.getFrameEvent();
 	irr::IrrlichtDevice* graphicDevice=core.getGraphicDevice();
 	irr::ITimer* timer=graphicDevice->getTimer();
@@ -29,11 +30,7 @@ void sgfGame::run()
 			(*frameEvent)(signal);
 		}
 	}
-}
-
-sgfCore* sgfGame::getCore() const
-{
-	return const_cast<sgfCore*>(&core);
+	core.entityManager->endGame();
 }
 
 void sgfGame::quit()

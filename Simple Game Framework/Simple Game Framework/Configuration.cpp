@@ -36,9 +36,9 @@ bool Configuration::read(irr::IrrlichtDevice* device)
 			const irr::u32 driver = xml->getAttributeValueAsInt(L"driver");
 			irr::video::E_DRIVER_TYPE driverType=(irr::video::E_DRIVER_TYPE)driver;
 			this->params.DriverType = driverType;
-			this->params.Fullscreen = xml->getAttributeValueAsInt(L"fullscreen");
-			this->params.Stencilbuffer = xml->getAttributeValueAsInt(L"stencilbuffer");
-			this->params.Vsync = xml->getAttributeValueAsInt(L"vsync");
+			this->params.Fullscreen = (bool)(xml->getAttributeValueAsInt(L"fullscreen"));
+			this->params.Stencilbuffer = (bool)(xml->getAttributeValueAsInt(L"stencilbuffer"));
+			this->params.Vsync = (bool)(xml->getAttributeValueAsInt(L"vsync"));
 		}
 
 		else if (irr::core::stringw("resolution") == xml->getNodeName()) 

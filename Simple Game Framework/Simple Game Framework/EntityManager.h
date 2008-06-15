@@ -10,6 +10,7 @@
 /// \brief The class that manages entity
 class sgfEntityManager:public sgfCoreComponent
 {
+friend class sgfGame;
 public:
 	sgfEntityManager(sgfCore* core);
 	~sgfEntityManager();
@@ -40,7 +41,10 @@ public:
 	/// \brief Update the entity system
 	/// \remarks The framework call this for you
 	void update(SFrameEvent& arg);
+
 private:
+	void endGame();
+
 	sgfPtr<sgfLevel> currentLevel;
 	sgfPtr<sgfLevel> previousLevel;
 	std::list<sgfPtr<sgfEntity>> entities;

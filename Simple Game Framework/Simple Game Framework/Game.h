@@ -18,8 +18,6 @@ public:
 	virtual void run();
 	/// \brief stop the game
 	virtual void quit();
-	/// \return The core that this game is using
-	sgfCore* getCore() const;
 
 protected:
 	/// \brief Whether the game is running
