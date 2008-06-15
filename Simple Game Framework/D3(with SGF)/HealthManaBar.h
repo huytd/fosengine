@@ -18,17 +18,17 @@ private:
 	position2d<s32> pos;
 	dimension2d<s32> BarSize;//Kích thước bar.
 public:
-  //Khởi tạo đối tượng.
+	//Khởi tạo đối tượng.
 	HealthManaBar(const rect<s32>& rect,IGUIEnvironment* env,IGUIElement* parent);
-  //Hủy đối tượng.
+	//Hủy đối tượng.
 	~HealthManaBar();
-  //Đặt các giá trị mới cho Máu, Mana,V.v....
+	//Đặt các giá trị mới cho Máu, Mana,V.v....
 	void setValue(int Value);
 	void setMaxValue(int MaxValue);
 	void setTexture(c8 *fileName);
 	void setPosition(int X,int Y);
 	void setTransparent(short int Transparent);
-  //Vẽ.
+	//Vẽ.
 	void draw();
 
 }; 
