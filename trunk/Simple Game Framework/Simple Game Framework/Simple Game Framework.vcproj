@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;DEBUG;BUILD_SGF"
+				PreprocessorDefinitions="_WIN32;_DEBUG;BUILD_SGF"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -298,10 +298,6 @@
 			</File>
 			<File
 				RelativePath=".\GameMonkey\gmByteCodeGen.h"
-				>
-			</File>
-			<File
-				RelativePath=".\GameMonkey\gmClassWrapper.h"
 				>
 			</File>
 			<File

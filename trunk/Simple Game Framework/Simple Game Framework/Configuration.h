@@ -17,10 +17,10 @@ public:
 	Configuration();
 
 	///Reads the configuration from an xml file.
-	bool read(irr::IrrlichtDevice* device);
+	virtual bool read(irr::IrrlichtDevice* device);
 
 	///Writes the configuration to an xml file.
-	void write(irr::IrrlichtDevice* device) const;
+	virtual void write(irr::IrrlichtDevice* device) const;
 
 	inline irr::SIrrlichtCreationParameters& getIrrlichtParams()
 	{ return this->params; }

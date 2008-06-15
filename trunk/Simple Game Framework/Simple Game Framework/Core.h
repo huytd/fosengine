@@ -43,6 +43,12 @@ public:
 	irr::gui::CGUITexturedSkin* getGUISkin() const;
 	///\return script machine
 	sgfScriptVM* getScriptVM() const;
+	/// \return The game object
+	template <class gameClass>
+	inline gameClass* getGame() const
+	{
+		return static_cast<gameClass*>(game);
+	}
 	/// \brief Multi-purpose varSet
 	sgfDynamicVarSet globalVars;
 	/// \brief Default configuration
@@ -62,6 +68,7 @@ private:
 	sgfEventRelay<SFrameEvent> frameEndEvent;
 	sgfPtr<sgfInputManager> inputManager;
 	irr::gui::CGUITexturedSkin* guiSkin;
+	sgfGame* game;
 };
 
 #endif

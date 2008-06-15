@@ -80,10 +80,24 @@ private:
 	IWriteFile* wFile;
 };
 
+static int GM_CDECL doFile(gmThread* a_thread)
+{
+	GM_CHECK_NUM_PARAMS(1);
+	GM_CHECK_STRING_PARAM(file,0);
+	gmVariable param;
+	param.Nullify();
+	param=a_thread->Param(1,param);
+	sgfScriptVM* vm=(sgfScriptVM*)(a_thread->GetMachine());//this function is only available in our vm
+	int ret=vm->ExecuteFile(file,&param);
+	a_thread->PushInt(ret);
+	return GM_OK;
+}
+
 sgfScriptVM::sgfScriptVM(sgfCore* core, IFileSystem* fs)
 	:gmMachineEx(false),sgfCoreComponent(core),fs(fs),scriptBuffer(0),bufferSize(0)
 {
 	fs->grab();
+	RegisterLibraryFunction("doFile",doFile);
 }
 
 sgfScriptVM::~sgfScriptVM()

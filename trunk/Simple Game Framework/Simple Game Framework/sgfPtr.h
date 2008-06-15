@@ -59,6 +59,8 @@ public:
 		return(me.ptr!=other.ptr);
 	}
 
+	/// \brief Return the real pointer
+	/// \remarks This should only be used for null checking
 	T* getPtr() const
 	{
 		return ptr;
@@ -71,10 +73,10 @@ public:
 
 	T& operator*()
 	{
-		  return ptr;
+		  return *ptr;
 	}
 
-	operator T* ()
+	operator T* () const
 	{
 		  return ptr;
 	}

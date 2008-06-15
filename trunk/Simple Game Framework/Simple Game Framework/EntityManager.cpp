@@ -8,7 +8,14 @@ sgfEntityManager::sgfEntityManager(sgfCore* core)
 
 sgfEntityManager::~sgfEntityManager()
 {
-	generalEvent.fire(SEntityEvent(SEntityEvent::EST_GameEnd));
+}
+
+void sgfEntityManager::endGame()
+{
+//notify all entites about the end of the game
+	generalEvent(SEntityEvent(SEntityEvent::EST_LevelEnd));
+	if(currentLevel.getPtr())
+		currentLevel->onExit(this);
 }
 
 bool sgfEntityManager::isActive(sgfEntity* entity)
@@ -69,7 +76,7 @@ void sgfEntityManager::loadLevel(sgfLevel* level)
 {
 	sgfPtr<sgfLevel> levelToLoad(level);//fix for ref counting madness
 	generalEvent(SEntityEvent(SEntityEvent::EST_LevelEnd));
-	if(currentLevel.getPtr())
+	if(currentLevel.getPtr())//if it is null
 	{
 		currentLevel->onExit(this);
 		previousLevel=currentLevel;
@@ -82,10 +89,10 @@ void sgfEntityManager::loadLevel(sgfLevel* level)
 
 sgfLevel* sgfEntityManager::getCurrentLevel() const
 {
-	return currentLevel.getPtr();
+	return currentLevel;
 }
 
 sgfLevel* sgfEntityManager::getPreviousLevel() const
 {
-	return previousLevel.getPtr();
+	return previousLevel;
 }
