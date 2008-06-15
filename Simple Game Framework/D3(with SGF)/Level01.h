@@ -3,6 +3,7 @@
 
 #include <SGF.h>
 #include "HealthManaBar.h"
+#include "Map.h"
 class Level01:public sgfLevel
 {
 private:
@@ -10,6 +11,7 @@ private:
 	irr::gui::IGUIEnvironment* env;
 	HealthManaBar* HPBar;
 	HealthManaBar* MPBar;
+	Map* map;
 public:
 
 	Level01();
