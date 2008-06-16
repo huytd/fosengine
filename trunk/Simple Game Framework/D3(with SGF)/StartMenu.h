@@ -25,7 +25,7 @@ public:
 			if(args.Caller->getID()==1)//start
 			{
 				printf("Level01\n");
-				emgr->loadLevel(new Level01);
+				emgr->loadLevel(new Level01("levels/start.irr"));
 			}
 			else if(args.Caller->getID()==2)
 			{

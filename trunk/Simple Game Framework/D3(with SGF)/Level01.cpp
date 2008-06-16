@@ -1,9 +1,12 @@
 #include "Level01.h"
-Level01::Level01()
+Level01::Level01(const char* fileName)
+:sgfIrrLevel(fileName)
 {
+	
 }
 void Level01::onEnter(sgfEntityManager* emgr)
 {
+	sgfIrrLevel::onEnter(emgr);
 	this->emgr = emgr;
 	env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
 
@@ -32,10 +35,11 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	map->drop();
 
 	//World.
-	emgr->getCore()->getGraphicDevice()->getSceneManager()->loadScene("levels/start.irr");
+	//emgr->getCore()->getGraphicDevice()->getSceneManager()->loadScene("levels/start.irr");
 
 }
 void Level01::onExit(sgfEntityManager* emgr)
 {
+	sgfIrrLevel::onExit(emgr);
 	env->clear();
 }

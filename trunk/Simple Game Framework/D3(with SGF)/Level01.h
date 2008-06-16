@@ -4,7 +4,7 @@
 #include <SGF.h>
 #include "HealthManaBar.h"
 #include "Map.h"
-class Level01:public sgfLevel
+class Level01:public sgfIrrLevel
 {
 private:
 	sgfEntityManager* emgr;
@@ -14,7 +14,7 @@ private:
 	Map* map;
 public:
 
-	Level01();
+	Level01(const char* fileName);
 	void onEnter(sgfEntityManager* emgr);
 	void onExit(sgfEntityManager* emgr);
 };

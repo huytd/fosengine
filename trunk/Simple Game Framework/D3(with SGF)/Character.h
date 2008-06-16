@@ -97,13 +97,9 @@ private:
 	}
 };
 
-class Character: public sgfEntity
+class Character: public sgfEntity, public LevelEntity<Character>
 {
 public:
-	static sgfEntity* createFromNode(irr::scene::ISceneNode* node)
-	{
-		return new Character(node);
-	}
 
 	Character(irr::scene::ISceneNode* node)
 	{

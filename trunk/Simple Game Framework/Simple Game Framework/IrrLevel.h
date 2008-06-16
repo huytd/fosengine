@@ -31,6 +31,17 @@ protected:
 	static std::map<const char*,createFunctionPtr,strCmp> createFunctions;
 };
 
+/// \brief a template to make dynamic loading easier
+template<class T>
+class LevelEntity
+{
+public:
+	static sgfEntity* createFromNode(irr::scene::ISceneNode* node)
+	{
+		return new T(node);
+	}
+};
+/// \brief register a class for dynamic loading
 #define registerClass(className) sgfIrrLevel::_registerClass( #className , className::createFromNode)
 
 #endif
