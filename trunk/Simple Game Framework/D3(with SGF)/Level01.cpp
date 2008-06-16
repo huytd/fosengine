@@ -33,10 +33,6 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	map->setWorldSize(10000,10000);
 	map->setCharPosition(core::vector3df(5000,0,5000));
 	map->drop();
-
-	//World.
-	//emgr->getCore()->getGraphicDevice()->getSceneManager()->loadScene("levels/start.irr");
-
 }
 void Level01::onExit(sgfEntityManager* emgr)
 {
