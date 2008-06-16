@@ -27,39 +27,87 @@ private:
 	irr::scene::ICameraSceneNode* camera;
 	irr::scene::ISceneNode* root;
 	sgfMethodDelegate<ThirdPersonCamera,SMouseEvent> mouseDelegate;
+	irr::core::vector3df lastTargetPos;
+
+	irr::f32 m_height; //distance above object camera tries to float at
+	irr::f32 m_leash;  //max distance object can be from camera before it moves
+	irr::f32 m_speed;  //rate at which camera moves per Update() 
+
 	void onAdd()
 	{
+		m_speed = 1.0f;
+		m_height = 30.0f;
+		m_leash = 30.0f;
+
 		cursor=manager->getCore()->getGraphicDevice()->getCursorControl();
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 		root=smgr->addEmptySceneNode();
-		camera=smgr->addCameraSceneNode(root,posOffset);
+
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
 		manager->setActive(this,true);
+
+		lastTargetPos = targetNode->getPosition();
+		camera = smgr->addCameraSceneNode(root, lastTargetPos + irr::core::vector3df(0, 20, 30), lastTargetPos, 0 );
 	}
+
 	void update(float deltaTime)
 	{
-		if(rotating)
-		{
-			float deltaY=cursor->getPosition().X-oldX;
-			//printf("%f %d\n",cursor->getRelativePosition().Y,oldY);
-			root->setRotation(root->getRotation()+irr::core::vector3df(0.0f,deltaTime*(float)deltaY/50.0f,0.0f));
-		}
-		irr::core::vector3df target=targetNode->getPosition();
+		//printf ("%f\n",deltaTime);
+		//if(rotating)
+		//{
+		//	float deltaY=cursor->getPosition().X-oldX;
+		//	//printf("%f %d\n",cursor->getRelativePosition().Y,oldY);
+		//	root->setRotation(root->getRotation()+irr::core::vector3df(0.0f,deltaTime*(float)deltaY/50.0f,0.0f));
+		//}
+		//irr::core::vector3df target=targetNode->getPosition();
 		//if((target-camera->getAbsolutePosition()).getLength()>5)
-		root->setPosition(target);
-		camera->setTarget(targetNode->getPosition()+targetOffset);
+		//root->setPosition(target);
+		//camera->setTarget(targetNode->getPosition()+targetOffset);
 
-		irr::scene::ITerrainSceneNode* terr = manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();
+		/*irr::scene::ITerrainSceneNode* terr = manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();
 		if (camera->getPosition().Y < terr->getHeight(camera->getPosition().X, camera->getPosition().Z))
 		{
 			camera->setPosition(irr::core::vector3df(camera->getPosition().X, terr->getHeight(camera->getPosition().X, camera->getPosition().Z), camera->getPosition().Z));
-		}
+		}*/
+
 		//Change camera position by mouse wheel (smooth)
-		irr::core::vector3df camPos = camera->getPosition();
-		if (camPos.Y < nxY) camPos.Y += 0.25;
-		if (camPos.Y > nxY) camPos.Y -= 0.25;
-		camera->setPosition(camPos);
-		
+		//irr::core::vector3df camPos = camera->getPosition();
+		//if (camPos.Y < nxY) camPos.Y += 0.25;
+		//if (camPos.Y > nxY) camPos.Y -= 0.25;
+		//camera->setPosition(camPos);
+
+
+		if(!camera || !targetNode) return;
+
+		irr::core::vector3df currTargetPos = targetNode->getPosition();
+
+		//if too far away, move camera closer
+		irr::core::vector3df camToTarg = currTargetPos - camera->getPosition() ;
+
+		//leash is only in the X-Z plane, so only count distance using X and Z
+		irr::core::vector2df xzDist( camToTarg.X, camToTarg.Z );
+
+		if(xzDist.getLength() > m_leash) { //need to move closer
+			irr::core::vector3df camToTargOrig = irr::core::vector3df( xzDist.X, 0, xzDist.Y);
+			camToTarg = camToTargOrig.normalize() * (camToTargOrig.getLength() - m_leash);
+
+			//set X-Z position
+			camera->setPosition( camera->getPosition() + camToTarg ); //move closer
+
+			//set Y position
+			irr::f32 h_tolerance = m_height / 10;  //the ammount of leway given to how close we need to be to the right height
+			irr::f32 h_delta = camera->getPosition().Y - currTargetPos.Y + m_height; //distance from prefered height position
+			if( camera->getPosition().Y < ( currTargetPos.Y + m_height) - h_tolerance) {
+
+				camera->setPosition( irr::core::vector3df( camera->getPosition().X, camera->getPosition().Y + h_delta/2, camera->getPosition().Z) );
+			}else if( camera->getPosition().Y > ( currTargetPos.Y + m_height) + h_tolerance ) {
+				camera->setPosition( irr::core::vector3df( camera->getPosition().X, camera->getPosition().Y - h_delta/2, camera->getPosition().Z) );
+			}
+		}
+
+		camera->setTarget( currTargetPos ); //look at Target position
+		lastTargetPos = currTargetPos; 
+
 	}
 	void onRemove()
 	{
@@ -74,15 +122,15 @@ private:
 			nxY = camera->getPosition().Y + args.wheel*2;
 			/*if (curCY < nxY)
 			{
-				curCY += 1;
-				//camera->setPosition(camera->getPosition()+irr::core::vector3df(0,args.wheel,0));
-				camera->setPosition(camera->getPosition()+irr::core::vector3df(0,1,0));
+			curCY += 1;
+			//camera->setPosition(camera->getPosition()+irr::core::vector3df(0,args.wheel,0));
+			camera->setPosition(camera->getPosition()+irr::core::vector3df(0,1,0));
 			}
 			if (curCY > nxY)
 			{
-				curCY -= 1;
-				//camera->setPosition(camera->getPosition()+irr::core::vector3df(0,args.wheel,0));
-				camera->setPosition(camera->getPosition()+irr::core::vector3df(0,-1,0));
+			curCY -= 1;
+			//camera->setPosition(camera->getPosition()+irr::core::vector3df(0,args.wheel,0));
+			camera->setPosition(camera->getPosition()+irr::core::vector3df(0,-1,0));
 			}*/
 		}
 		else if(args.mouseEvent==irr::EMIE_MMOUSE_PRESSED_DOWN)
@@ -132,7 +180,7 @@ protected:
 		//collision
 		const irr::core::aabbox3df& box = node->getBoundingBox();
 		irr::core::vector3df radius = box.MaxEdge - box.getCenter();
-		
+
 		irr::scene::ISceneNodeAnimator* anim=new irr::scene::StandOnTerrainAnimator(manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::ITriangleSelector*>(),
 			manager->getCore()->getGraphicDevice()->getSceneManager()->getSceneCollisionManager(),
 			irr::core::vector3df(0,-1.0f,0)
