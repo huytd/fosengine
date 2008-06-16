@@ -5,13 +5,9 @@
 #include "Demo3.h"
 #include <irrlicht.h>
 
-class Terrain: public sgfEntity
+class Terrain: public sgfEntity, public LevelEntity<Terrain>
 {
 public:
-	static sgfEntity* createFromNode(irr::scene::ISceneNode* node)
-	{
-		return new Terrain(node);
-	}
 
 	Terrain(irr::scene::ISceneNode* node)
 	{

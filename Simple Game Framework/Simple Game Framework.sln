@@ -8,6 +8,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3(with SGF)", "D3(with SGF
 		{12939A64-29F2-4B27-8683-0A611798876A} = {12939A64-29F2-4B27-8683-0A611798876A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleGameEditor", "SimpleGameEditor\SimpleGameEditor.vcproj", "{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{12939A64-29F2-4B27-8683-0A611798876A} = {12939A64-29F2-4B27-8683-0A611798876A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +27,10 @@ Global
 		{D3466873-AEA8-4996-964D-167B2DCD742F}.Debug|Win32.Build.0 = Debug|Win32
 		{D3466873-AEA8-4996-964D-167B2DCD742F}.Release|Win32.ActiveCfg = Release|Win32
 		{D3466873-AEA8-4996-964D-167B2DCD742F}.Release|Win32.Build.0 = Release|Win32
+		{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}.Debug|Win32.Build.0 = Debug|Win32
+		{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}.Release|Win32.ActiveCfg = Release|Win32
+		{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
