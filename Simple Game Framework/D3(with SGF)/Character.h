@@ -32,6 +32,7 @@ protected:
 	void onAdd()
 	{
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
+		
 		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/ninja/ninja.b3d"));
 		//node->setDebugDataVisible(irr::scene::EDS_FULL);
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
@@ -42,6 +43,7 @@ protected:
 		//node->setScale(irr::core::vector3df(0.01,0.01,-0.01));
 		node->setPosition(startPos);
 		node->setMaterialFlag(irr::video::EMF_LIGHTING,false);
+		manager->getCore()->globalVars["characterNode"] = node;
 		idle();
 		//collision
 		const irr::core::aabbox3df& box = node->getBoundingBox();

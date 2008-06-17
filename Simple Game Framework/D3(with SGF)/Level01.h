@@ -12,10 +12,12 @@ private:
 	HealthManaBar* HPBar;
 	HealthManaBar* MPBar;
 	Map* map;
+
 public:
 
 	Level01(const char* fileName);
 	void onEnter(sgfEntityManager* emgr);
 	void onExit(sgfEntityManager* emgr);
+	void onUpdate(sgfEntityManager* emgr);
 };
 #endif
