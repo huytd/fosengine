@@ -258,6 +258,14 @@
 				RelativePath=".\Terrain.h"
 				>
 			</File>
+			<File
+				RelativePath=".\ThirdPersonCamera.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ThirdPersonCamera.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
