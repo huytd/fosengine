@@ -26,17 +26,19 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	HPBar->drop();
 	MPBar->drop();
 
+	//! Get character node
+	irr::scene::ISceneNode* characterNode = emgr->getCore()->globalVars["characterNode"].getAs<irr::scene::ISceneNode*>();
+
 	//Map.
 	map = new Map(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
 	map->setMapTexture("map/Worldmap.png");
 	map->setCharacterTexture("map/character.png");
-	map->setWorldSize(10000,10000);
-	map->setCharPosition(core::vector3df(5000,0,5000));
+	map->setWorldSize(512,512);
+	map->setCharPosition(characterNode->getPosition());
 	map->drop();
 }
 void Level01::onExit(sgfEntityManager* emgr)
 {
 	sgfIrrLevel::onExit(emgr);
 	env->clear();
-	
 }
