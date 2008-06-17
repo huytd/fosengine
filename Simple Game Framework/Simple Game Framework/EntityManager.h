@@ -23,6 +23,13 @@ public:
 	void removeEntity(sgfEntity* entity);
 	/// \return the number of entity
 	unsigned int getNumEntity() const;
+	/// \brief Search an entity by its class name
+	/// \remarks Use linear search
+	sgfEntity* getEntityByClassName(const char* className) const;
+	/// \brief Return a list of entity by their class name
+	/// \remarks Use linear search. The list is not guaranteed to be valid
+	/// \remarks if it is not used right after the call.
+	const std::list<sgfEntity*>& getEntityCollectionByClassName(const char* className) const;
 	/// \brief Remove all entity
 	void clear();
 	/// \param entity The entity to check for activeness
@@ -45,6 +52,7 @@ public:
 private:
 	void endGame();
 
+	mutable std::list<sgfEntity*> entityCollection;
 	sgfPtr<sgfLevel> currentLevel;
 	sgfPtr<sgfLevel> previousLevel;
 	std::list<sgfPtr<sgfEntity>> entities;

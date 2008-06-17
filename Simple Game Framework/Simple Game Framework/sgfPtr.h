@@ -66,12 +66,12 @@ public:
 		return ptr;
 	}
 
-	T* operator->()
+	T* operator->() const
 	{
 		return ptr;
 	}
 
-	T& operator*()
+	T& operator*() const
 	{
 		  return *ptr;
 	}
