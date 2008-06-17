@@ -1,6 +1,6 @@
 ﻿#include "Map.h"
 const short int miniMapSizeWidth = 150;
-const short int miniMapSizeHeight = 180;
+const short int miniMapSizeHeight = 150;
 const SColor KeyColor = SColor(255,255,255,255);
 //Khởi tạo đối tượng.
 Map::Map(const rect<s32>& rect, IGUIEnvironment* env, IGUIElement* parent)
@@ -145,7 +145,7 @@ void Map::draw()
 	{
 
 		//Draw Map.
-		driver->draw2DImage(imgMap,position2d<s32>(screenSize.Width - mapSize.Width,0));
+		driver->draw2DImage(imgMap,position2d<s32>(screenSize.Width - mapSize.Width,0)  ,0,0,true);
 
 		//Draw Character Icon.
 		driver->draw2DImage(imgCharacter,characterIconPos);
@@ -157,6 +157,6 @@ void Map::draw()
 		driver->draw2DImage(imgMap,position2d<s32>(screenSize.Width - miniMapSizeWidth,0),miniMapRect);
 
 		//Draw Character Icon.
-		driver->draw2DImage(imgCharacter,characterIconPos);
+		driver->draw2DImage(imgCharacter,characterIconPos,core::rect<s32>(0,0,16,16),0,  video::SColor(255,255,255,255), true);
 	}
 }
