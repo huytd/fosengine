@@ -20,7 +20,7 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	MPBar->setTexture("bar/MP.png");
 	MPBar->setPosition(10,36);
 	MPBar->setMaxValue(150);
-	MPBar->setValue(110);
+	MPBar->setValue(10);
 
 	//Destroy object
 	HPBar->drop();
@@ -28,8 +28,8 @@ void Level01::onEnter(sgfEntityManager* emgr)
 
 	//Map.
 	map = new Map(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
-	map->setMapTexture("map/LevelOneState.jpg");
-	map->setCharacterTexture("map/character.jpg");
+	map->setMapTexture("map/Worldmap.png");
+	map->setCharacterTexture("map/character.png");
 	map->setWorldSize(10000,10000);
 	map->setCharPosition(core::vector3df(5000,0,5000));
 	map->drop();
@@ -38,4 +38,5 @@ void Level01::onExit(sgfEntityManager* emgr)
 {
 	sgfIrrLevel::onExit(emgr);
 	env->clear();
+	
 }
