@@ -60,6 +60,29 @@ void sgfEntityManager::removeEntity(sgfEntity* entity)
 	generalEvent.removeDelegate(&tempDelegate);
 }
 
+sgfEntity* sgfEntityManager::getEntityByClassName(const char* className) const
+{
+	std::list<sgfPtr<sgfEntity>>::const_iterator i;
+	for(i=entities.begin();i!=entities.end();i++)
+	{
+		if(!strcmp(className,(*i)->getClassName()))
+			return *i;
+	}
+	return 0;
+}
+
+const std::list<sgfEntity*>& sgfEntityManager::getEntityCollectionByClassName(const char* className) const
+{
+	entityCollection.clear();
+	std::list<sgfPtr<sgfEntity>>::const_iterator i;
+	for(i=entities.begin();i!=entities.end();i++)
+	{
+		if(!strcmp(className,(*i)->getClassName()))
+			entityCollection.push_back(*i);
+	}
+	return entityCollection;
+}
+
 void sgfEntityManager::clear()
 {
 	generalEvent.removeAll();

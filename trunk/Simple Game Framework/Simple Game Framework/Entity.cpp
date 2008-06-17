@@ -50,6 +50,10 @@ void sgfEntity::onLevelStart()
 {
 }
 
+const char* sgfEntity::getClassName() const
+{
+	return "unknown";
+}
 sgfEntityManager* sgfEntity::getManager() const
 {
 	return manager;

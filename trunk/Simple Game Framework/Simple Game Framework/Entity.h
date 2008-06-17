@@ -37,6 +37,8 @@ public:
 	//sgfEvent<SEntityEvent>* getEntityEvent() const;
 	/// \return The current manager of this entity or NULL
 	sgfEntityManager* getManager() const;
+	/// \return the class name of this entity;
+	virtual const char* getClassName() const;
 protected:
 	/// \brief The event handler
 	virtual void onEvent(SEntityEvent& param);
