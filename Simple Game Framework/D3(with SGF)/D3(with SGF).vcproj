@@ -266,6 +266,10 @@
 				RelativePath=".\ThirdPersonCamera.h"
 				>
 			</File>
+			<File
+				RelativePath=".\Utility.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

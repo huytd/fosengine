@@ -36,17 +36,17 @@ void Level01::onGUIEvent(irr::SEvent::SGUIEvent& args)
 	{
 		if(args.EventType==irr::gui::EGET_BUTTON_CLICKED)
 		{
-			if(args.Caller->getID() == 101)
+			if(args.Caller == btn1)
 			{
-				printf("BTN1 clicked\n");
+				emgr->loadLevel(emgr->getPreviousLevel());
 			}
-			else if(args.Caller->getID() == 102)
+			else if(args.Caller == btn2)
 			{
-				printf("BTN2 clicked\n");
+				map->setVisible(!map->isVisible());		
 			}
-			else if(args.Caller->getID() == 103)
+			else if(args.Caller == btn3)
 			{
-				printf("BTN3 clicked\n");
+				map->setExpand(!map->getIsExpand());
 			}
 		}
 	}
@@ -55,6 +55,7 @@ void Level01::onEnter(sgfEntityManager* emgr)
 {
 	sgfIrrLevel::onEnter(emgr);
 	this->emgr = emgr;
+	
 	env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
 	setFont(emgr, "font/myfont.xml");
 	//HP and MP Bar.
@@ -90,11 +91,10 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	//Toolbar in game.
 	toolbar = env->addImage(env->getVideoDriver()->getTexture("hud/toolbar.png"),position2d<s32>((screenSize.Width/2)-512,screenSize.Height-64),true);
 	btn1 = createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn1.png"),position2df(((screenSize.Width/2)-512) + 163, screenSize.Height - 35),L"Thoát game");
-	btn1->setID(101);
 	btn2 = createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn2.png"),position2df(((screenSize.Width/2)-512) + 193, screenSize.Height - 36),L"Ẩn/Hiện bản đồ");
-	btn2->setID(102);
 	btn3 = createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn3.png"),position2df(((screenSize.Width/2)-512) + 224, screenSize.Height - 35),L"Phóng to/Thu nhỏ bản đồ");
-	btn3->setID(103);
+	
+	emgr->getCore()->getGUIEvent()->addDelegate(&onGUI);
 }
 void Level01::onExit(sgfEntityManager* emgr)
 {
