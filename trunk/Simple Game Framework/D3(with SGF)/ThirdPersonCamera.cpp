@@ -28,6 +28,9 @@ ThirdPersonCamera::ThirdPersonCamera(ISceneNode* targetNode)
 
 void ThirdPersonCamera::onAdd()
 {
+}
+void ThirdPersonCamera::onLevelStart()
+{
 		cursor = manager->getCore()->getGraphicDevice()->getCursorControl();
 		ISceneManager* smgr = manager->getCore()->getGraphicDevice()->getSceneManager();
 		camera = smgr->addCameraSceneNode();//add camera.

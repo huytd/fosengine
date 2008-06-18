@@ -8,11 +8,11 @@
 class Terrain: public sgfEntity, public LevelEntity<Terrain>
 {
 public:
-
 	Terrain(irr::scene::ISceneNode* node)
 	{
 		this->node=(irr::scene::ITerrainSceneNode*)node;
 	}
+
 	void onAdd()
 	{
 		manager->getCore()->globalVars["terrain"]=(void*)node;

@@ -39,6 +39,7 @@ private:
 	ITerrainSceneNode* terrain;
 	sgfMethodDelegate<ThirdPersonCamera,SMouseEvent> mouseDelegate;//Register mouse event.
 	void onAdd();
+	void onLevelStart();
 	void update(float deltaTime);//Update.
 	void onRemove();
 	void onMouse(SMouseEvent& args);
