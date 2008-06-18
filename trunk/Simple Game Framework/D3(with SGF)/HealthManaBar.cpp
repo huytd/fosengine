@@ -41,6 +41,8 @@ void HealthManaBar::setTransparent(short int Transparent)
 }
 void HealthManaBar::draw()
 {
+	if(!IsVisible)
+		return;
 	IVideoDriver* driver = Environment->getVideoDriver();	
 
 	//Draw Background.

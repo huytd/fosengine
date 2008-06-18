@@ -172,11 +172,20 @@ public:
 				++i;
 		}
 		iterating=false;
+		if(toAdd.size())
+			Delegates.splice(Delegates.end(),toAdd);
 	}
 
 	void addDelegate(sgfDelegate<T>* Delegate)
 	{
-		Delegates.push_back(TDelegate(Delegate));
+		if(iterating)
+		{
+			toAdd.push_back(TDelegate(Delegate));
+		}
+		else
+		{
+			Delegates.push_back(TDelegate(Delegate));
+		}
 	}
 
 	void removeDelegate(sgfDelegate<T>* Delegate)
@@ -220,6 +229,7 @@ public:
 protected:
 	std::list<TDelegate> Delegates;
 private:
+	std::list<TDelegate> toAdd;
 	sgfDelegate<T>* current;
 	bool iterating;
 	bool needRemoval;

@@ -139,7 +139,9 @@ void Map::Calc()
 
 
 void Map::draw()
-{	
+{
+	if(!IsVisible)
+		return;
 	Calc();   
 	if (isExpand)//nếu trong tình trạng mở rộng.
 	{

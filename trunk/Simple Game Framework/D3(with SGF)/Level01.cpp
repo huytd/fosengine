@@ -8,7 +8,7 @@ irr::gui::IGUIButton* createGUIBtn(sgfEntityManager* mgr, irr::video::ITexture* 
 	bt = env->addButton(core::rect<irr::s32>(pos.X, pos.Y, pos.X + 36, pos.Y + 36),0,-1,0,tooltiptext);
 	bt->setImage(tex);
 	bt->setUseAlphaChannel(true);
-	bt->grab();
+	//bt->grab(); // why???
 	return bt;
 }
 
