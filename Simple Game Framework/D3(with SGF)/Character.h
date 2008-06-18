@@ -7,13 +7,9 @@
 #include "ThirdPersonCamera.h"
 #include <irrlicht.h>
 
-class Character: public sgfEntity
+class Character: public sgfEntity, public LevelEntity<Character>//this entity is loadable from level
 {
 public:
-	static sgfEntity* createFromNode(irr::scene::ISceneNode* node)
-	{
-		return new Character(node);
-	}
 
 	Character(irr::scene::ISceneNode* node)
 	{
@@ -23,6 +19,11 @@ public:
 		mouseDelegate.bind(this,&Character::onMouse);
 		startPos=node->getAbsolutePosition();
 		node->remove();
+	}
+
+	const char* getClassName() const
+	{
+		return "Character";
 	}
 protected:
 	void onLevelStart()
