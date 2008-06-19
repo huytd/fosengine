@@ -1,12 +1,11 @@
 #include "Demo3.h"
-#include "SGF.h"
+#include <SGF.h>
 #include "Terrain.h"
 #include "Character.h"
 #include "StartMenu.h"
 #include <exception>
 using namespace irr;
 
-Demo3* Demo3::instance=NULL;
 void testException()
 {
 	throw std::exception("test exception");
@@ -14,9 +13,8 @@ void testException()
 
 Demo3::Demo3()
 {
-	Demo3::instance=this;//single instance
 	core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
-	core.init();//initialize the core
+	core.init(this);//initialize the core
 	//set skin(use script to set skin)
 	//core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
 	//display fps

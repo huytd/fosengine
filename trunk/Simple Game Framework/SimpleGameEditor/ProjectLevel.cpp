@@ -23,7 +23,6 @@ ProjectLevel::ProjectLevel()
 
 ProjectLevel::~ProjectLevel()
 {
-	delete setting;
 }
 
 void ProjectLevel::onEnter(sgfEntityManager* emgr)
@@ -32,11 +31,18 @@ void ProjectLevel::onEnter(sgfEntityManager* emgr)
 	emgr->getCore()->getInputManager()->getKeyboardEvent()->addDelegate(keyDelegate);
 	emgr->getCore()->getInputManager()->getMouseEvent()->addDelegate(mouseDelegate);
 	this->emgr=emgr;
-	att=emgr->getCore()->getFileSystem()->createEmptyAttributes(emgr->getCore()->getGraphicDevice()->getVideoDriver());
-	setting=new SGEProjectSetting(emgr->getCore()->getFileSystem());
+	IFileSystem* fs=emgr->getCore()->getFileSystem();
+	originalPath=fs->getWorkingDirectory();
+	att=fs->createEmptyAttributes(emgr->getCore()->getGraphicDevice()->getVideoDriver());
+	setting=new SGEProjectSetting(fs);
 	createGUI();
 	load(untitled);
 	fileName="";
+	if(emgr->getCore()->getFileSystem()->existFile("resources/lastTime.sgp"))
+	{
+		setting->read("resources/lastTime.sgp");
+		fs->changeWorkingDirectoryTo(setting->workingDir.c_str());
+	}
 }
 
 void ProjectLevel::createScene()
@@ -70,6 +76,9 @@ void ProjectLevel::onExit(sgfEntityManager* emgr)
 	emgr->getCore()->getInputManager()->getMouseEvent()->removeDelegate(mouseDelegate);
 	this->emgr=0;
 	att->drop();
+	emgr->getCore()->getFileSystem()->changeWorkingDirectoryTo(originalPath.c_str());//restore the path
+	setting->write("resources/lastTime.sgp");//save settings
+	delete setting;
 	textEditor->drop();
 	projectWindow->drop();
 	emgr->getCore()->getGraphicDevice()->getSceneManager()->clear();

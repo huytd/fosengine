@@ -24,7 +24,7 @@ public:
 	/*!\brief Initialize the core
 	 *
 	 */
-	virtual void init();
+	virtual void init(sgfGame* game);
 	/*! \brief Return the graphic device
 	 *\return The graphic device
 	 */
@@ -49,12 +49,15 @@ public:
 	{
 		return static_cast<gameClass*>(game);
 	}
+	inline sgfGame* getGame() const
+	{
+		return game;
+	}
 	/// \brief Multi-purpose varSet
 	sgfDynamicVarSet globalVars;
 	/// \brief Default configuration
 	Configuration config;
-private:
-	virtual void updateGraphic(SFrameEvent& data);
+
 private:
 	sgfEvent<SFrameEvent>* getFrameEvent() const;
 	bool inited;

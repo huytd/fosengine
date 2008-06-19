@@ -1,4 +1,5 @@
 #include "Core.h"
+#include "Game.h"
 
 using namespace irr;
 using namespace video;
@@ -16,14 +17,11 @@ sgfCore::~sgfCore()
 	delete guiSkin;
 }
 
-static irr::video::IVideoDriver* vd;
-static irr::scene::ISceneManager* smgr;//speed up graphic updating
-static irr::gui::IGUIEnvironment* env;
-
-void sgfCore::init()
+void sgfCore::init(sgfGame* game)
 {
 	if(inited)
 		return;
+	this->game=game;
 	IrrlichtDevice* tempDevice=createDevice(irr::video::EDT_NULL);
 	if(!config.read(tempDevice))// if config file is not found
 		config.write(tempDevice);// write it
@@ -36,7 +34,7 @@ void sgfCore::init()
 	globalVars.setTable(scriptVM,scriptVM->GetGlobals());
 	//-------------------------------------
 	//GUI
-	env=graphicDevice->getGUIEnvironment();
+	irr::gui::IGUIEnvironment* env=graphicDevice->getGUIEnvironment();
 	guiSkin=new irr::gui::CGUITexturedSkin(env,graphicDevice->getFileSystem());
 	env->setSkin(guiSkin);
 	//initialize input
@@ -48,24 +46,10 @@ void sgfCore::init()
 	//frame event
 	frameEvent.addDelegate(frameStartEvent.Delegate);
 	frameEvent.addDelegate(new sgfMethodDelegate<sgfEntityManager,SFrameEvent>(entityManager,&sgfEntityManager::update));
-	frameEvent.addDelegate(new sgfMethodDelegate<sgfCore,SFrameEvent>(this,&sgfCore::updateGraphic));//there's no leak here
+	frameEvent.addDelegate(new sgfMethodDelegate<sgfGame,SFrameEvent>(game,&sgfGame::updateGraphic));//there's no leak here
 	frameEvent.addDelegate(frameEndEvent.Delegate);
-	inited=true;
-	vd=graphicDevice->getVideoDriver();//some shortcuts to speed up rendering loop
-	smgr=graphicDevice->getSceneManager();
-}
 
-void sgfCore::updateGraphic(SFrameEvent& data)
-{
-	if(graphicDevice->isWindowActive())
-	{
-		vd->beginScene(true,true,SColor(0,200,200,200));
-		smgr->drawAll();
-		env->drawAll();
-		vd->endScene();
-	}
-	else
-		graphicDevice->yield();
+	inited=true;
 }
 
 sgfEntityManager* sgfCore::getEntityManager() const

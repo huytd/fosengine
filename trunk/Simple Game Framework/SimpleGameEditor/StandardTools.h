@@ -247,6 +247,11 @@ public:
 				scaleVect=core::vector3df(0,(f32)(oldY-args.y),0);
 			}
 			scaleVect=scaleVect/800;
+			core::matrix4 m;
+			core::vector3df camRot=manager->getCore()->getGraphicDevice()->getSceneManager()->getActiveCamera()->getRotation();
+			camRot.X=0;
+			m.setRotationDegrees(camRot);
+			m.transformVect(scaleVect);
 			ProjectLevel* level=(ProjectLevel*)(manager->getCurrentLevel());
 			ISceneNode* node=level->getSelectedNode();
 			if(node&&(node!=manager->getCore()->getGraphicDevice()->getSceneManager()->getRootSceneNode()))

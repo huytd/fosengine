@@ -8,7 +8,7 @@ using namespace gui;
 SGE::SGE()
 {
 	core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
-	core.init();
+	core.init(this);
 	core.getGraphicDevice()->setResizeAble(true);
 	core.getGraphicDevice()->setWindowCaption(L"Simple Game Editor - untitled.irr");
 	//gui

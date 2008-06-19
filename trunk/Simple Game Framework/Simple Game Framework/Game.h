@@ -1,7 +1,7 @@
 #ifndef _sgfGame_H_
 #define _sgfGame_H_
 
-#include "irrlicht.h"
+#include <irrlicht.h>
 //#include "ScriptVM.h"
 #include "Event.h"
 #include "StandardEvents.h"
@@ -18,7 +18,8 @@ public:
 	virtual void run();
 	/// \brief stop the game
 	virtual void quit();
-
+	/// \brief Update graphic, use by the engine
+	virtual void updateGraphic(SFrameEvent& data);
 protected:
 	/// \brief Whether the game is running
 	bool running;
