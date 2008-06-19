@@ -1,28 +1,5 @@
 ﻿#include "Level01.h"
-
-//! Quickly create IGUIButton
-irr::gui::IGUIButton* createGUIBtn(sgfEntityManager* mgr, irr::video::ITexture* tex, core::position2df pos, wchar_t* tooltiptext=0)
-{
-	gui::IGUIButton* bt;
-	gui::IGUIEnvironment* env=mgr->getCore()->getGraphicDevice()->getGUIEnvironment();
-	bt = env->addButton(core::rect<irr::s32>(pos.X, pos.Y, pos.X + 36, pos.Y + 36),0,-1,0,tooltiptext);
-	bt->setImage(tex);
-	bt->setUseAlphaChannel(true);
-	//bt->grab(); // why???
-	return bt;
-}
-
-//! Set font
-void setFont(sgfEntityManager* mgr, const irr::c8* fileName)
-{
-	gui::IGUIEnvironment* env=mgr->getCore()->getGraphicDevice()->getGUIEnvironment();
-	irr::gui::IGUIFont* font = env->getFont(fileName);
-	if (font)
-	{
-		env->getSkin()->setFont(font);
-		env->getSkin()->setFont(font, irr::gui::EGDF_TOOLTIP);
-	}
-}
+#include "Utility.h"
 
 Level01::Level01(const char* fileName)
 :sgfIrrLevel(fileName)
@@ -57,7 +34,8 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	this->emgr = emgr;
 	
 	env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
-	setFont(emgr, "font/myfont.xml");
+	Utility->setFont(emgr, "font/myfont.xml");
+	
 	//HP and MP Bar.
 	HPBar = new HealthManaBar(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
 	MPBar = new HealthManaBar(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
@@ -69,11 +47,11 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	MPBar->setPosition(10,36);
 	MPBar->setMaxValue(150);
 	MPBar->setValue(10);
-
+	
 	//Destroy object
 	HPBar->drop();
 	MPBar->drop();
-
+	
 	//! Get character node
 	irr::scene::ISceneNode* characterNode = emgr->getCore()->globalVars["characterNode"].getAs<irr::scene::ISceneNode*>();
 
@@ -90,10 +68,10 @@ void Level01::onEnter(sgfEntityManager* emgr)
 
 	//Toolbar in game.
 	toolbar = env->addImage(env->getVideoDriver()->getTexture("hud/toolbar.png"),position2d<s32>((screenSize.Width/2)-512,screenSize.Height-64),true);
-	btn1 = createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn1.png"),position2df(((screenSize.Width/2)-512) + 163, screenSize.Height - 35),L"Thoát game");
-	btn2 = createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn2.png"),position2df(((screenSize.Width/2)-512) + 193, screenSize.Height - 36),L"Ẩn/Hiện bản đồ");
-	btn3 = createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn3.png"),position2df(((screenSize.Width/2)-512) + 224, screenSize.Height - 35),L"Phóng to/Thu nhỏ bản đồ");
-	
+	/*btn1 = Utility.createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn1.png"),position2df(((screenSize.Width/2)-512) + 163, screenSize.Height - 35),L"Thoát game");
+	btn2 = Utility.createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn2.png"),position2df(((screenSize.Width/2)-512) + 193, screenSize.Height - 36),L"Ẩn/Hiện bản đồ");
+	btn3 = Utility.createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn3.png"),position2df(((screenSize.Width/2)-512) + 224, screenSize.Height - 35),L"Phóng to/Thu nhỏ bản đồ");
+	*/
 	emgr->getCore()->getGUIEvent()->addDelegate(&onGUI);
 }
 void Level01::onExit(sgfEntityManager* emgr)
