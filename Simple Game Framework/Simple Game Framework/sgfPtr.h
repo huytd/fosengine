@@ -11,7 +11,7 @@ public:
 		:ptr(0)
 	{
 	}
-	explicit sgfPtr(const T* obj)
+	sgfPtr(const T* obj)
 		:ptr(0)
 	{
 		assign(obj);

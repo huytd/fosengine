@@ -8,8 +8,7 @@ class Demo3 :
 public:
 	Demo3(void);
 	~Demo3(void);
-public:
-	static Demo3* instance;
+
 private:
 	void showFPS(SFrameEvent&);
 };

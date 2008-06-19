@@ -24,11 +24,13 @@
  *
  */
 
+#ifdef _MSC_VER
 #pragma comment(lib,"SGF.lib")
 #pragma comment(lib,"irrlicht.lib")
+#endif
 
 #include "Game.h"
-//#include "ScriptVM.h"
+#include "ScriptVM.h"
 #include "Entity.h"
 #include "EntityManager.h"
 #include "Event.h"
@@ -38,6 +40,7 @@
 //#include "StandardComponents.h"
 ///\def SGF_LAZY
 ///\brief define this symbol to make all namespace members of Irrlicht global(not recommended)
+
 #ifdef SGF_LAZY
 using namespace irr;
 using namespace video;

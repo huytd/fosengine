@@ -1,7 +1,7 @@
 #ifndef _CHARACTER_H_
 #define _CHARACTER_H_
 
-#include "SGF.h"
+#include <SGF.h>
 #include "JointAnimator.h"
 #include "StandOnTerrainAnimator.h"
 #include "ThirdPersonCamera.h"

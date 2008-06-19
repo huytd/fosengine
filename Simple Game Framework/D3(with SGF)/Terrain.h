@@ -1,7 +1,7 @@
 #ifndef _TERRAIN_H_
 #define _TERRAIN_H_
 
-#include "SGF.h"
+#include <SGF.h>
 #include "Demo3.h"
 #include <irrlicht.h>
 

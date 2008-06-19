@@ -30,7 +30,7 @@ public:
 			}
 			else if(args.Caller->getID()==2)
 			{
-				Demo3::instance->quit();
+				emgr->getCore()->getGame()->quit();
 			}
 		}
 	}

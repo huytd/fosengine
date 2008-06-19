@@ -83,6 +83,7 @@ private:
 	irr::gui::IGUIWindow* projectWindow;
 	irr::gui::IGUIElement* lockStatus;
 	irr::gui::IGUIWindow* textEditor;
+	irr::core::stringc originalPath;
 	std::map<irr::scene::ISceneNode*,std::string> sceneNodeData;
 	char openFileName[1024];
 	char editorBuffer[800];

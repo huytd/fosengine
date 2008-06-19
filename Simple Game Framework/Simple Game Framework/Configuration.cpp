@@ -36,9 +36,10 @@ bool Configuration::read(irr::IrrlichtDevice* device)
 			const irr::u32 driver = xml->getAttributeValueAsInt(L"driver");
 			irr::video::E_DRIVER_TYPE driverType=(irr::video::E_DRIVER_TYPE)driver;
 			this->params.DriverType = driverType;
-			this->params.Fullscreen = (bool)(xml->getAttributeValueAsInt(L"fullscreen"));
-			this->params.Stencilbuffer = (bool)(xml->getAttributeValueAsInt(L"stencilbuffer"));
-			this->params.Vsync = (bool)(xml->getAttributeValueAsInt(L"vsync"));
+			this->params.Fullscreen = (xml->getAttributeValueAsInt(L"fullscreen")!=0);
+			this->params.Stencilbuffer = (xml->getAttributeValueAsInt(L"stencilbuffer")!=0);
+			this->params.Vsync = (xml->getAttributeValueAsInt(L"vsync")!=0);
+			this->params.AntiAlias= (xml->getAttributeValueAsInt(L"antialias")!=0);
 		}
 
 		else if (irr::core::stringw("resolution") == xml->getNodeName()) 
@@ -100,7 +101,8 @@ void Configuration::write(irr::IrrlichtDevice* device) const
 		L"driver", driver.c_str(),
 		L"fullscreen", irr::core::stringw(this->params.Fullscreen).c_str(),
 		L"stencilbuffer", irr::core::stringw(this->params.Stencilbuffer).c_str(),
-		L"vsync", irr::core::stringw(this->params.Vsync).c_str()
+		L"vsync", irr::core::stringw(this->params.Vsync).c_str(),
+		L"antialias", irr::core::stringw(this->params.AntiAlias).c_str()
 	);
 
 	xmlw->writeLineBreak();

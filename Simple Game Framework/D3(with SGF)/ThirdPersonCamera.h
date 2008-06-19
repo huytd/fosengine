@@ -11,7 +11,7 @@
 #ifndef _THIRD_PERSON_CAMERA_H_
 #define _THIRD_PERSON_CAMERA_H_
 
-#include "SGF.h"
+#include <SGF.h>
 #include <functional>
 #include <irrlicht.h>
 using namespace irr;
