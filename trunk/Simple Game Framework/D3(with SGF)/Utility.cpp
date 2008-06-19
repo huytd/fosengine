@@ -13,7 +13,17 @@ void Utility::setFont(sgfEntityManager *mgr, const irr::c8 *fileName)
 			{
 				env->getSkin()->setFont(font);
 				env->getSkin()->setFont(font, irr::gui::EGDF_TOOLTIP);
+				env->getSkin()->setFont(font, irr::gui::EGDF_BUTTON);
 			}
+			
+}
+
+void Utility::setTxColor(sgfEntityManager *mgr, const irr::video::SColor col, irr::gui::EGUI_DEFAULT_COLOR which)
+{
+	irr::gui::IGUIEnvironment* env=mgr->getCore()->getGraphicDevice()->getGUIEnvironment();
+	irr::video::SColor co = env->getSkin()->getColor(which);
+	co.set(col.getAlpha(), col.getRed(), col.getBlue(), col.getGreen());
+	env->getSkin()->setColor(which, co);
 }
 
 irr::gui::IGUIButton* Utility::createGUIBtn(sgfEntityManager *mgr, irr::video::ITexture *tex, irr::core::position2df pos, wchar_t *tooltiptext)

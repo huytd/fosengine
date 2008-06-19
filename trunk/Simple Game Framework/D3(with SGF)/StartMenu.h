@@ -41,11 +41,14 @@ public:
 		irr::gui::IGUIEnvironment* env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
 		irr::gui::ICursorControl* cursor = emgr->getCore()->getGraphicDevice()->getCursorControl();
 		irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
-		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-80)/2,(screenSize.Height-60)/2,
-			                                     (screenSize.Width+80)/2,
+		Utility::setTxColor(emgr,irr::video::SColor(255,255,0,0),EGDC_BUTTON_TEXT);
+		env->addImage(env->getVideoDriver()->getTexture("textures/startBG.jpg"),position2d<s32>(0,0),false,0,-1,0);
+		
+		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-150),(screenSize.Height-60)/2,
+			                                     (screenSize.Width),
 												 (screenSize.Height+60)/2), 0, 1,  L"Start", L"Bắt đầu game");
-		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-80)/2,(screenSize.Height-60)/2+50,
-			                                     (screenSize.Width+80)/2,
+		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-150),(screenSize.Height-60)/2+50,
+			                                     (screenSize.Width),
 												 (screenSize.Height+60)/2+50), 0, 2,  L"Quit", L"Thoát khỏi game");
 		emgr->getCore()->getGUIEvent()->addDelegate(&onGUI);
 		cursor->setPosition(screenSize.Width/2,screenSize.Height/2);//Đặt con trỏ chuột đúng giữa nút bắt đầu.
