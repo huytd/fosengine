@@ -4,6 +4,7 @@
 #include <SGF.h>
 #include "Level01.h"
 #include "GameLevel.h"
+#include "Utility.h"
 
 class StartMenu:public sgfLevel
 {
@@ -36,16 +37,16 @@ public:
 	void onEnter(sgfEntityManager* emgr)
 	{
 		this->emgr=emgr;
-		
+		Utility::setFont(emgr,"font/myfont.xml");
 		irr::gui::IGUIEnvironment* env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
 		irr::gui::ICursorControl* cursor = emgr->getCore()->getGraphicDevice()->getCursorControl();
 		irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
 		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-80)/2,(screenSize.Height-60)/2,
 			                                     (screenSize.Width+80)/2,
-												 (screenSize.Height+60)/2), 0, 1,  L"Start", L"Start the game");
+												 (screenSize.Height+60)/2), 0, 1,  L"Start", L"Bắt đầu game");
 		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-80)/2,(screenSize.Height-60)/2+50,
 			                                     (screenSize.Width+80)/2,
-												 (screenSize.Height+60)/2+50), 0, 2,  L"Quit", L"Quit the game");
+												 (screenSize.Height+60)/2+50), 0, 2,  L"Quit", L"Thoát khỏi game");
 		emgr->getCore()->getGUIEvent()->addDelegate(&onGUI);
 		cursor->setPosition(screenSize.Width/2,screenSize.Height/2);//Đặt con trỏ chuột đúng giữa nút bắt đầu.
 	}
