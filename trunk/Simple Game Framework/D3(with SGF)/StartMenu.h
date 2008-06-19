@@ -36,6 +36,7 @@ public:
 	void onEnter(sgfEntityManager* emgr)
 	{
 		this->emgr=emgr;
+		
 		irr::gui::IGUIEnvironment* env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
 		irr::gui::ICursorControl* cursor = emgr->getCore()->getGraphicDevice()->getCursorControl();
 		irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();

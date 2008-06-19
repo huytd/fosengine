@@ -183,6 +183,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CharSelectScreen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CharSelectScreen.h"
+				>
+			</File>
+			<File
 				RelativePath=".\D3(with SGF).cpp"
 				>
 			</File>
@@ -264,6 +272,10 @@
 			</File>
 			<File
 				RelativePath=".\ThirdPersonCamera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Utility.cpp"
 				>
 			</File>
 			<File
