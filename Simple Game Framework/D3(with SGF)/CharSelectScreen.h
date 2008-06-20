@@ -9,7 +9,7 @@ private:
 	sgfEntityManager* emgr;
 	irr::gui::IGUIEnvironment* env;
 	sgfMethodDelegate<CharSelectScreen,irr::SEvent::SGUIEvent> onGUI;
-
+	irr::gui::IGUIImage* bgimg;
 public:
 
 	CharSelectScreen();
