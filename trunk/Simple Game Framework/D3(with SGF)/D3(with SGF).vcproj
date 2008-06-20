@@ -282,6 +282,18 @@
 				RelativePath=".\Utility.h"
 				>
 			</File>
+			<Filter
+				Name="HUD"
+				>
+				<File
+					RelativePath=".\HUDControler.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\HUDControler.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
