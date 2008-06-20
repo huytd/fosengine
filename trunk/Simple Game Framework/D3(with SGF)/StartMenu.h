@@ -5,12 +5,14 @@
 #include "Level01.h"
 #include "GameLevel.h"
 #include "Utility.h"
+#include "CharSelectScreen.h"
 
 class StartMenu:public sgfLevel
 {
 private:
 	sgfMethodDelegate<StartMenu,irr::SEvent::SGUIEvent> onGUI;
 	sgfEntityManager* emgr;
+	irr::gui::IGUIImage* bgimg;
 public:
 
 	StartMenu()
@@ -26,7 +28,8 @@ public:
 			if(args.Caller->getID()==1)//start
 			{
 				printf("Level01\n");
-				emgr->loadLevel(new Level01("levels/start.irr"));
+				//emgr->loadLevel(new Level01("levels/start.irr"));
+				emgr->loadLevel(new CharSelectScreen());
 			}
 			else if(args.Caller->getID()==2)
 			{
@@ -42,8 +45,10 @@ public:
 		irr::gui::ICursorControl* cursor = emgr->getCore()->getGraphicDevice()->getCursorControl();
 		irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
 		Utility::setTxColor(emgr,irr::video::SColor(255,255,0,0),EGDC_BUTTON_TEXT);
-		env->addImage(env->getVideoDriver()->getTexture("textures/startBG.jpg"),position2d<s32>(0,0),false,0,-1,0);
-		
+		//env->addImage(env->getVideoDriver()->getTexture("textures/startBG.jpg"),position2d<s32>(0,0),false,0,-1,0);
+		bgimg = env->addImage(irr::core::rect<irr::s32>(0,0,screenSize.Width, screenSize.Height),0,-1,0);
+		bgimg->setImage(env->getVideoDriver()->getTexture("textures/startBG.jpg"));
+		bgimg->setScaleImage(true);
 		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-150),(screenSize.Height-60)/2,
 			                                     (screenSize.Width),
 												 (screenSize.Height+60)/2), 0, 1,  L"Start", L"Bắt đầu game");
