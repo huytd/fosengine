@@ -32,8 +32,7 @@ void HUDControler::onLevelStart()
 		map->setCharacterTexture("map/character.png");
 		map->setWorldSize(512,512);
 		map->setCharPosition(targetNode->getPosition());
-		map->drop();
-
+		
 		manager->setActive(this,true);
 }
 
