@@ -43,5 +43,5 @@ irr::s32 Utility::SX(sgfEntityManager *mgr, irr::s32 x)
 
 irr::s32 Utility::SY(sgfEntityManager *mgr, irr::s32 y)
 {
-	return (irr::s32)(mgr->getCore()->getGraphicDevice()->getVideoDriver()->getScreenSize().Height*(irr::f32)(x)/768.0f);
+	return (irr::s32)(mgr->getCore()->getGraphicDevice()->getVideoDriver()->getScreenSize().Height*(irr::f32)(y)/768.0f);
 }
