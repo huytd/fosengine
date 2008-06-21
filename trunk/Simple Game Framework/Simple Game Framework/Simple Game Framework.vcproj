@@ -184,14 +184,7 @@
 				RelativePath=".\DynamicVar.h"
 				>
 			</File>
-			<File
-				RelativePath=".\EmptyEntity.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\EmptyEntity.h"
-				>
-			</File>
+		
 			<File
 				RelativePath=".\Entity.cpp"
 				>
