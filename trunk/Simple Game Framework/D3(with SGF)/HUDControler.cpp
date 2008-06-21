@@ -14,29 +14,35 @@ using namespace scene;
 using namespace core;
 HUDControler::HUDControler(ISceneNode* targetNode)
 {    
-	    //this->targetNode = targetNode;		
+	    this->targetNode = targetNode;		
 } 
 
 void HUDControler::onAdd()
 {
-
 }
+
 void HUDControler::onLevelStart()
-{
-		//cursor = manager->getCore()->getGraphicDevice()->getCursorControl();
-		//ISceneManager* smgr = manager->getCore()->getGraphicDevice()->getSceneManager();
-	
-		//manager->setActive(this,true);
+{		
+		ISceneManager* smgr = manager->getCore()->getGraphicDevice()->getSceneManager();
+		irr::gui::IGUIEnvironment* env = manager->getCore()->getGraphicDevice()->getGUIEnvironment();
+
+		//Map.
+		map = new Map(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
+		map->setMapTexture("map/Worldmap.png");
+		map->setCharacterTexture("map/character.png");
+		map->setWorldSize(512,512);
+		map->setCharPosition(targetNode->getPosition());
+		map->drop();
+
+		manager->setActive(this,true);
 }
 
 void HUDControler::update(float deltaTime)
 {	
-
+		map->setCharPosition(targetNode->getPosition());
 }
 
 void HUDControler::onRemove()
 {
-		//manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);//Gỡ Event ra.
-		//camera->remove();//đập cái camera.
+		map->drop();
 }
-
