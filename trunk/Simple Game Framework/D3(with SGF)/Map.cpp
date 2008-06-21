@@ -2,31 +2,33 @@
 const short int miniMapSizeWidth = 150;
 const short int miniMapSizeHeight = 150;
 const SColor KeyColor = SColor(255,255,255,255);
-//Khởi tạo đối tượng.
+//! Khởi tạo đối tượng.
 Map::Map(const rect<s32>& rect, IGUIEnvironment* env, IGUIElement* parent)
 :IGUIElement(EGUIET_ELEMENT, env, parent, -1, rect)
 {
-	isExpand = false;//Đặt map trong trạng thái bình thường.
+	isExpand = false;//! Đặt map trong trạng thái bình thường.
 	driver = Environment->getVideoDriver();
 	screenSize = driver->getScreenSize();
 }
-//Hủy đối tượng.
+//! Hủy đối tượng.
 Map::~Map()
 {
 }
-//Đặt Texture cho map.
+//! Đặt Texture cho map.
 void Map::setMapTexture(c8 *fileName)
 {
 	imgMap = driver->getTexture(fileName);
 	mapSize = imgMap->getOriginalSize();
 }
-//Đặt Texture cho NPC.
+
+//! Đặt Texture cho NPC.
 void Map::setNPCTexture(c8 *fileName)
 {	
 	imgNPC = driver->getTexture(fileName);
 	imgNPCSize = imgNPC->getOriginalSize();
 }
-//Đặt Texture cho Nhân vật chính.
+
+//! Đặt Texture cho Nhân vật chính.
 void Map::setCharacterTexture(c8 *fileName)
 {
 	imgCharacter = driver->getTexture(fileName);
@@ -58,13 +60,15 @@ bool Map::getIsExpand()
 void Map::Calc()
 {
 	int X,Y;
-	characterPosInMap.X = (characterPosInWorld.X*mapSize.Width) / WorldSize.Width;//Vị trí nhân vật trên bản đồ.
+	characterPosInMap.X = (characterPosInWorld.X*mapSize.Width) / WorldSize.Width;//! Vị trí nhân vật trên bản đồ.
 	characterPosInMap.Y = (characterPosInWorld.Y*mapSize.Height) / WorldSize.Height;
+
 	if (isExpand)
 	{
 		X = screenSize.Width - mapSize.Width + characterPosInMap.X - imgCharacterSize.Width/2;
 		Y = characterPosInMap.Y - imgCharacterSize.Width/2;
-		//Điều chỉnh vụ Icon nhân vật lấn biên.
+
+		//! Điều chỉnh vụ Icon nhân vật lấn biên.
 		if (X < screenSize.Width - mapSize.Width)
 		{
 			X = screenSize.Width - mapSize.Width;
@@ -85,13 +89,14 @@ void Map::Calc()
 	}
 	else
 	{
-		//Xác định phần Map sẽ vẽ lên màn hình.
+		//! Xác định phần Map sẽ vẽ lên màn hình.
 		int X1,Y1,X2,Y2;
 		X1 = characterPosInMap.X - miniMapSizeWidth/2;
 		Y1 = characterPosInMap.Y - miniMapSizeHeight/2;
 		X2 = X1 + miniMapSizeWidth;
 		Y2 = Y1 + miniMapSizeHeight;
-		//Điều chỉnh vụ wrap texture.
+
+		//! Điều chỉnh vụ wrap texture.
 		if (X1<0)
 		{
 			X1 = 0;
@@ -113,10 +118,12 @@ void Map::Calc()
 			Y2 = mapSize.Height;
 		}
 		miniMapRect = rect<s32>(X1,Y1,X2,Y2);
-		//Vị trí vẽ Icon nhân vật.
-		X = characterPosInMap.X - X1 - imgCharacterSize.Width/2 + screenSize.Width - miniMapSizeWidth;
-		Y = characterPosInMap.Y - Y1 - imgCharacterSize.Height/2;
-		//Giải quyết vụ Icon nhân vật lấn biên.
+
+		//! Vị trí vẽ Icon nhân vật.
+		X = characterPosInMap.X - X1 - imgCharacterSize.Width/2 + screenSize.Width - (int)miniMapSizeWidth/2;
+		Y = characterPosInMap.Y - Y1 - imgCharacterSize.Height/2 + (int)miniMapSizeHeight/2;
+
+		//! Giải quyết vụ Icon nhân vật lấn biên.
 		if (X < screenSize.Width - miniMapSizeWidth)
 		{
 			X = screenSize.Width - miniMapSizeWidth;
@@ -143,22 +150,20 @@ void Map::draw()
 	if(!IsVisible)
 		return;
 	Calc();   
-	if (isExpand)//nếu trong tình trạng mở rộng.
+	if (isExpand)//! nếu trong tình trạng mở rộng.
 	{
-
-		//Draw Map.
+		//! Draw Map.
 		driver->draw2DImage(imgMap,position2d<s32>(screenSize.Width - mapSize.Width,0)  ,0,0,true);
 
-		//Draw Character Icon.
+		//! Draw Character Icon.
 		driver->draw2DImage(imgCharacter,characterIconPos);
 	}
 	else
 	{
-
-		//Draw Map.
+		//! Draw Map.
 		driver->draw2DImage(imgMap,position2d<s32>(screenSize.Width - miniMapSizeWidth,0),miniMapRect);
 
-		//Draw Character Icon.
+		//! Draw Character Icon.
 		driver->draw2DImage(imgCharacter,characterIconPos,core::rect<s32>(0,0,16,16),0,  video::SColor(255,255,255,255), true);
 	}
 }
