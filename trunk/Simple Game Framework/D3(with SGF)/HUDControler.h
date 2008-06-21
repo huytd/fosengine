@@ -14,6 +14,9 @@
 #include <SGF.h>
 #include <functional>
 #include <irrlicht.h>
+
+#include "Map.h"
+
 using namespace irr;
 using namespace scene;
 using namespace core;
@@ -24,7 +27,8 @@ public:
 	
 private:
 	ISceneNode* targetNode;//Character.
-	
+	Map* map;
+
 	sgfMethodDelegate<HUDControler,SMouseEvent> mouseDelegate;//Register mouse event.
 	void onAdd();
 	void update(float deltaTime);//Update.
