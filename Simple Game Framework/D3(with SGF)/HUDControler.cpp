@@ -40,8 +40,3 @@ void HUDControler::onRemove()
 		//camera->remove();//đập cái camera.
 }
 
-void HUDControler::onMouse(SMouseEvent& args)
-{
-
-}
-
