@@ -28,8 +28,8 @@ public:
 			if(args.Caller->getID()==1)//start
 			{
 				printf("Level01\n");
-				//emgr->loadLevel(new Level01("levels/start.irr"));
-				emgr->loadLevel(new CharSelectScreen());
+				emgr->loadLevel(new Level01("levels/start.irr"));
+				//emgr->loadLevel(new CharSelectScreen());
 			}
 			else if(args.Caller->getID()==2)
 			{

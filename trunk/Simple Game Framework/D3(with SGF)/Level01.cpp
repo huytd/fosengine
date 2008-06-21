@@ -56,12 +56,12 @@ void Level01::onEnter(sgfEntityManager* emgr)
 	irr::scene::ISceneNode* characterNode = emgr->getCore()->globalVars["characterNode"].getAs<irr::scene::ISceneNode*>();
 
 	//Map.
-	map = new Map(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
-	map->setMapTexture("map/Worldmap.png");
-	map->setCharacterTexture("map/character.png");
-	map->setWorldSize(512,512);
-	map->setCharPosition(characterNode->getPosition());
-	map->drop();
+	//map = new Map(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
+	//map->setMapTexture("map/Worldmap.png");
+	//map->setCharacterTexture("map/character.png");
+	//map->setWorldSize(512,512);
+	//map->setCharPosition(characterNode->getPosition());
+	//map->drop();
 
 	//! Get screen size
 	irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
