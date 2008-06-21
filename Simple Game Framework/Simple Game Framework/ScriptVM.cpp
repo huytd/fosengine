@@ -209,6 +209,11 @@ gmType sgfScriptVM::GetTypeId(const char* name)
 	return 0;
 }
 
+void sgfScriptVM::Update(SFrameEvent& arg)
+{
+	Execute(arg.deltaTime*1000);
+}
+
 int sgfScriptVM::GetInt(const char* varName,gmTableObject* table)
 {
 	gmVariable var=GetVar(varName,table);

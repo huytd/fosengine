@@ -176,6 +176,11 @@ public:
 			Delegates.splice(Delegates.end(),toAdd);
 	}
 
+	void hijack(sgfDelegate<T>* Delegate)
+	{
+		Delegates.push_front(TDelegate(Delegate));
+	}
+
 	void addDelegate(sgfDelegate<T>* Delegate)
 	{
 		if(iterating)
