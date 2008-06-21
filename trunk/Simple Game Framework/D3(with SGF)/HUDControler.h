@@ -1,9 +1,9 @@
 ﻿/**
  * \RunOn: SGF(Simple Game Framework) - Irrlicht Engine
- * \Summary: Third Person Camera
- * \Filename: ThirdPersonCamera.h
+ * \Summary: Create A Minimap In Game
+ * \Filename: HUDControler.h
  * \Encoding: UTF-8
- * \CreatedDate: 12:47 AM 6/21/2008
+ * \CreatedDate: 13:34 2008/06/21
  * \CreatedBy: FOSP Team 
  * \Copyright: FOS Project
  **/
@@ -26,10 +26,13 @@ public:
 	HUDControler(ISceneNode* targetNode);
 	
 private:
-	ISceneNode* targetNode;//Character.
+	//! Active character.
+	ISceneNode* targetNode;
+
+	//! Minimap in game
 	Map* map;
 
-	sgfMethodDelegate<HUDControler,SMouseEvent> mouseDelegate;//Register mouse event.
+	
 	void onAdd();
 	void update(float deltaTime);//Update.
 	void onRemove();
