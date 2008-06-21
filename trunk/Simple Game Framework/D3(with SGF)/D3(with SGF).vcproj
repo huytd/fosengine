@@ -294,6 +294,38 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="GUIElement"
+				>
+				<File
+					RelativePath=".\CGUIBringUpSlotWindowButton.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CGUIBringUpSlotWindowButton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\CGUIIcon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CGUIIcon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\CGUIIconSlot.h"
+					>
+				</File>
+				<File
+					RelativePath=".\CGUISlotWindow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CGUISlotWindow.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
