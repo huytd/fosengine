@@ -104,7 +104,7 @@ public:
 
 		//! create an array of slots in the window
 		core::array<IGUIElement*> slotArray = window->addSlotArray(core::rect<s32>(0,0,32,32), slotTex, env->getRootGUIElement(), -1,
-		core::position2d<s32>(10,30),core::dimension2d<s32>(6,3),core::dimension2d<s32>(10,10));
+		core::position2d<s32>(10,30),core::dimension2d<s32>(6,3),core::dimension2d<s32>(2,2));
 
 		//! create an icon
 		CGUIIcon *icon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
