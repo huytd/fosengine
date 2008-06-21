@@ -33,6 +33,15 @@ irr::gui::IGUIButton* Utility::createGUIBtn(sgfEntityManager *mgr, irr::video::I
 			bt = env->addButton(irr::core::rect<irr::s32>(pos.X, pos.Y, pos.X + 36, pos.Y + 36),0,-1,0,tooltiptext);
 			bt->setImage(tex);
 			bt->setUseAlphaChannel(true);
-			//bt->grab(); // why???
 			return bt;
+}
+
+irr::s32 Utility::SX(sgfEntityManager *mgr, irr::s32 x)
+{
+	return (irr::s32)(mgr->getCore()->getGraphicDevice()->getVideoDriver()->getScreenSize().Width*(irr::f32)(x)/1024.0f);
+}
+
+irr::s32 Utility::SY(sgfEntityManager *mgr, irr::s32 y)
+{
+	return (irr::s32)(mgr->getCore()->getGraphicDevice()->getVideoDriver()->getScreenSize().Height*(irr::f32)(x)/768.0f);
 }
