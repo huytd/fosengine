@@ -4,6 +4,7 @@
 #include "gmMachineEx/gmMachineEx.h"
 #include "irrlicht.h"
 #include "CoreComponent.h"
+#include "StandardEvents.h"
 
 /// \brief a GameMonkey script machine specially designed for this framework
 /// It uses the Irrlicth VFS(virtual file system)
@@ -28,6 +29,7 @@ public:
 	// \brief Get type's id
 	gmType GetTypeId(const char* name);
 
+	void Update(SFrameEvent& arg);
 	const char* GetString(const char* varName,gmTableObject* table=0);
 	gmTableObject* GetTable(const char* varName,gmTableObject* table=0);
 	gmFunctionObject* GetFunction(const char* varName,gmTableObject* table=0);

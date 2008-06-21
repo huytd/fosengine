@@ -46,6 +46,7 @@ void sgfCore::init(sgfGame* game)
 	//frame event
 	frameEvent.addDelegate(frameStartEvent.Delegate);
 	frameEvent.addDelegate(new sgfMethodDelegate<sgfEntityManager,SFrameEvent>(entityManager,&sgfEntityManager::update));
+	frameEvent.addDelegate(new sgfMethodDelegate<sgfScriptVM,SFrameEvent>(scriptVM,&sgfScriptVM::Update));
 	frameEvent.addDelegate(new sgfMethodDelegate<sgfGame,SFrameEvent>(game,&sgfGame::updateGraphic));//there's no leak here
 	frameEvent.addDelegate(frameEndEvent.Delegate);
 
