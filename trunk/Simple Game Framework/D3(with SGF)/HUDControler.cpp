@@ -36,7 +36,7 @@ void HUDControler::update(float deltaTime)
 
 void HUDControler::onRemove()
 {
-  //      manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);//Gỡ Event ra.
+		//manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);//Gỡ Event ra.
 		//camera->remove();//đập cái camera.
 }
 
