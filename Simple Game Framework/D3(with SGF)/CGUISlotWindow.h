@@ -33,13 +33,13 @@ class CGUISlotWindow : public IGUIWindow
 		virtual void draw();
 
 		//! Returns pointer to the close button
-		virtual IGUIButton* getCloseButton();
+		virtual IGUIButton* getCloseButton() const;
 
 		//! Returns pointer to the minimize button
-		virtual IGUIButton* getMinimizeButton();
+		virtual IGUIButton* getMinimizeButton() const;
 
 		//! Returns pointer to the maximize button
-		virtual IGUIButton* getMaximizeButton();
+		virtual IGUIButton* getMaximizeButton() const;
 
 		//! creates a bring-up button
 		virtual CGUIBringUpSlotWindowButton* createBringUpButton(core::rect<s32> rectangle, IGUIElement* parent = 0,

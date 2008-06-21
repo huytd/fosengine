@@ -201,7 +201,7 @@ void CGUISlotWindow::draw()
 
 
 //! Returns pointer to the close button
-IGUIButton* CGUISlotWindow::getCloseButton()
+IGUIButton* CGUISlotWindow::getCloseButton() const
 {
 	return CloseButton;
 }
@@ -209,7 +209,7 @@ IGUIButton* CGUISlotWindow::getCloseButton()
 
 
 //! Returns pointer to the minimize button
-IGUIButton* CGUISlotWindow::getMinimizeButton()
+IGUIButton* CGUISlotWindow::getMinimizeButton() const
 {
 	return MinButton;
 }
@@ -217,7 +217,7 @@ IGUIButton* CGUISlotWindow::getMinimizeButton()
 
 
 //! Returns pointer to the maximize button
-IGUIButton* CGUISlotWindow::getMaximizeButton()
+IGUIButton* CGUISlotWindow::getMaximizeButton() const
 {
 	return RestoreButton;
 }
