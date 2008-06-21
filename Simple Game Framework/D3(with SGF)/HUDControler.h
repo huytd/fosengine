@@ -20,14 +20,15 @@ using namespace core;
 class HUDControler: public sgfEntity
 {
 public:
-	ThirdPersonCamera(ISceneNode* targetNode);
+	HUDControler(ISceneNode* targetNode);
 	
 private:
 	ISceneNode* targetNode;//Character.
 	
-	sgfMethodDelegate<ThirdPersonCamera,SMouseEvent> mouseDelegate;//Register mouse event.
+	sgfMethodDelegate<HUDControler,SMouseEvent> mouseDelegate;//Register mouse event.
 	void onAdd();
 	void update(float deltaTime);//Update.
 	void onRemove();
+	void onLevelStart();
 };
 #endif
