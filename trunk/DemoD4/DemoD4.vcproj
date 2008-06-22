@@ -59,6 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="kernel32.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -179,6 +180,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CGUIIcon.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CGUISlotWindow.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CGUITexturedSkin.cpp"
 				>
 			</File>
@@ -238,6 +247,22 @@
 			</File>
 			<File
 				RelativePath=".\Application.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CGUIBringUpSlotWindowButton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CGUIIcon.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CGUIIconSlot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CGUISlotWindow.h"
 				>
 			</File>
 			<File
