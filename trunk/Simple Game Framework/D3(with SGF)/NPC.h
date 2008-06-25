@@ -35,7 +35,7 @@ protected:
 	{
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 
-		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/ninja/ninja.b3d"));
+		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/macay/macay.b3d"));
 
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
 		node->setTransitionTime(0.2f);
@@ -70,20 +70,17 @@ protected:
 	{
 		if(currentAction != "Idle")
 		{
-			node->setFrameLoop(205,249);
+			node->setFrameLoop(0,40);
 			currentAction = "Idle";
 		}
 	}
 	void walk()
 	{
-		if ((node->getStartFrame()!=0)&&(node->getEndFrame()!=14))
-		{
 			if(currentAction != "Walking")
 			{
-				node->setFrameLoop(0,14);
+				node->setFrameLoop(41,80);
 				currentAction = "Walking";       
 			}
-		}
 	}
 
 
