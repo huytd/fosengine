@@ -1,44 +1,59 @@
-﻿#ifndef MAP_H
-#define MAP_H
+﻿/**
+ * \RunOn: SGF(Simple Game Framework) - Irrlicht Engine
+ * \Summary: Mini Map
+ * \Filename: Map.h
+ * \Encoding: UTF-8
+ * \CreatedDate: 9:07 2008/06/22
+ * \CreatedBy: FOSP Team 
+ * \Copyright: FOS Project
+ **/
+
+#ifndef _MAP_H_
+#define _MAP_H_
+
 #include <irrlicht.h>
+#include "Icon.h"
 using namespace irr;
 using namespace video;
 using namespace core;
 using namespace gui;
-//Định ngĩa class.
-class Map : public IGUIElement //Class Map kế thừa từ class IGUIElement.
+using namespace scene;
+class Map : public IGUIElement
 {
 private:
 	IVideoDriver* driver;
 	ITexture* imgMap;
-	ITexture* imgCharacter;
-	ITexture* imgNPC;
-	position2d<s32> characterPosInMap;//Vị trí nhân vật trên bản đồ.
-	position2d<f32> characterPosInWorld;//Vị trí nhân vật trên trục thế giới.
-	position2d<s32> characterIconPos;//Vị trí sẽ vẽ Icon của nhân vật trên màn hình.
-	dimension2d<f32> WorldSize;//Kích thước thế giới.
-	dimension2d<s32> mapSize;//Kích thước map.
-	dimension2d<s32> imgNPCSize;//Kích thước icon NPC.
-	dimension2d<s32> imgCharacterSize;//Kích thước icon Character.
-	dimension2d<s32> screenSize;//Kích thước màn hình(hay cửa sổ).
-	rect<s32> miniMapRect;
-	bool isExpand;//Mở rộng?.
+    ITexture* imgIcon[3];
+    dimension2d<s32> imgIconSize[3];
+	dimension2d<f32> worldSize;
+	dimension2d<s32> mapSize;
+	dimension2d<s32> screenSize;
+	position2d<s32> mapPosInScreen;
+	rect<s32> minimapRect;
+	s32 X1,X2,Y1,Y2;
+	short miniMapSizeWidth;
+    short miniMapSizeHeight;
+    short miniMapPaddingRight;
+    short miniMapPaddingTop;
+	bool isExpand;
+	Icon* targetIcon;
+	vector3df terrainPos;
+    ITerrainSceneNode* terrain;
 public:
-	//Khởi tạo đối tượng.
 	Map(const rect<s32>& rect,IGUIEnvironment* env,IGUIElement* parent);
-	//Hủy đối tượng.
 	~Map();
-	//Đặt các giá trị mới.
-
-	void setMapTexture(c8 *fileName);//Đặt Texture cho map.
-	void setCharacterTexture(c8 *fileName);//Đặt Texture cho nhân vật.
-	void setNPCTexture(c8 *fileName);//Đặt Texture cho NPC.
-	void setCharPosition(vector3df CharPos);//Vị trí nhân vật trên trục thế giới.
-	void setWorldSize(f32 Width,f32 Height);//Kích thước thế giới.
-	void Calc();//Tính toán.
-	void setExpand(bool IsExpand);//Đặt mini map ở chế độ mở rộng hoặc thu hẹp.
-	bool getIsExpand();//Trả về tình trạng(thu hẹp, mở rộng) của map.
-	//Vẽ.
+	void setSize(short miniMapSizeWidth,short miniMapSizeHeight,short miniMapPaddingRight,short miniMapPaddingTop);
+	void addIcon(Icon* icon,int styleID,IAnimatedMeshSceneNode* node);//Thêm 1 Icon mới
+	void removeIcon(Icon* icon);//Gỡ 1 icon
+	void setMapTexture(c8 *fileName);
+	void setIcon0Texture(c8 *fileName);//Icon texture kiểu 0
+	void setIcon1Texture(c8 *fileName);//Icon texture kiểu 1
+	void setIcon2Texture(c8 *fileName);//Icon texture kiểu 2
+	void setTarget(Icon* targetIcon);
+	void setExpand(bool IsExpand);
+	void setWorld(ITerrainSceneNode* terrain);
+	bool getIsExpand();
+	void calc();
 	void draw();
 }; 
 #endif

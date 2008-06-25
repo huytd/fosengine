@@ -12,9 +12,8 @@
 #define _HUD_CONTROLER_H_
 
 #include <SGF.h>
-#include <functional>
 #include <irrlicht.h>
-
+#include "Icon.h" 
 #include "Map.h"
 
 using namespace irr;
@@ -23,16 +22,13 @@ using namespace core;
 class HUDControler: public sgfEntity
 {
 public:
-	HUDControler(ISceneNode* targetNode);
+	HUDControler();
 	
 private:
-	//! Active character.
-	ISceneNode* targetNode;
-
 	//! Minimap in game
 	Map* map;
-
-	
+	Icon* icon;
+    ITerrainSceneNode* terrain;
 	void onAdd();
 	void update(float deltaTime);//Update.
 	void onRemove();
