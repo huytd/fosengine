@@ -223,14 +223,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Level01.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Level01.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MemMgr.cpp"
 				>
 			</File>
