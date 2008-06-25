@@ -2,6 +2,7 @@
 #include <SGF.h>
 #include "Terrain.h"
 #include "Character.h"
+#include "NPC.h"
 #include "StartMenu.h"
 #include <exception>
 using namespace irr;
@@ -44,6 +45,7 @@ Demo3::Demo3()
 	//register entity class
 	registerClass(Character);
 	registerClass(Terrain);
+	registerClass(NPC);
 	//set up collision
 	core.globalVars["worldCollision"]=(void*)(core.getGraphicDevice()->getSceneManager()->createMetaTriangleSelector());
 	//load first level

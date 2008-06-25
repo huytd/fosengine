@@ -1,5 +1,5 @@
-#ifndef _CHARACTER_H_
-#define _CHARACTER_H_
+#ifndef _NPC_H_
+#define _NPC_H_
 
 #include <SGF.h>
 #include "JointAnimator.h"
@@ -10,23 +10,21 @@
 #include "Map.h"
 #include <irrlicht.h>
 
-class Character: public sgfEntity, public LevelEntity<Character>//this entity is loadable from level
+class NPC: public sgfEntity, public LevelEntity<NPC>//this entity is loadable from level
 {
 public:
 
-	Character(irr::scene::ISceneNode* node)
+	NPC(irr::scene::ISceneNode* node)
 	{
 		speed=22.2f;
 		goalReached=false;
-		mouseDelegate.addRef();
-		mouseDelegate.bind(this,&Character::onMouse);
 		startPos=node->getAbsolutePosition();
 		node->remove();
 	}
 
 	const char* getClassName() const
 	{
-		return "Character";
+		return "NPC";
 	}
 protected:
 	void onLevelStart()
@@ -37,19 +35,19 @@ protected:
 	{
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 		
-		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/thaycung/thaycung.b3d"));
-		//node->setDebugDataVisible(irr::scene::EDS_FULL);
+		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/ninja/ninja.b3d"));
+		
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
 		node->setTransitionTime(0.2f);
 		node->addAnimator(anim1);
 		anim1->drop();
-		//temporary work around
-		//node->setScale(irr::core::vector3df(0.01,0.01,-0.01));
+		
 		node->setPosition(startPos);
 		node->setMaterialFlag(irr::video::EMF_LIGHTING,false);
-		manager->getCore()->globalVars["characterNode"] = node;
+		manager->getCore()->globalVars["NPCNode"] = node;
 		idle();
-		//collision
+		
+		//! collision
 		const irr::core::aabbox3df& box = node->getBoundingBox();
 		irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 		
@@ -59,65 +57,64 @@ protected:
 			);
 		node->addAnimator(anim);
 		anim->drop();
-		//setup mouse
-		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
-		//add camera
-		ThirdPersonCamera* cam = new ThirdPersonCamera(node);
-		manager->addEntity(cam);
+				
+		//HUDControler* controler = new HUDControler();
+        //manager->addEntity(controler);
 
-		HUDControler* controler = new HUDControler();
-        manager->addEntity(controler);
+		//! make update called every frame.
+		manager->setActive(this,true);
 
-		//node->setVisible(false);
-		//manager->getCore()->getGraphicDevice()->getSceneManager()->addCameraSceneNodeFPS()->setPosition(startPos);
 	}
+
 	void idle()
-	{//will be rewritten
-		node->setFrameLoop(1,40);
-	}
-	void walk()
-	{
-	    if ((node->getStartFrame()!=0)&&(node->getEndFrame()!=14))
+    {
+		if(currentAction != "Idle")
 		{
-		node->setFrameLoop(71,100);
+			node->setFrameLoop(205,249);
+			currentAction = "Idle";
 		}
 	}
+    void walk()
+    {
+        if ((node->getStartFrame()!=0)&&(node->getEndFrame()!=14))
+            {
+				if(currentAction != "Walking")
+				{
+					node->setFrameLoop(0,14);
+					currentAction = "Walking";       
+				}
+			}
+	}
+
+
 	void onMouse(SMouseEvent& args)
 	{
-		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
-		if(args.mouseEvent==irr::EMIE_LMOUSE_PRESSED_DOWN)
-		{
-			irr::core::line3df ray(smgr->getSceneCollisionManager()->getRayFromScreenCoordinates(manager->getCore()->getGraphicDevice()->getCursorControl()->getPosition()));
-			irr::core::vector3df collisionPoint;
-			irr::core::triangle3df collisionTriangle;
-			if(smgr->getSceneCollisionManager()->getCollisionPoint(ray, terrain->getTriangleSelector(), collisionPoint, collisionTriangle))
-			{
-				walk();
-				targetPos = collisionPoint;
-				goalReached=false;
-				node->setRotation(faceTarget(targetPos,node->getPosition()));
-				manager->setActive(this,true);//make update called every frame.
-			}
-		}
 	}
+
 	void update(float deltaTime)
 	{
-		//printf_s("%f\n",deltaTime);
-		//deltaTime=15;
-		irr::core::vector3df diffVect=node->getPosition()-targetPos;
-		diffVect.Y=0.0f;
+		//! Very simple AI
+		irr::scene::IAnimatedMeshSceneNode* NPCnode = manager->getCore()->globalVars["characterNode"].getAs<irr::scene::IAnimatedMeshSceneNode*>();
+		
+		//! Get positon near target node, -5 mean behind 5 units
+		targetPos = getNearPosition(NPCnode, irr::core::vector3df(0,0,-5));
+
+		irr::core::vector3df diffVect = node->getPosition() - targetPos;
+		diffVect.Y = 0.0f;
 		float distance=diffVect.getLength();
-		if(distance<=(speed*deltaTime))//reached target
+		
+		if(distance <= (speed*deltaTime))//reached target
 		{
-			goalReached=true;
-			manager->setActive(this,false);//stop updating
-			idle();
+				idle();
+				goalReached = true;
 		}
 		else
 		{
-			moveto(irr::core::vector3df(0,0,speed*deltaTime));
+				walk();				
+				goalReached=false;
+				node->setRotation(faceTarget(targetPos,node->getPosition()));				
+				moveto(irr::core::vector3df(0,0,speed*deltaTime));
 		}
-
 	}
 
 	void onRemove()
@@ -134,6 +131,13 @@ protected:
 		return posDiff.getHorizontalAngle();
 	} 
 
+	irr::core::vector3df getNearPosition(irr::scene::IAnimatedMeshSceneNode* targetNode, irr::core::vector3df vel) //velocity vector
+	{
+		irr::core::matrix4 m;
+		m.setRotationDegrees(targetNode->getRotation());
+		m.transformVect(vel);
+		return (targetNode->getPosition() + vel);
+	}
 
 	void moveto(irr::core::vector3df vel) //velocity vector
 	{
@@ -147,7 +151,8 @@ protected:
 protected:
 	float speed;
 	bool goalReached;
-	sgfMethodDelegate<Character,SMouseEvent> mouseDelegate;
+	char* currentAction;
+	sgfMethodDelegate<NPC,SMouseEvent> mouseDelegate;
 	irr::core::vector3df startPos;
 	irr::core::vector3df targetPos;
 	irr::scene::IAnimatedMeshSceneNode* node;
