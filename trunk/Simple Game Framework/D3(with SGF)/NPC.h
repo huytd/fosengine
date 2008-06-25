@@ -16,7 +16,7 @@ public:
 
 	NPC(irr::scene::ISceneNode* node)
 	{
-		speed=15.0f;
+		speed=5.0f;
 		goalReached=false;
 		startPos=node->getAbsolutePosition();
 		node->remove();
