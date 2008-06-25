@@ -3,4 +3,5 @@
 #include <SGF.h>
 #include "Demo3.h"
 
+//#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 GAME_ENTRY_POINT(Demo3)
