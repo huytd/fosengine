@@ -72,15 +72,20 @@ protected:
 		//manager->getCore()->getGraphicDevice()->getSceneManager()->addCameraSceneNodeFPS()->setPosition(startPos);
 	}
 	void idle()
-	{//will be rewritten
-		node->setFrameLoop(1,40);
+	{
+		if(currentAction != "Idle")
+		{
+			node->setFrameLoop(1,40);
+			currentAction = "Idle";
+		}
 	}
 	void walk()
 	{
-	    if ((node->getStartFrame()!=0)&&(node->getEndFrame()!=14))
-		{
-		node->setFrameLoop(71,100);
-		}
+		if(currentAction != "Walking")
+			{
+				node->setFrameLoop(71,100);
+				currentAction = "Walking";       
+			}
 	}
 	void onMouse(SMouseEvent& args)
 	{
@@ -117,7 +122,6 @@ protected:
 		{
 			moveto(irr::core::vector3df(0,0,speed*deltaTime));
 		}
-
 	}
 
 	void onRemove()
@@ -147,6 +151,7 @@ protected:
 protected:
 	float speed;
 	bool goalReached;
+	char* currentAction;
 	sgfMethodDelegate<Character,SMouseEvent> mouseDelegate;
 	irr::core::vector3df startPos;
 	irr::core::vector3df targetPos;

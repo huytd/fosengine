@@ -2,7 +2,7 @@
 #define _START_MENU_H_
 
 #include <SGF.h>
-#include "Level01.h"
+#include "GameLevel.h"
 #include "GameLevel.h"
 #include "Utility.h"
 
@@ -32,9 +32,8 @@ public:
 		if(args.EventType==irr::gui::EGET_BUTTON_CLICKED)
 		{
 			if(args.Caller->getID()==1)//start
-			{
-				printf("Level01\n");
-				emgr->loadLevel(new Level01("levels/start.irr"));
+			{				
+				emgr->loadLevel(new GameLevel("levels/start.irr"));
 				//emgr->loadLevel(new CharSelectScreen());
 			}
 			else if(args.Caller->getID()==2)
