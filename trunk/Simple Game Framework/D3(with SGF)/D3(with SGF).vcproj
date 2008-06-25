@@ -179,10 +179,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Character.h"
-				>
-			</File>
-			<File
 				RelativePath=".\CharSelectScreen.cpp"
 				>
 			</File>
@@ -232,14 +228,6 @@
 			</File>
 			<File
 				RelativePath=".\Level01.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Map.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Map.h"
 				>
 			</File>
 			<File
@@ -293,6 +281,22 @@
 					RelativePath=".\HUDControler.h"
 					>
 				</File>
+				<File
+					RelativePath=".\Icon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Icon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Map.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Map.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="GUIElement"
@@ -323,6 +327,14 @@
 				</File>
 				<File
 					RelativePath=".\CGUISlotWindow.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Character"
+				>
+				<File
+					RelativePath=".\Character.h"
 					>
 				</File>
 			</Filter>
