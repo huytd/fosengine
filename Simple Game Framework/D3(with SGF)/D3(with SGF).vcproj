@@ -338,11 +338,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\NPC.cpp"
+					RelativePath=".\Enemy.h"
 					>
 				</File>
 				<File
 					RelativePath=".\NPC.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Effect"
+				>
+				<File
+					RelativePath=".\Magic.h"
 					>
 				</File>
 			</Filter>

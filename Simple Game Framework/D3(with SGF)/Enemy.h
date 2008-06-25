@@ -1,5 +1,5 @@
-#ifndef _NPC_H_
-#define _NPC_H_
+#ifndef _ENEMY_H_
+#define _ENEMY_H_
 
 #include <SGF.h>
 #include "JointAnimator.h"
@@ -9,22 +9,26 @@
 #include "Icon.h"
 #include "Map.h"
 #include <irrlicht.h>
+#include "Magic.h"
 
-class NPC: public sgfEntity, public LevelEntity<NPC>//this entity is loadable from level
+class Enemy: public sgfEntity, public LevelEntity<Enemy>//this entity is loadable from level
 {
 public:
 
-	NPC(irr::scene::ISceneNode* node)
+	Enemy(irr::scene::ISceneNode* node)
 	{
-		speed=15.0f;
+		speed=22.2f;
 		goalReached=false;
 		startPos=node->getAbsolutePosition();
-		node->remove();
+		//node->remove();
+
+		magic = new Magic();
+		
 	}
 
 	const char* getClassName() const
 	{
-		return "NPC";
+		return "Enemy";
 	}
 protected:
 	void onLevelStart()
@@ -44,7 +48,7 @@ protected:
 
 		node->setPosition(startPos);
 		node->setMaterialFlag(irr::video::EMF_LIGHTING,false);
-		manager->getCore()->globalVars["NPCNode"] = node;
+		manager->getCore()->globalVars["EnemyNode"] = node;
 		idle();
 
 		//! collision
@@ -91,10 +95,10 @@ protected:
 	void update(float deltaTime)
 	{
 		//! Very simple AI
-		irr::scene::IAnimatedMeshSceneNode* NPCnode = manager->getCore()->globalVars["characterNode"].getAs<irr::scene::IAnimatedMeshSceneNode*>();
+		irr::scene::IAnimatedMeshSceneNode* Enemynode = manager->getCore()->globalVars["characterNode"].getAs<irr::scene::IAnimatedMeshSceneNode*>();
 
 		//! Get positon near target node, -5 mean behind 5 units
-		targetPos = getNearPosition(NPCnode, irr::core::vector3df(0,0,-5));
+		targetPos = getNearPosition(Enemynode, irr::core::vector3df(0,0,-5));
 
 		irr::core::vector3df diffVect = node->getPosition() - targetPos;
 		diffVect.Y = 0.0f;
@@ -104,6 +108,8 @@ protected:
 		{
 			idle();
 			goalReached = true;
+			
+			magic->attack(3, node->getPosition(), targetPos);
 		}
 		else
 		{
@@ -149,7 +155,8 @@ protected:
 	float speed;
 	bool goalReached;
 	char* currentAction;
-	sgfMethodDelegate<NPC,SMouseEvent> mouseDelegate;
+	Magic* magic;
+	sgfMethodDelegate<Enemy,SMouseEvent> mouseDelegate;
 	irr::core::vector3df startPos;
 	irr::core::vector3df targetPos;
 	irr::scene::IAnimatedMeshSceneNode* node;

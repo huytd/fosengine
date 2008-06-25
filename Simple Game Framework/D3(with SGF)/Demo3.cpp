@@ -4,6 +4,8 @@
 #include "Character.h"
 #include "NPC.h"
 #include "StartMenu.h"
+#include "Enemy.h"
+
 #include <exception>
 using namespace irr;
 
@@ -36,16 +38,19 @@ Demo3::Demo3()
 	//vm->UpdateTypeIds();//since there's no cross-reference between classes, this is not necessary
 	//pass our instance to script
 	core.globalVars["skin"].setAs<irr::gui::CGUITexturedSkin*>(core.getGUISkin(),guiSkinType);
-	vm->ExecuteFile("testScript.gm");//a script can be executed directly, I just want to test compiling
+	//vm->ExecuteFile("testScript.gm");//a script can be executed directly, I just want to test compiling
 	//vm->CompileFile("testScript.gm","testScript.lib");
 	//vm->ExecuteLibFile("testScript.lib");
 	//call a script function from C++
 
-	vm->Call<const char*>(vm->GetFunction("scriptFunction"),"test");
+	//vm->Call<const char*>(vm->GetFunction("scriptFunction"),"test");
+
 	//register entity class
 	registerClass(Character);
 	registerClass(Terrain);
 	registerClass(NPC);
+	registerClass(Enemy);
+
 	//set up collision
 	core.globalVars["worldCollision"]=(void*)(core.getGraphicDevice()->getSceneManager()->createMetaTriangleSelector());
 	//load first level
@@ -57,16 +62,32 @@ Demo3::~Demo3()
 	core.globalVars["worldCollision"].getAs<scene::IMetaTriangleSelector*>()->drop();
 }
 
-int lastFPS=0;
+int lastFPS=0, lastMaximalPrimitive=0, lastPrimitive=0;
+int FPS=0;
+int MaximalPrimitive = 0;
+int Primitive = 0;
 void Demo3::showFPS(SFrameEvent&)
 {
 	IrrlichtDevice* device=core.getGraphicDevice();
-	int FPS=device->getVideoDriver()->getFPS();
-	if(FPS!=lastFPS)
+	FPS=device->getVideoDriver()->getFPS();
+	MaximalPrimitive = device->getVideoDriver()->getMaximalPrimitiveCount();
+	Primitive  = device->getVideoDriver()->getPrimitiveCountDrawn();
+
+	if(FPS!=lastFPS || MaximalPrimitive!=lastMaximalPrimitive || Primitive!=lastPrimitive)
 	{
 		core::stringw str = L"FPS: ";
 		str+=FPS;
+
+		str+= L" - MaxPrimitive: ";
+		str+=MaximalPrimitive;
+		
+		str+= L" - PrimitiveCountDrawn: ";
+		str+=Primitive;
+				
 		lastFPS=FPS;
+		lastPrimitive = Primitive;
+		lastMaximalPrimitive = MaximalPrimitive;
+
 		device->setWindowCaption(str.c_str());
 	}
 }
