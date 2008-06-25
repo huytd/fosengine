@@ -37,50 +37,6 @@ public:
 
 	Magic()
 	{
-		irr::IrrlichtDevice* device = manager->getCore()->getGraphicDevice();
-		irr::scene::ISceneManager *smgr = manager->getCore()->getGraphicDevice()->getSceneManager();
-		irr::video::IVideoDriver *driver = manager->getCore()->getGraphicDevice()->getVideoDriver();
-		isAttack = false;
-
-		// add light 2 (gray)
-		light2 =
-			smgr->addLightSceneNode(0, core::vector3df(0,0,0),
-			video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), 800.0f);
-
-		// attach billboard to light
-		bill = smgr->addBillboardSceneNode(light2, core::dimension2d<f32>(8, 8));
-		bill->setMaterialFlag(video::EMF_LIGHTING, false);
-		bill->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-		bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
-		bill->setMaterialTexture(0, driver->getTexture("textures\\particlewhite.bmp"));
-
-		// add particle system
-		ps = smgr->addParticleSystemSceneNode(false, light2);
-		ps->setParticleSize(core::dimension2d<f32>(5.0f, 5.0f));
-
-		// create and set emitter
-		em = ps->createBoxEmitter(
-			core::aabbox3d<f32>(-1,0,-1,1,1,1), 
-			core::vector3df(0.0f,0.0f,0.0f),
-			100,100, 
-			video::SColor(0,255,255,255), video::SColor(0,255,255,255),
-			100,300);
-		ps->setEmitter(em);
-
-		// create and set affector
-		paf = ps->createFadeOutParticleAffector();
-		ps->addAffector(paf);
-
-		// adjust some material settings
-		ps->setMaterialFlag(video::EMF_LIGHTING, false);
-		ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-		ps->setMaterialTexture(0, driver->getTexture("textures\\lighteffect.bmp"));
-		ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
-
-		light2->setVisible(false);
-
-		//! make update called every frame.
-		manager->setActive(this,true);
 	}
 
 	//! Set magic movement speed
@@ -121,32 +77,55 @@ private:
 		node->updateAbsolutePosition();
 	} 
 protected:
-
+	void onLevelStart()
+	{
+		//! Get terrain to disable magic on terrain
+		terrain=manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();//get the terrain from a global variable
+	}
 
 	void onAdd()
 	{
-		//! Create magic by partical system and lightscenenode
 
-		//! Set start prosition
-		node->setPosition(startPos);
-		node->setMaterialFlag(irr::video::EMF_LIGHTING,false);
+		isAttack = false;
 
-		//! Set Global variable in engine
-		manager->getCore()->globalVars["MagicNode"] = node;
+		// add light 2 (gray)
+		light2 =
+			manager->getCore()->getGraphicDevice()->getSceneManager()->addLightSceneNode(0, core::vector3df(0,0,0),
+			video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), 800.0f);
 
-		//! Set startup status
-		//idle();
+		// attach billboard to light
+		bill = manager->getCore()->getGraphicDevice()->getSceneManager()->addBillboardSceneNode(light2, core::dimension2d<f32>(8, 8));
+		bill->setMaterialFlag(video::EMF_LIGHTING, false);
+		bill->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+		bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
+		bill->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\particlewhite.bmp"));
 
-		//! collision
-		const irr::core::aabbox3df& box = node->getBoundingBox();
-		irr::core::vector3df radius = box.MaxEdge - box.getCenter();
+		// add particle system
+		ps = manager->getCore()->getGraphicDevice()->getSceneManager()->addParticleSystemSceneNode(false, light2);
+		ps->setParticleSize(core::dimension2d<f32>(5.0f, 5.0f));
 
-		irr::scene::ISceneNodeAnimator* anim=new irr::scene::StandOnTerrainAnimator(manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::ITriangleSelector*>(),
-			manager->getCore()->getGraphicDevice()->getSceneManager()->getSceneCollisionManager(),
-			irr::core::vector3df(0,-1.0f,0)
-			);
-		node->addAnimator(anim);
-		anim->drop();
+		// create and set emitter
+		em = ps->createBoxEmitter(
+			core::aabbox3d<f32>(-1,0,-1,1,1,1), 
+			core::vector3df(0.0f,0.0f,0.0f),
+			100,100, 
+			video::SColor(0,255,255,255), video::SColor(0,255,255,255),
+			100,300);
+		ps->setEmitter(em);
+		em->drop();
+
+		// create and set affector
+		paf = ps->createFadeOutParticleAffector();
+		ps->addAffector(paf);
+		paf->drop();
+
+		// adjust some material settings
+		ps->setMaterialFlag(video::EMF_LIGHTING, false);
+		ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+		ps->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\lighteffect.bmp"));
+		ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
+
+		light2->setVisible(false);
 
 		//! make update called every frame.
 		manager->setActive(this,true);
@@ -227,7 +206,8 @@ protected:
 
 	void onRemove()
 	{
-		
+		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
+		node->remove();
 	}
 
 	irr::core::vector3df faceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
