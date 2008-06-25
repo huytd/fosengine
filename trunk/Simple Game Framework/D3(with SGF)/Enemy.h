@@ -20,10 +20,7 @@ public:
 		speed=10.0f;
 		goalReached=false;
 		startPos=node->getAbsolutePosition();
-		//node->remove();
-
-		magic = new Magic();
-		
+		node->remove();
 	}
 
 	const char* getClassName() const
@@ -62,8 +59,8 @@ protected:
 		node->addAnimator(anim);
 		anim->drop();
 
-		//HUDControler* controler = new HUDControler();
-		//manager->addEntity(controler);
+		magic = new Magic();	
+		manager->addEntity(magic);
 
 		//! make update called every frame.
 		manager->setActive(this,true);
@@ -98,18 +95,18 @@ protected:
 		irr::scene::IAnimatedMeshSceneNode* Enemynode = manager->getCore()->globalVars["characterNode"].getAs<irr::scene::IAnimatedMeshSceneNode*>();
 
 		//! Get positon near target node, -5 mean behind 5 units
-		targetPos = getNearPosition(Enemynode, irr::core::vector3df(0,0,-5));
+		targetPos = Enemynode->getPosition();//getNearPosition(Enemynode, irr::core::vector3df(0,0,25));
 
 		irr::core::vector3df diffVect = node->getPosition() - targetPos;
 		diffVect.Y = 0.0f;
 		float distance=diffVect.getLength();
 
-		if(distance <= (speed*deltaTime))//reached target
+		if(distance <= 55)//reached target
 		{
-			idle();
+			idle();		
+			if(!goalReached)
+			magic->attack(1000, node->getPosition(), targetPos, 5000.0f, 5000.0f, 30000.0f, 5000.0f);
 			goalReached = true;
-			
-			magic->attack(3, node->getPosition(), targetPos);
 		}
 		else
 		{
@@ -123,6 +120,7 @@ protected:
 	void onRemove()
 	{
 		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
+		delete magic;
 		node->remove();
 	}
 

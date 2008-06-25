@@ -16,7 +16,7 @@ public:
 
 	void attack( u32 startTime, irr::core::vector3df startPosition,
 		irr::core::vector3df StartTargetPostion,
-		float startIdleTime=10.0f, float startPreTime=10.0f, float startTTL=30.0f,  float startBlowTime=10.0f)
+		float startIdleTime=1000.0f, float startPreTime=1000.0f, float startTTL=30000.0f,  float startBlowTime=1000.0f)
 	{
 		light2->setPosition(startPosition);
 		light2->setVisible(true);
@@ -79,8 +79,6 @@ private:
 protected:
 	void onLevelStart()
 	{
-		//! Get terrain to disable magic on terrain
-		terrain=manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();//get the terrain from a global variable
 	}
 
 	void onAdd()
@@ -131,22 +129,7 @@ protected:
 		manager->setActive(this,true);
 	}
 
-	void idle()
-	{
-		if(currentAction != "Idle")
-		{
-			node->setFrameLoop(0,40);
-			currentAction = "Idle";
-		}
-	}
-	void walk()
-	{
-		if(currentAction != "Walking")
-		{
-			node->setFrameLoop(41,80);
-			currentAction = "Walking";       
-		}
-	}
+	
 
 
 	void onMouse(SMouseEvent& args)
@@ -183,7 +166,7 @@ protected:
 		}
 		else if(subTime < TTL + preTime + idleTime)
 		{
-			if( light2->getPosition().getDistanceFrom(vTargetPostion) <= 15) 
+			if( light2->getPosition().getDistanceFrom(vTargetPostion) <= 2) 
 			{
 				isAttack = false;	
 				light2->setVisible(false);
@@ -194,7 +177,7 @@ protected:
 			light2->setRotation( psfaceTarget(vTargetPostion, light2->getPosition()));
 
 			//Change funtion to define magic's quy dao
-			psMoveTo(light2, core::vector3df(0.0f, 0.0f, 1.5f*deltaTime));
+			psMoveTo(light2, core::vector3df(0.0f, 0.0f, 5));
 
 		}
 		else
@@ -206,47 +189,15 @@ protected:
 
 	void onRemove()
 	{
-		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
-		node->remove();
 	}
-
-	irr::core::vector3df faceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
-	{
-		irr::core::vector3df posDiff = targetpos - nodepos;
-		posDiff.Y=0;//dont look up/down
-		posDiff.normalize();
-		return posDiff.getHorizontalAngle();
-	} 
-
-	irr::core::vector3df getNearPosition(irr::scene::IAnimatedMeshSceneNode* targetNode, irr::core::vector3df vel) //velocity vector
-	{
-		irr::core::matrix4 m;
-		m.setRotationDegrees(targetNode->getRotation());
-		m.transformVect(vel);
-		return (targetNode->getPosition() + vel);
-	}
-
-	void moveto(irr::core::vector3df vel) //velocity vector
-	{
-		irr::core::matrix4 m;
-		m.setRotationDegrees(node->getRotation());
-		m.transformVect(vel);
-		node->setPosition(node->getPosition() + vel);
-		node->updateAbsolutePosition();
-	}
-
-	
 
 
 protected:
 	float speed;
 	bool goalReached;
-	char* currentAction;
-	sgfMethodDelegate<Magic,SMouseEvent> mouseDelegate;
-	irr::core::vector3df startPos;
-	irr::core::vector3df targetPos;
-	irr::scene::IAnimatedMeshSceneNode* node;
-	irr::scene::ITerrainSceneNode* terrain;
+	char* CurrentAction;
+	irr::scene::ISceneNode* node;
+
 
 public:
 	irr::core::vector3df vTargetPostion, vPostition;
