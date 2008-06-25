@@ -6,6 +6,8 @@
 #include "StandOnTerrainAnimator.h"
 #include "ThirdPersonCamera.h"
 #include "HUDControler.h"
+#include "Icon.h"
+#include "Map.h"
 #include <irrlicht.h>
 
 class Character: public sgfEntity, public LevelEntity<Character>//this entity is loadable from level
@@ -63,7 +65,7 @@ protected:
 		ThirdPersonCamera* cam = new ThirdPersonCamera(node);
 		manager->addEntity(cam);
 
-		HUDControler* controler = new HUDControler(node);
+		HUDControler* controler = new HUDControler();
         manager->addEntity(controler);
 
 		//node->setVisible(false);
