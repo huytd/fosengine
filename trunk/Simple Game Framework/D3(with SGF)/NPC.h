@@ -34,32 +34,32 @@ protected:
 	void onAdd()
 	{
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
-		
+
 		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/ninja/ninja.b3d"));
-		
+
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
 		node->setTransitionTime(0.2f);
 		node->addAnimator(anim1);
 		anim1->drop();
-		
+
 		node->setPosition(startPos);
 		node->setMaterialFlag(irr::video::EMF_LIGHTING,false);
 		manager->getCore()->globalVars["NPCNode"] = node;
 		idle();
-		
+
 		//! collision
 		const irr::core::aabbox3df& box = node->getBoundingBox();
 		irr::core::vector3df radius = box.MaxEdge - box.getCenter();
-		
+
 		irr::scene::ISceneNodeAnimator* anim=new irr::scene::StandOnTerrainAnimator(manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::ITriangleSelector*>(),
 			manager->getCore()->getGraphicDevice()->getSceneManager()->getSceneCollisionManager(),
 			irr::core::vector3df(0,-1.0f,0)
 			);
 		node->addAnimator(anim);
 		anim->drop();
-				
+
 		//HUDControler* controler = new HUDControler();
-        //manager->addEntity(controler);
+		//manager->addEntity(controler);
 
 		//! make update called every frame.
 		manager->setActive(this,true);
@@ -67,23 +67,23 @@ protected:
 	}
 
 	void idle()
-    {
+	{
 		if(currentAction != "Idle")
 		{
 			node->setFrameLoop(205,249);
 			currentAction = "Idle";
 		}
 	}
-    void walk()
-    {
-        if ((node->getStartFrame()!=0)&&(node->getEndFrame()!=14))
-            {
-				if(currentAction != "Walking")
-				{
-					node->setFrameLoop(0,14);
-					currentAction = "Walking";       
-				}
+	void walk()
+	{
+		if ((node->getStartFrame()!=0)&&(node->getEndFrame()!=14))
+		{
+			if(currentAction != "Walking")
+			{
+				node->setFrameLoop(0,14);
+				currentAction = "Walking";       
 			}
+		}
 	}
 
 
@@ -95,25 +95,25 @@ protected:
 	{
 		//! Very simple AI
 		irr::scene::IAnimatedMeshSceneNode* NPCnode = manager->getCore()->globalVars["characterNode"].getAs<irr::scene::IAnimatedMeshSceneNode*>();
-		
+
 		//! Get positon near target node, -5 mean behind 5 units
 		targetPos = getNearPosition(NPCnode, irr::core::vector3df(0,0,-5));
 
 		irr::core::vector3df diffVect = node->getPosition() - targetPos;
 		diffVect.Y = 0.0f;
 		float distance=diffVect.getLength();
-		
+
 		if(distance <= (speed*deltaTime))//reached target
 		{
-				idle();
-				goalReached = true;
+			idle();
+			goalReached = true;
 		}
 		else
 		{
-				walk();				
-				goalReached=false;
-				node->setRotation(faceTarget(targetPos,node->getPosition()));				
-				moveto(irr::core::vector3df(0,0,speed*deltaTime));
+			walk();				
+			goalReached=false;
+			node->setRotation(faceTarget(targetPos,node->getPosition()));				
+			moveto(irr::core::vector3df(0,0,speed*deltaTime));
 		}
 	}
 
