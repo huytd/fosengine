@@ -16,7 +16,7 @@ public:
 
 	Character(irr::scene::ISceneNode* node)
 	{
-		speed=22.2f;
+		speed=10.2f;
 		goalReached=false;
 		mouseDelegate.addRef();
 		mouseDelegate.bind(this,&Character::onMouse);

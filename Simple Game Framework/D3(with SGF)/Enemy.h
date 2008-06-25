@@ -17,7 +17,7 @@ public:
 
 	Enemy(irr::scene::ISceneNode* node)
 	{
-		speed=10.0f;
+		speed=5.0f;
 		goalReached=false;
 		startPos=node->getAbsolutePosition();
 		node->remove();
@@ -105,7 +105,7 @@ protected:
 		{
 			idle();		
 			if(!goalReached)
-			magic->attack(1000, node->getPosition(), targetPos, 5000.0f, 5000.0f, 30000.0f, 5000.0f);
+				magic->attack(0.0f, targetPos, node->getPosition(), 5000.0f, 5000.0f, 30000.0f, 5000.0f);
 			goalReached = true;
 		}
 		else
@@ -119,8 +119,6 @@ protected:
 
 	void onRemove()
 	{
-		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
-		delete magic;
 		node->remove();
 	}
 
