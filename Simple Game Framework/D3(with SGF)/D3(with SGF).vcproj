@@ -337,6 +337,14 @@
 					RelativePath=".\Character.h"
 					>
 				</File>
+				<File
+					RelativePath=".\NPC.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NPC.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>
