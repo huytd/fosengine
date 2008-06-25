@@ -17,7 +17,7 @@ public:
 
 	Enemy(irr::scene::ISceneNode* node)
 	{
-		speed=22.2f;
+		speed=10.0f;
 		goalReached=false;
 		startPos=node->getAbsolutePosition();
 		//node->remove();
