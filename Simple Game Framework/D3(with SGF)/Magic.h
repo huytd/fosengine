@@ -18,17 +18,22 @@ public:
 		irr::core::vector3df StartTargetPostion,
 		float startIdleTime=1000.0f, float startPreTime=1000.0f, float startTTL=30000.0f,  float startBlowTime=1000.0f)
 	{
-		light2->setPosition(startPosition);
-		light2->setVisible(true);
-
+		
 		isAttack = true;
 
 		idleTime = startIdleTime;
 
-		beginTime = startTime;
+		irr::IrrlichtDevice* device = manager->getCore()->getGraphicDevice();
+		beginTime =  device->getTimer()->getRealTime();
 
 		vTargetPostion = StartTargetPostion;
 		vPostition = startPosition;
+
+		vTargetPostion.Y += 2.0f;
+		vPostition.Y += 6.0f;
+
+		light2->setPosition(vPostition);
+		light2->setVisible(false);
 
 		TTL = startTTL;
 		preTime = startPreTime;
@@ -55,18 +60,14 @@ public:
 		ps->setPosition(pos);
 	}
 private:
-	core::vector3df psfaceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos) {
-
-		core::vector3df posDiff = targetpos - nodepos;
-		f32 degree = nodepos.Y; //keep current rotation if nothing to do
+	core::vector3df psfaceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
+	{
+		irr::core::vector3df posDiff = targetpos - nodepos;
 		posDiff.normalize();
-
-		if (posDiff.X != 0.0f || posDiff.Z != 0.0f)
-			degree = atan2(posDiff.X,posDiff.Z) * core::RADTODEG;
-
-		return core::vector3df(0,degree,0);
+		return posDiff.getHorizontalAngle();
 	} 
 
+	//! arras code
 	void psMoveTo(irr::scene::ISceneNode *node, //node to move
 		irr::core::vector3df vel) //velocity vector
 	{
@@ -89,7 +90,7 @@ protected:
 		// add light 2 (gray)
 		light2 =
 			manager->getCore()->getGraphicDevice()->getSceneManager()->addLightSceneNode(0, core::vector3df(0,0,0),
-			video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), 800.0f);
+			video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), 100.0f);
 
 		// attach billboard to light
 		bill = manager->getCore()->getGraphicDevice()->getSceneManager()->addBillboardSceneNode(light2, core::dimension2d<f32>(8, 8));
@@ -130,8 +131,6 @@ protected:
 	}
 
 	
-
-
 	void onMouse(SMouseEvent& args)
 	{
 	}
@@ -166,7 +165,7 @@ protected:
 		}
 		else if(subTime < TTL + preTime + idleTime)
 		{
-			if( light2->getPosition().getDistanceFrom(vTargetPostion) <= 2) 
+			if( light2->getPosition().getDistanceFrom(vTargetPostion) <= 50*deltaTime) 
 			{
 				isAttack = false;	
 				light2->setVisible(false);
@@ -177,7 +176,7 @@ protected:
 			light2->setRotation( psfaceTarget(vTargetPostion, light2->getPosition()));
 
 			//Change funtion to define magic's quy dao
-			psMoveTo(light2, core::vector3df(0.0f, 0.0f, 5));
+			psMoveTo(light2, core::vector3df(0.0f, 0.0f, 50*deltaTime));
 
 		}
 		else
@@ -198,8 +197,6 @@ protected:
 	char* CurrentAction;
 	irr::scene::ISceneNode* node;
 
-
-public:
 	irr::core::vector3df vTargetPostion, vPostition;
 	float TTL, preTime, blowTime, idleTime;
 	bool isAttack;

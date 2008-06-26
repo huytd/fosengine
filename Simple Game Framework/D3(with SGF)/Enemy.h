@@ -72,18 +72,29 @@ protected:
 		if(currentAction != "Idle")
 		{
 			node->setFrameLoop(0,40);
+			node->setLoopMode(true);
 			currentAction = "Idle";
 		}
 	}
 	void walk()
 	{
-			if(currentAction != "Walking")
-			{
-				node->setFrameLoop(41,80);
-				currentAction = "Walking";       
-			}
+		if(currentAction != "Walking")
+		{
+			node->setFrameLoop(41,80);
+			node->setLoopMode(true);
+			currentAction = "Walking";       
+		}
 	}
 
+	void attack()
+	{
+		if(currentAction != "Attaking")
+		{
+			node->setFrameLoop(106,125);
+			node->setLoopMode(false);
+			currentAction = "Attaking";       
+		}
+	}
 
 	void onMouse(SMouseEvent& args)
 	{
@@ -98,22 +109,25 @@ protected:
 		targetPos = Enemynode->getPosition();//getNearPosition(Enemynode, irr::core::vector3df(0,0,25));
 
 		irr::core::vector3df diffVect = node->getPosition() - targetPos;
-		diffVect.Y = 0.0f;
-		float distance=diffVect.getLength();
+		
+		float distance = diffVect.getLength();
 
-		if(distance <= 55)//reached target
+		if(distance <= 55 )//reached target
 		{
-			idle();		
+			idle();
 			if(!goalReached)
-				magic->attack(0.0f, targetPos, node->getPosition(), 5000.0f, 5000.0f, 30000.0f, 5000.0f);
+				{
+					attack();
+					magic->attack(0, node->getPosition(), Enemynode->getPosition(), 500.0f, 1000.0f, 30000.0f, 2000.0f);
+				}
 			goalReached = true;
 		}
 		else
-		{
+		{			
 			walk();				
 			goalReached=false;
 			node->setRotation(faceTarget(targetPos,node->getPosition()));				
-			moveto(irr::core::vector3df(0,0,speed*deltaTime));
+			moveto(irr::core::vector3df(0,0,speed*deltaTime));			
 		}
 	}
 
