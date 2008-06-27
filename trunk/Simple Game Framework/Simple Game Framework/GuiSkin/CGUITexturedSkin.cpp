@@ -1,5 +1,5 @@
+#include <irrlicht.h>
 #include "CGUITexturedSkin.h"
-
 
 using namespace irr;
 using namespace core;
@@ -667,6 +667,8 @@ void CGUITexturedSkin::draw3DSunkenPane(IGUIElement *element, video::SColor bgco
 }
 
 
+#ifndef IRRLICHT_1_5
+
 void CGUITexturedSkin::draw3DTabBody(IGUIElement *element, bool border, bool background, const core::rect<s32> &rect, const core::rect<s32> *clip)
 {
 	core::rect<s32> tabBody = skinTexCoords[ESTC_TAB_BODY];
@@ -682,6 +684,182 @@ void CGUITexturedSkin::draw3DTabButton(IGUIElement *element, bool active, const 
 	core::rect<s32> tabButton = skinTexCoords[buttonType];
 	pVideo->draw2DImage(pSkinTexture,rect,tabButton,0,0,true);
 }
+
+#else
+
+void CGUISkin::draw3DTabButton(IGUIElement* element, bool active,
+	const core::rect<s32>& frameRect, const core::rect<s32>* clip, EGUI_ALIGNMENT alignment)
+{
+	if (!Driver)
+		return;
+
+	core::rect<s32> tr = frameRect;
+
+	if ( alignment == EGUIA_UPPERLEFT )
+	{
+		tr.LowerRightCorner.X -= 2;
+		tr.LowerRightCorner.Y = tr.UpperLeftCorner.Y + 1;
+		tr.UpperLeftCorner.X += 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_HIGH_LIGHT), tr, clip);
+		
+		// draw left highlight
+		tr = frameRect;
+		tr.LowerRightCorner.X = tr.UpperLeftCorner.X + 1;
+		tr.UpperLeftCorner.Y += 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_HIGH_LIGHT), tr, clip);
+
+		// draw grey background
+		tr = frameRect;
+		tr.UpperLeftCorner.X += 1;
+		tr.UpperLeftCorner.Y += 1;
+		tr.LowerRightCorner.X -= 2;
+		Driver->draw2DRectangle(getColor(EGDC_3D_FACE), tr, clip);
+
+		
+		// draw right middle gray shadow
+		tr.LowerRightCorner.X += 1;
+		tr.UpperLeftCorner.X = tr.LowerRightCorner.X - 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_SHADOW), tr, clip);
+
+		
+		tr.LowerRightCorner.X += 1;
+		tr.UpperLeftCorner.X += 1;
+		tr.UpperLeftCorner.Y += 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_DARK_SHADOW), tr, clip);		
+	}
+	else
+	{
+		tr.LowerRightCorner.X -= 2;
+		tr.UpperLeftCorner.Y = tr.LowerRightCorner.Y - 1;
+		tr.UpperLeftCorner.X += 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_HIGH_LIGHT), tr, clip);
+		
+		// draw left highlight
+		tr = frameRect;
+		tr.LowerRightCorner.X = tr.UpperLeftCorner.X + 1;
+		tr.LowerRightCorner.Y -= 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_HIGH_LIGHT), tr, clip);
+
+		// draw grey background
+		tr = frameRect;
+		tr.UpperLeftCorner.X += 1;
+		tr.UpperLeftCorner.Y -= 1;
+		tr.LowerRightCorner.X -= 2;
+		tr.LowerRightCorner.Y -= 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_FACE), tr, clip);
+		
+		// draw right middle gray shadow
+		tr.LowerRightCorner.X += 1;
+		tr.UpperLeftCorner.X = tr.LowerRightCorner.X - 1;
+		//tr.LowerRightCorner.Y -= 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_SHADOW), tr, clip);
+
+		
+		tr.LowerRightCorner.X += 1;
+		tr.UpperLeftCorner.X += 1;
+		tr.LowerRightCorner.Y -= 1;
+		Driver->draw2DRectangle(getColor(EGDC_3D_DARK_SHADOW), tr, clip);		
+	}
+
+}
+
+
+//! draws a tab control body
+/**	\param element: Pointer to the element which wishes to draw this. This parameter
+is usually not used by ISkin, but can be used for example by more complex
+implementations to find out how to draw the part exactly.
+\param border: Specifies if the border should be drawn.
+\param background: Specifies if the background should be drawn.
+\param rect: Defining area where to draw.
+\param clip: Clip area.	*/
+void CGUISkin::draw3DTabBody(IGUIElement* element, bool border, bool background,
+	const core::rect<s32>& rect, const core::rect<s32>* clip, s32 tabHeight, EGUI_ALIGNMENT alignment)
+{
+	if (!Driver)
+		return;
+
+	core::rect<s32> tr = rect;
+
+	if ( tabHeight == -1 )
+		tabHeight = getSize(gui::EGDS_BUTTON_HEIGHT);
+
+	// draw border.
+	if (border)
+	{
+		if ( alignment == EGUIA_UPPERLEFT )
+		{
+			// draw left hightlight
+			tr.UpperLeftCorner.Y += tabHeight + 2;
+			tr.LowerRightCorner.X = tr.UpperLeftCorner.X + 1;
+			Driver->draw2DRectangle(getColor(EGDC_3D_HIGH_LIGHT), tr, clip);
+
+			
+			// draw right shadow
+			tr.UpperLeftCorner.X = rect.LowerRightCorner.X - 1;
+			tr.LowerRightCorner.X = tr.UpperLeftCorner.X + 1;
+			Driver->draw2DRectangle(getColor(EGDC_3D_SHADOW), tr, clip);
+
+			// draw lower shadow
+			tr = rect;
+			tr.UpperLeftCorner.Y = tr.LowerRightCorner.Y - 1;
+			Driver->draw2DRectangle(getColor(EGDC_3D_SHADOW), tr, clip);
+			
+		}
+		else
+		{
+			// draw left hightlight
+			tr.LowerRightCorner.Y -= tabHeight + 2;
+			tr.LowerRightCorner.X = tr.UpperLeftCorner.X + 1;
+			Driver->draw2DRectangle(getColor(EGDC_3D_HIGH_LIGHT), tr, clip);
+			
+			// draw right shadow
+			tr.UpperLeftCorner.X = rect.LowerRightCorner.X - 1;
+			tr.LowerRightCorner.X = tr.UpperLeftCorner.X + 1;
+			Driver->draw2DRectangle(getColor(EGDC_3D_SHADOW), tr, clip);
+			
+			// draw lower shadow
+			tr = rect;
+			tr.LowerRightCorner.Y = tr.UpperLeftCorner.Y + 1;
+			Driver->draw2DRectangle(getColor(EGDC_3D_HIGH_LIGHT), tr, clip);
+			
+		}
+	}
+
+	if (background)
+	{
+		
+		if ( alignment == EGUIA_UPPERLEFT )
+		{
+			tr = rect;
+			tr.UpperLeftCorner.Y += tabHeight + 2;
+			tr.LowerRightCorner.X -= 1;
+			tr.UpperLeftCorner.X += 1;
+			tr.LowerRightCorner.Y -= 1;
+		}
+		else
+		{
+			tr = rect;
+			tr.UpperLeftCorner.X += 1;
+			tr.UpperLeftCorner.Y -= 1;
+			tr.LowerRightCorner.X -= 1;
+			tr.LowerRightCorner.Y -= tabHeight + 2;
+			//tr.UpperLeftCorner.X += 1;
+		}
+
+		if (!UseGradient)
+			Driver->draw2DRectangle(getColor(EGDC_3D_FACE), tr, clip);
+		else
+		{
+			video::SColor c1 = getColor(EGDC_3D_FACE);
+			video::SColor c2 = getColor(EGDC_3D_SHADOW);
+			Driver->draw2DRectangle(tr, c1, c1, c2, c2, clip);
+		}
+	}
+}
+
+
+#endif
+
 
 
 void CGUITexturedSkin::draw3DToolBar(IGUIElement *element, const core::rect<s32> &rect, const core::rect<s32> *clip)

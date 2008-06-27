@@ -1,9 +1,7 @@
 #ifndef C_GUI_TEXTURED_SKIN_H
 #define C_GUI_TEXTURED_SKIN_H
 
-
 #include <irrlicht.h>
-
 
 namespace irr {
 namespace gui {
@@ -127,6 +125,7 @@ public:
 								  const irr::core::rect<irr::s32> &rect,
 								  const irr::core::rect<irr::s32> *clip=0);
 
+#ifndef IRRLICHT_1_5
 	virtual void draw3DTabBody(irr::gui::IGUIElement *element, bool border, bool background,
 							   const irr::core::rect<irr::s32> &rect,
 							   const irr::core::rect<irr::s32> *clip=0);
@@ -134,6 +133,20 @@ public:
 	virtual void draw3DTabButton(irr::gui::IGUIElement *element, bool active,
 								 const irr::core::rect<irr::s32> &rect,
 								 const irr::core::rect<irr::s32> *clip=0);
+#else
+	virtual void draw3DTabBody(IGUIElement* element, bool border, bool background,
+								const core::rect<s32>& rect, 
+								const core::rect<s32>* clip=0, 
+								s32 tabHeight=-1, 
+								gui::EGUI_ALIGNMENT alignment=EGUIA_UPPERLEFT ) = 0;
+
+	virtual void draw3DTabButton(IGUIElement* element, bool active, const core::rect<s32>& rect, 
+								const core::rect<s32>* clip=0, 
+								gui::EGUI_ALIGNMENT alignment=EGUIA_UPPERLEFT) = 0;
+
+#endif
+
+
 
 	virtual void draw3DToolBar(irr::gui::IGUIElement *element,
 							   const irr::core::rect<irr::s32> &rect,
