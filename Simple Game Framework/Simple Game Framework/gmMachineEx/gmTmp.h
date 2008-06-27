@@ -52,7 +52,7 @@
 #define GM_OBJ_PTR -6
 #define GM_OBJ_CONST_PTR -7
 
-#define GM_CONST_ANY_PTR -9 //DOIT Ítre egal ‡ l'opposÈ de GM_ANY_PTR
+#define GM_CONST_ANY_PTR -9 //DOIT Ítre egal ÅEl'opposÅEde GM_ANY_PTR
 #define GM_CONST_C_STRING -10
 
 /*=============================================================================================
@@ -377,7 +377,7 @@ template<int FUNCTION_CAT> struct SWITCH
 
 
 /*=============================
-  Cas des appels ‡ des variable
+  Cas des appels ÅEdes variable
 ===============================*/
 
 template<> struct SWITCH<GET_SET_ACCESS>
@@ -422,7 +422,7 @@ template<> struct SWITCH<DIRECT_ACCESS_READ_ONLY>
 };
 
 /*=========================================
-  Cas des appels ‡ des fonctions classiques
+  Cas des appels ÅEdes fonctions classiques
 ===========================================*/
 
 
@@ -550,7 +550,7 @@ template<> struct SWITCH<FUNCTION_TYPE>
 };
 
 /*===========================================================
-  Cas des appels ‡ des fonctions ne retournant pas de valeurs
+  Cas des appels ÅEdes fonctions ne retournant pas de valeurs
 =============================================================*/
 
 template<> struct SWITCH<FUNCTION_NORET_TYPE>
@@ -689,7 +689,7 @@ template<> struct SWITCH<FUNCTION_NORET_TYPE>
 };
 
 /*========================================
-  Cas des appels ‡ des mÈthodes classiques
+  Cas des appels ÅEdes mÈthodes classiques
 ==========================================*/
 
 template<> struct SWITCH<METHOD_TYPE>
@@ -816,7 +816,7 @@ template<> struct SWITCH<METHOD_TYPE>
 };
 
 /*==========================================================
-  Cas des appels ‡ des mÈthodes ne retournant pas de valeurs
+  Cas des appels ÅEdes mÈthodes ne retournant pas de valeurs
 ============================================================*/
 
 template<> struct SWITCH<METHOD_NORET_TYPE>
@@ -954,7 +954,7 @@ template<> struct SWITCH<METHOD_NORET_TYPE>
 };
 
 /*=======================================
-  Cas des appels ‡ des opÈrateurs membres
+  Cas des appels ÅEdes opÈrateurs membres
 =========================================*/
 
 template<> struct SWITCH<METHOD_OPERATOR_TYPE>
@@ -985,7 +985,7 @@ template<> struct SWITCH<METHOD_OPERATOR_TYPE>
 
 
 /*===========================================
-  Cas des appels ‡ des opÈrateurs non membres
+  Cas des appels ÅEdes opÈrateurs non membres
 =============================================*/
 
 template<> struct SWITCH<FUNCTION_OPERATOR_TYPE>
@@ -1009,7 +1009,7 @@ template<> struct SWITCH<FUNCTION_OPERATOR_TYPE>
 
 
 /*==================================
-  Cas des appels ‡ des constructeurs
+  Cas des appels ÅEdes constructeurs
 ====================================*/
 
 template<> struct SWITCH<CONSTRUCTOR_TYPE>
@@ -1362,7 +1362,7 @@ template<class CLASS> struct REMOVE_REF<CLASS&>
 	typedef CLASS Type;
 };
 
-template<class DUMMY, typename OPERATOR> bool isUnary( OPERATOR Op ) //la classe factice est la car VC++ est buggÈ
+template<class DUMMY, typename OPERATOR> bool isUnary( OPERATOR Op ) //la classe factice est la car VC++ est buggÅE
 {
 	return _isUnary( Op );
 };
