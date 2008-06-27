@@ -4,14 +4,13 @@
 #include <SGF.h>
 #include "JointAnimator.h"
 #include "StandOnTerrainAnimator.h"
-#include "ThirdPersonCamera.h"
 #include "HUDControler.h"
 #include "Icon.h"
 #include "Map.h"
 #include <irrlicht.h>
 #include "Magic.h"
 
-class Enemy: public sgfEntity, public LevelEntity<Enemy>//this entity is loadable from level
+class Enemy: public sgfEntity, public LevelEntity<Enemy>, irr::scene::IAnimationEndCallBack //this entity is loadable from level
 {
 public:
 
@@ -88,17 +87,23 @@ protected:
 
 	void attack()
 	{
-		if(currentAction != "Attaking")
+		if(currentAction != "Attacking")
 		{
 			node->setFrameLoop(106,125);
 			node->setLoopMode(false);
-			currentAction = "Attaking";       
+			currentAction = "Attacking";       
 		}
+
+		node->setAnimationEndCallback(this);
 	}
 
 	void onMouse(SMouseEvent& args)
 	{
 	}
+	void OnAnimationEnd(IAnimatedMeshSceneNode* node)
+	{
+		idle();
+	} 
 
 	void update(float deltaTime)
 	{
@@ -113,13 +118,15 @@ protected:
 		float distance = diffVect.getLength();
 
 		if(distance <= 55 )//reached target
-		{
-			idle();
-			if(!goalReached)
-				{
-					attack();
-					magic->attack(0, node->getPosition(), Enemynode->getPosition(), 500.0f, 1000.0f, 30000.0f, 2000.0f);
-				}
+		{		
+			if(magic->isEnd())
+			{
+				node->setRotation(faceTarget(targetPos,node->getPosition()));	
+				attack();
+				if(currentAction == "Attacking")
+					magic->attack(0, node->getPosition(), Enemynode->getPosition(), 200.0f, 200.0f, 30000.0f, 200.0f);
+			}
+
 			goalReached = true;
 		}
 		else
