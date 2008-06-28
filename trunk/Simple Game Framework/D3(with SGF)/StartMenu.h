@@ -38,6 +38,10 @@ public:
 			}
 			else if(args.Caller->getID()==2)
 			{
+				emgr->loadLevel(new GameLevel("levels/levelOne.irr"));
+			}
+			else if(args.Caller->getID()==3)
+			{
 				emgr->getCore()->getGame()->quit();
 			}
 		}
@@ -59,7 +63,7 @@ public:
 		irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
 
 		//! Set button text color
-		Utility::setTxColor(emgr,irr::video::SColor(155,255,255,0),EGDC_BUTTON_TEXT);
+		Utility::setTxColor(emgr,irr::video::SColor(255,255,255,255),EGDC_BUTTON_TEXT);
 
 		//env->addImage(env->getVideoDriver()->getTexture("textures/startBG.jpg"),position2d<s32>(0,0),false,0,-1,0);
 		bgimg = env->addImage(irr::core::rect<irr::s32>(0,0,screenSize.Width, screenSize.Height),0,-1,0);
@@ -69,10 +73,15 @@ public:
 		//! Add menu button
 		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-150),(screenSize.Height-60)/2,
 			                                     (screenSize.Width),
-												 (screenSize.Height+60)/2), 0, 1,  L"Start", L"Bắt đầu game");
+												 (screenSize.Height+60)/2), 0, 1,  L"Bắt đầu", L"Bắt đầu game");
+		
 		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-150),(screenSize.Height-60)/2+50,
 			                                     (screenSize.Width),
-												 (screenSize.Height+60)/2+50), 0, 2,  L"Quit", L"Thoát khỏi game");
+												 (screenSize.Height+60)/2+50), 0, 2,  L"Bắt đầu 2", L"Bắt đầu game");
+		
+		env->addButton(irr::core::rect<irr::s32>((screenSize.Width-150),(screenSize.Height-60)/2+50+50,
+			                                     (screenSize.Width),
+												 (screenSize.Height+60)/2+50+50), 0, 3,  L"Thoát", L"Thoát khỏi game");
 
 		
 		//! Đặt con trỏ chuột đúng giữa nút bắt đầu.
