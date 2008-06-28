@@ -133,9 +133,9 @@ void Map::draw()
 	{
 		calc();
 		driver->draw2DImage(imgMap,mapPosInScreen,minimapRect);//Vẽ map
-		driver->draw2DImage(borderImage, borderPosition, borderClippingRect,0, SColor(255,255,255,255), true);
-		//driver->draw2DImage(borderImage, mapPosInScreen, borderClippingRect);
 
+		//! draw the boder
+		driver->draw2DImage(borderImage, borderPosition, borderClippingRect,0, SColor(255,255,255,255), true);
 	}
 }
 
