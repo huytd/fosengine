@@ -9,6 +9,7 @@
 #include "Icon.h"
 #include "Map.h"
 #include <irrlicht.h>
+#include "Enemy.h"
 
 struct SAttack
 {
@@ -28,24 +29,22 @@ public:
 		mouseDelegate.bind(this,&Character::onMouse);
 		startPos=node->getAbsolutePosition();
 		node->remove();
-		attackDelegate=new sgfMethodDelegate<Character,SAttack>(this,&Character::onAttack);
-		attackEvent.addDelegate(attackDelegate);
+		collisionDelegate.addRef();
+		collisionDelegate.bind(this,&Character::onCollision);
+		//attackDelegate=new sgfMethodDelegate<Character,SAttack>(this,&Character::onAttack);
+		//attackEvent.addDelegate(attackDelegate);
 	}
 
 	const char* getClassName() const
 	{
 		return "Character";
 	}
-
-	void receiveAttack(SAttack& atk)
-	{
-		attackEvent(atk);
-	}
-
+	
+	static int colID;
 protected:
-	void onAttack(SAttack& atk)
+	void onCollision(SCollisionEvent& arg)
 	{
-		printf("Attacked by %s , damage %d \n",atk.attacker->getClassName(),atk.damage);
+		printf("Touch enemy");
 	}
 	void onLevelStart()
 	{
@@ -57,17 +56,18 @@ protected:
 		
 		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/thaycung/thaycung.b3d"));
 		const irr::core::aabbox3df& box=node->getBoundingBox();
-		irr::core::vector3df size=box.MaxEdge-box.getCenter();
+		irr::core::vector3df size=box.MaxEdge-box.MinEdge;
 		irr::core::matrix4 m;
-		m.setTranslation(irr::core::vector3df(0,-size.Y,0));
+		m.setTranslation(irr::core::vector3df(0,size.Y/2,0));
 		sgfPhysicWorld* world=manager->getCore()->getPhysicWorld();
-		sgfPtr<sgfPhysicShape> shape=world->createSphere(size.X,size.Y,size.Z);
-		body=manager->getCore()->getPhysicWorld()->createBody(shape);
-		body->setMass(50.0f,shape);		
-		body->setNode(node);
-		body->setPosition(startPos);
+		sgfPtr<sgfPhysicShape> shape=world->createBox(size.X,size.Y,size.Z);
+		body=new sgfPhysicBody(shape);
 		body->setOffset(m);
-		new NewtonUpVector(world,body,irr::core::vector3df(0,-1,0));
+		body->userData=this;
+		world->attachNode(body,node);
+		world->addBody(body);
+		world->setBodyCollisionClass(body,colID);
+		world->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->addDelegate(&collisionDelegate);
 		//sgfPhysicDebugger::add(smgr,body);
 		
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
@@ -87,7 +87,7 @@ protected:
 			manager->getCore()->getGraphicDevice()->getSceneManager()->getSceneCollisionManager(),
 			irr::core::vector3df(0,-1.0f,0)
 			);
-		//node->addAnimator(anim);
+		node->addAnimator(anim);
 		anim->drop();
 		//setup mouse
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
@@ -130,6 +130,7 @@ protected:
 				walk();
 				targetPos = collisionPoint;
 				goalReached=false;
+				node->setRotation(faceTarget(targetPos,node->getPosition()));
 				manager->setActive(this,true);//make update called every frame.
 			}
 		}
@@ -138,7 +139,7 @@ protected:
 	{
 		//printf_s("%f\n",deltaTime);
 		//deltaTime=15;
-		irr::core::vector3df diffVect=node->getPosition()+body->getVelocity()-targetPos;
+		irr::core::vector3df diffVect=targetPos-node->getPosition();
 		diffVect.Y=0.0f;
 		float distance=diffVect.getLength();
 		if(distance<=(speed*deltaTime))//reached target
@@ -149,17 +150,18 @@ protected:
 		}
 		else
 		{
-			body->unfreeze();
-			body->setRotation(faceTarget(targetPos,node->getPosition()));
-			body->addLocalForce(irr::core::vector3df(0,0,500));
+			diffVect.setLength(speed*deltaTime);
+			node->setPosition(node->getPosition()+diffVect);
+			node->updateAbsolutePosition();
 		}
 	}
 
 	void onRemove()
 	{
 		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
+		manager->getCore()->getPhysicWorld()->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->removeDelegate(&collisionDelegate);
 		node->remove();
-		manager->getCore()->getPhysicWorld()->destroyBody(body);
+		manager->getCore()->getPhysicWorld()->removeBody(body);
 	}
 
 	irr::core::vector3df faceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
@@ -190,8 +192,9 @@ protected:
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ITerrainSceneNode* terrain;
 	sgfPhysicBody* body;
-	sgfEvent<SAttack> attackEvent;
-	sgfPtr<sgfDelegate<SAttack>> attackDelegate;
+	sgfMethodDelegate<Character,SCollisionEvent> collisionDelegate;
 };
+
+int Character::colID;
 
 #endif

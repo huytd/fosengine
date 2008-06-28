@@ -1,103 +1,62 @@
 #include "Physic.h"
 #include "sgfPtr.h"
 
+class CollisionEvent:public sgfObject,public sgfEvent<SCollisionEvent>
+{
+public:
+	CollisionEvent()
+		:sgfObject(),sgfEvent<SCollisionEvent>()
+	{}
+	virtual ~CollisionEvent()
+	{}
+};
 //callbacks
 class EngineCallback
 {
 public:
-	static void NewtonApplyForceAndTorque(const NewtonBody* body)
+	static DT_Bool CollisionResponse(void *client_data, void *client_object1, void *client_object2, const DT_CollData *coll_data)
 	{
-		sgfPhysicBody* sgfBody=(sgfPhysicBody*)NewtonBodyGetUserData(body);
-		sgfBody->forceToAdd+=sgfBody->world->gravity*sgfBody->mass;
-		NewtonBodyAddForce(body,reinterpret_cast<float*>(&sgfBody->forceToAdd));
-		NewtonBodyAddTorque(body,reinterpret_cast<float*>(&sgfBody->torqueToAdd));
-		sgfBody->forceToAdd.set(0,0,0);
-		sgfBody->torqueToAdd.set(0,0,0);
-	}
-
-	static void NewtonSetTransform(const NewtonBody* body, const dFloat* matrix)
-	{
-		sgfPhysicBody* sgfBody=(sgfPhysicBody*)NewtonBodyGetUserData(body);
-		irr::core::matrix4 m;
-		m.setM(matrix);
-		m*=sgfBody->offset;
-		sgfBody->node->setPosition(m.getTranslation());
-		sgfBody->node->setRotation(m.getRotationDegrees());
-		
-	}
-
-	static void NewtonBodyDestructor(const NewtonBody* body)
-	{
-		sgfPhysicBody* sgfBody=(sgfPhysicBody*)NewtonBodyGetUserData(body);
-		delete sgfBody;
-	}
-	static int NewtonContactBegin(const NewtonMaterial* material, const NewtonBody* body0, const NewtonBody* body1)
-	{
-		sgfPhysicWorld::colEvent* ev=(sgfPhysicWorld::colEvent*)NewtonMaterialGetMaterialPairUserData(material);
-		ev->arg.body0=(sgfPhysicBody*)NewtonBodyGetUserData(body0);
-		ev->arg.body1=(sgfPhysicBody*)NewtonBodyGetUserData(body1);
-		return 1;
-	}
-
-	static void NewtonContactEnd(const NewtonMaterial* material)
-	{
-		sgfPhysicWorld::colEvent* ev=(sgfPhysicWorld::colEvent*)NewtonMaterialGetMaterialPairUserData(material);
-		ev->fire(ev->arg);
+		SCollisionEvent arg;
+		arg.body1=(sgfPhysicBody*)client_object1;
+		arg.body2=(sgfPhysicBody*)client_object2;
+		arg.data=coll_data;
+		(reinterpret_cast<CollisionEvent*>(client_data))->fire(arg);
+		return DT_CONTINUE;
 	}
 };
 
 //shape
 sgfPhysicShape::~sgfPhysicShape()
 {
+	DT_DeleteShape(ptr);
 }
 
-sgfPhysicShape::sgfPhysicShape(sgfPhysicWorld* world,ShapeType* innerPtr)
-:world(world),ptr(innerPtr)
+sgfPhysicShape::sgfPhysicShape(ShapeType innerPtr)
+:ptr(innerPtr)
 {
 }
 
-class NewtonConvexCollision:public sgfPhysicShape
+/*class SOLIDMesh:public sgfPhysicShape
 {
 public:
-	NewtonConvexCollision(sgfPhysicWorld* world,NewtonCollision* ptr)
-		:sgfPhysicShape(world,ptr)
+	SOLIDMesh(sgfPhysicWorld* world,irr::scene::IMesh* mesh,const irr::core::matrix4& transform)
+		:sgfPhysicShape(0)
 	{
-	}
-	virtual ~NewtonConvexCollision()
-	{
-		NewtonReleaseCollision(world->getPtr(),ptr);
-	}
-};
-
-class NewtonTreeCollision:public sgfPhysicShape
-{
-public:
-	NewtonTreeCollision(sgfPhysicWorld* world,irr::scene::IMesh* mesh,const irr::core::matrix4& transform)
-		:sgfPhysicShape(world,0)
-	{
-		ptr=NewtonCreateTreeCollision(world->getPtr(),NULL);
-		NewtonTreeCollisionBeginBuild(ptr);
-		unsigned int count=mesh->getMeshBufferCount();
-		for(unsigned int i=0;i<count;++i)
-		{
-			irr::scene::IMeshBuffer* buffer=mesh->getMeshBuffer(i);
-			AddMeshBuffer(buffer,transform);
-		}
-		NewtonTreeCollisionEndBuild(ptr,1);
+		
 	}
 	
-	NewtonTreeCollision(sgfPhysicWorld* world,irr::scene::IMeshBuffer* meshBuffer,const irr::core::matrix4& transform)
+	SOLIDMesh(sgfPhysicWorld* world,irr::scene::IMeshBuffer* meshBuffer,const irr::core::matrix4& transform)
 		:sgfPhysicShape(world,0)
 	{
-		ptr=NewtonCreateTreeCollision(world->getPtr(),NULL);
+		ptr=NewtonCreateTreeCollision(world->getHandle(),NULL);
 		NewtonTreeCollisionBeginBuild(ptr);
 		AddMeshBuffer(meshBuffer,transform);
 		NewtonTreeCollisionEndBuild(ptr,1);
 	}
 
-	virtual ~NewtonTreeCollision()
+	virtual ~SOLIDMesh()
 	{
-		NewtonReleaseCollision(world->getPtr(),ptr);
+		NewtonReleaseCollision(world->getHandle(),ptr);
 	}
 private:
 	void AddMeshBuffer(irr::scene::IMeshBuffer* buffer,const irr::core::matrix4& transform)
@@ -137,47 +96,31 @@ private:
 		}
 		return irr::core::vector3df(0,0,0);
 	}
-};
+};*/
 //body
-sgfPhysicBody::sgfPhysicBody(sgfPhysicWorld* world,sgfPhysicShape* shape)
-:world(world),mass(0),node(0)
+sgfPhysicBody::sgfPhysicBody(sgfPhysicShape* shape)
+:node(0)
 {
-	sgfPtr<sgfPhysicShape> Shape(shape);
-	ptr=NewtonCreateBody(world->getPtr(),shape->getPtr());
-	NewtonBodySetUserData(ptr,this);
-	NewtonBodySetForceAndTorqueCallback(ptr,&EngineCallback::NewtonApplyForceAndTorque);
-	NewtonBodySetDestructorCallback(ptr,&EngineCallback::NewtonBodyDestructor);
+	this->shape=shape;
+	ptr=DT_CreateObject(this,shape->getHandle());
+	updateDelegate.addRef();
+	updateDelegate.bind(this,&sgfPhysicBody::update);
 }
 
 sgfPhysicBody::~sgfPhysicBody()
 {
+	DT_DestroyObject(ptr);
 }
 
-void sgfPhysicBody::setMass(float mass, float ixx, float iyy, float izz)
+void sgfPhysicBody::setRotation(const irr::core::vector3df& rotation)
 {
-	this->mass=mass;
-	NewtonBodySetMassMatrix(ptr,mass,ixx,iyy,izz);
-}
-
-void sgfPhysicBody::setMass(float mass, sgfPhysicShape* shape)
-{
-	sgfPtr<sgfPhysicShape> Shape(shape);//reference count
-	float inertia[3];
-	float center[3];
-	NewtonConvexCollisionCalculateInertialMatrix(shape->getPtr(),inertia,center);
-	setMass(mass,inertia[0],inertia[1],inertia[2]);
-}
-
-float sgfPhysicBody::getMass() const
-{
-	return mass;
-}
-
-void sgfPhysicBody::setRotation(irr::core::vector3df& rotation)
-{
-	getTransform();
-	transform.setRotationDegrees(rotation);
-	setTransform(transform);
+	irr::core::quaternion q(rotation*irr::core::DEGTORAD);
+	float q2[4];
+	q2[0]=q.X;
+	q2[1]=q.Y;
+	q2[2]=q.Z;
+	q2[3]=q.W;
+	DT_SetOrientation(ptr,q2);
 }
 
 irr::core::vector3df sgfPhysicBody::getRotation() const
@@ -185,11 +128,15 @@ irr::core::vector3df sgfPhysicBody::getRotation() const
 	return getTransform().getRotationDegrees();
 }
 
-void sgfPhysicBody::setPosition(irr::core::vector3df& position)
+void sgfPhysicBody::setPosition(const irr::core::vector3df& position)
 {
-	getTransform();
-	transform.setTranslation(position);
-	setTransform(transform);
+	DT_SetPosition(ptr,reinterpret_cast<const float*>(&position));
+}
+
+void sgfPhysicBody::update(char&)
+{
+	setPosition(node->getPosition());
+	setRotation(node->getRotation());
 }
 
 irr::core::vector3df sgfPhysicBody::getPosition() const
@@ -197,234 +144,163 @@ irr::core::vector3df sgfPhysicBody::getPosition() const
 	return getTransform().getTranslation();
 }
 
-void sgfPhysicBody::setTransform(irr::core::matrix4& transform)
+void sgfPhysicBody::setTransform(const irr::core::matrix4& transform)
 {
-	NewtonBodySetMatrix(ptr,transform.pointer());
+	DT_SetMatrixf(ptr,transform.getTransposed().pointer());
 }
 
 const irr::core::matrix4& sgfPhysicBody::getTransform()const
 {
-	NewtonBodyGetMatrix(ptr,transform.pointer());
+	DT_GetMatrixf(ptr,transform.pointer());
+	transform=transform.getTransposed();
 	return transform;
 }
 
-void sgfPhysicBody::setVelocity(irr::core::vector3df& velocity)
-{
-	NewtonBodySetVelocity(ptr,reinterpret_cast<float*>(&velocity));
-}
-
-irr::core::vector3df sgfPhysicBody::getVelocity() const
-{
-	irr::core::vector3df vec;
-	NewtonBodyGetVelocity(ptr,reinterpret_cast<float*>(&vec));
-	return vec;
-}
-
-void sgfPhysicBody::addGlobalForce(irr::core::vector3df& force)
-{
-	forceToAdd+=force;
-}
-
-void sgfPhysicBody::addLocalForce(irr::core::vector3df force)
-{
-	irr::core::matrix4 m;
-	m.setRotationDegrees(getRotation());
-	m.transformVect(force);
-	addGlobalForce(force);
-}
-void sgfPhysicBody::addTorque(irr::core::vector3df& torque)
-{
-	torqueToAdd+=torque;
-}
-
-void sgfPhysicBody::setNode(irr::scene::ISceneNode* node)
-{
-	this->node=node;
-	if(node)
-		NewtonBodySetTransformCallback(ptr,&EngineCallback::NewtonSetTransform);
-	else
-		NewtonBodySetTransformCallback(ptr,NULL);
-}
-void sgfPhysicBody::setOffset(irr::core::matrix4& offset)
+void sgfPhysicBody::setOffset(const irr::core::matrix4& offset)
 {
 	this->offset=offset;
 }
+
 irr::scene::ISceneNode* sgfPhysicBody::getNode() const
 {
 	return node;
 }
 
-void sgfPhysicBody::unfreeze()
-{
-	NewtonWorldUnfreezeBody(world->getPtr(),ptr);
-}
-
-void sgfPhysicBody::setMaterial(int material)
-{
-	NewtonBodySetMaterialGroupID(ptr,material);
-}
-
-int sgfPhysicBody::getMaterial() const
-{
-	return NewtonBodyGetMaterialGroupID(ptr);
-}
-void sgfPhysicBody::setControlled(bool controlled)
-{
-	this->controlled=controlled;
-}
-bool sgfPhysicBody::getControlled() const
-{
-	return controlled;
-}
 //world
 sgfPhysicWorld::sgfPhysicWorld(sgfCore* core)
 	:sgfCoreComponent(core)
 {
-	ptr=NewtonCreate(0,0);
+	ptr=DT_CreateScene();
+	respTable=DT_CreateRespTable();
 }
 
 sgfPhysicWorld::~sgfPhysicWorld()
 {
-	NewtonDestroy((NewtonWorld*)ptr);
+	DT_DestroyScene(ptr);
+	DT_DestroyRespTable(respTable);
 }
 
-sgfPhysicShape* sgfPhysicWorld::createBox(float x, float y, float z, float* offsetMatrix)
+sgfPhysicShape* sgfPhysicWorld::createBox(float x, float y, float z)
 {
-	return new NewtonConvexCollision(this,NewtonCreateBox((NewtonWorld*)ptr,x,y,z,offsetMatrix));
+	return new sgfPhysicShape(DT_NewBox(x,y,z));
 }
-sgfPhysicShape* sgfPhysicWorld::createSphere(float x, float y, float z, float* offsetMatrix)
+sgfPhysicShape* sgfPhysicWorld::createSphere(float radius)
 {
-	return new NewtonConvexCollision(this,NewtonCreateSphere((NewtonWorld*)ptr,x,y,z,offsetMatrix));
+	return new sgfPhysicShape(DT_NewSphere(radius));
 }
-sgfPhysicShape* sgfPhysicWorld::createCone(float radius, float height, float* offsetMatrix)
+sgfPhysicShape* sgfPhysicWorld::createCone(float radius, float height)
 {
-	return new NewtonConvexCollision(this,NewtonCreateCone((NewtonWorld*)ptr,radius,height,offsetMatrix));
+	return new sgfPhysicShape(DT_NewCone(radius,height));
 }
-sgfPhysicShape* sgfPhysicWorld::createCylinder(float radius, float height, float* offsetMatrix)
+sgfPhysicShape* sgfPhysicWorld::createCylinder(float radius, float height)
 {
-	return new NewtonConvexCollision(this,NewtonCreateCylinder((NewtonWorld*)ptr,radius,height,offsetMatrix));
+	return new sgfPhysicShape(DT_NewCylinder(radius,height));
 }
-sgfPhysicShape* sgfPhysicWorld::createLevelFromMesh(irr::scene::IMesh* mesh,const irr::core::matrix4& transform)
+/*sgfPhysicShape* sgfPhysicWorld::createLevelFromMesh(irr::scene::IMesh* mesh,const irr::core::matrix4& transform)
 {
-	return new NewtonTreeCollision(this,mesh,transform);
+	return new SOLIDMesh(this,mesh,transform);
 }
 sgfPhysicShape* sgfPhysicWorld::createLevelFromMeshBuffer(irr::scene::IMeshBuffer* mesh,const irr::core::matrix4& transform)
 {
-	return new NewtonTreeCollision(this,mesh,transform);
+	return new SOLIDMesh(this,mesh,transform);
+}*/
+
+void sgfPhysicWorld::addBody(sgfPhysicBody* body)
+{
+	bodies.push_back(sgfPtr<sgfPhysicBody>(body));
+	DT_AddObject(ptr,body->getHandle());
 }
 
-sgfPhysicBody* sgfPhysicWorld::createBody(sgfPhysicShape* shape)
+void sgfPhysicWorld::removeBody(sgfPhysicBody* body)
 {
-	return new sgfPhysicBody(this, shape);
+	sgfPtr<sgfPhysicBody> Body(body);
+	bodies.remove(Body);
+	DT_RemoveObject(ptr,Body->getHandle());
+	attachNode(body,0);
 }
 
-void sgfPhysicWorld::destroyBody(sgfPhysicBody* body)
+void sgfPhysicWorld::attachNode(sgfPhysicBody* body,irr::scene::ISceneNode* node)
 {
-	NewtonDestroyBody(ptr,body->getPtr());
-}
-
-irr::core::vector3df sgfPhysicWorld::getGravity() const
-{
-	return gravity;
-}
-
-void sgfPhysicWorld::setGravity(irr::core::vector3df& gravity)
-{
-	this->gravity=gravity;
-}
-irr::core::aabbox3df sgfPhysicWorld::getWorldLimit() const
-{
-	return worldLimit;
-}
-
-int sgfPhysicWorld::getDefaultMaterial() const
-{
-	return NewtonMaterialGetDefaultGroupID(ptr);
-}
-
-int sgfPhysicWorld::createMaterial()
-{
-	return NewtonMaterialCreateGroupID(ptr);
-}
-
-void sgfPhysicWorld::setWorldLimit(irr::core::aabbox3df& limit)
-{
-	worldLimit=limit;
-	NewtonSetWorldSize((NewtonWorld*)ptr,reinterpret_cast<float*>(&limit.MinEdge),reinterpret_cast<float*>(&limit.MaxEdge));
-}
-sgfEvent<SCollisionEvent>* sgfPhysicWorld::getCollisionEvent(int material0,int material1)
-{
-	std::map<SMaterialPair,sgfPtr<colEvent>>::iterator i=collisionEvents.find(SMaterialPair(material0,material1));
-	if(i==collisionEvents.end())//not found
+	if(body->node)
 	{
-		i->second=new colEvent;
-		NewtonMaterialSetCollisionCallback(ptr,material0,material1,i->second,&EngineCallback::NewtonContactBegin,NULL,&EngineCallback::NewtonContactEnd);
+		if(!node)//switch off
+			updateEvent.removeDelegate(&body->updateDelegate);
 	}
 	else
 	{
-		return i->second;
+		if(node)//switch on
+			updateEvent.addDelegate(&body->updateDelegate);
 	}
-	return 0;
+	body->node=node;
 }
+
 void sgfPhysicWorld::update(SFrameEvent& arg)
 {
-	NewtonUpdate((NewtonWorld*)ptr,arg.deltaTime);
+	char a='\0';
+	updateEvent(a);
+	DT_Test(ptr,respTable);
 }
 
-//debugger
-sgfPhysicDebugger::sgfPhysicDebugger(irr::scene::ISceneManager* smgr,sgfPhysicBody* body)
-:irr::scene::ISceneNode(smgr->getRootSceneNode(),smgr),body(body)
+int sgfPhysicWorld::createCollisionClass()
 {
-	mat.Wireframe=true;
-	mat.Lighting=false;
-	setAutomaticCulling(irr::scene::EAC_OFF);// this will be slow
+	return DT_GenResponseClass(respTable);
 }
-const irr::core::aabbox3df& sgfPhysicDebugger::getBoundingBox() const
+
+void sgfPhysicWorld::setBodyCollisionClass(sgfPhysicBody* body,int Class)
 {
-	return box;
+	DT_SetResponseClass(respTable, body->getHandle(), Class);
 }
-void sgfPhysicDebugger::OnRegisterSceneNode()
-{          
-	if (IsVisible)
-		SceneManager->registerNodeForRendering(this);
-    ISceneNode::OnRegisterSceneNode();
-}
-irr::u32 sgfPhysicDebugger::getMaterialCount() const
+
+sgfEvent<SCollisionEvent>* sgfPhysicWorld::getClassCollisionEvent(int Class,EResponseType resType)
 {
-	return 1;
-}
-irr::video::SMaterial& sgfPhysicDebugger::getMaterial(irr::u32 num)
-{
-	return mat;
-}
-void sgfPhysicDebugger::render()
-{
-	smgr=SceneManager;//pass the current sceneManager;
-	SceneManager->getVideoDriver()->setTransform(irr::video::ETS_WORLD,irr::core::matrix4());
-	SceneManager->getVideoDriver()->setMaterial(irr::video::SMaterial());
-	NewtonBodyForEachPolygonDo(body->getPtr(),&sgfPhysicDebugger::PolyIterator);
-}
-void sgfPhysicDebugger::PolyIterator(const NewtonBody* body, int vertexCount, const dFloat* faceArray, int faceId)
-{
-	irr::core::vector3df p0=irr::core::vector3df(faceArray[0],faceArray[1],faceArray[2]);
-	irr::core::vector3df p1,p2;
-	irr::core::triangle3df tri;
-	tri.pointC=p0;
-	for(int i=2;i<vertexCount;i++)
+	std::map<int,sgfPtr<CollisionEvent>>::iterator i=classCollisionEvents.find(Class);
+	if(i==classCollisionEvents.end())//not found
 	{
-		p1=irr::core::vector3df(faceArray[(i-1) * 3 + 0], faceArray[(i-1) * 3 + 1], faceArray[(i-1) * 3 + 2]);
-		p2=irr::core::vector3df(faceArray[i * 3 + 0], faceArray[i * 3 + 1], faceArray[i * 3 + 2]);
-		tri.pointA=p1;
-		tri.pointB=p2;
-		smgr->getVideoDriver()->draw3DTriangle(tri,irr::video::SColor(0,0,0,255));
+		sgfPtr<CollisionEvent> ev=new CollisionEvent;
+		classCollisionEvents.insert(std::make_pair<int,sgfPtr<CollisionEvent>>(Class,ev));		
+		DT_AddClassResponse(respTable,//setup callback
+                            Class,
+							EngineCallback::CollisionResponse,
+                            (DT_ResponseType)resType,
+                            ev);		
+		return ev;
+     
 	}
+	return i->second;
 }
-
-irr::scene::ISceneNode* sgfPhysicDebugger::add(irr::scene::ISceneManager* smgr,sgfPhysicBody* body)
+sgfEvent<SCollisionEvent>* sgfPhysicWorld::getPairCollisionEvent(int class1,int class2,EResponseType resType)
 {
-	irr::scene::ISceneNode* node=new sgfPhysicDebugger(smgr,body);
-	node->drop();
-	return node;
+	SClassPair pair(class1,class2);
+	std::map<SClassPair,sgfPtr<CollisionEvent>>::iterator i=pairCollisionEvents.find(pair);
+	if(i==pairCollisionEvents.end())//not found
+	{
+		CollisionEvent* ev=new CollisionEvent;
+		pairCollisionEvents.insert(std::make_pair<SClassPair,sgfPtr<CollisionEvent>>(pair,ev));
+		DT_AddPairResponse(respTable,
+							pair.id0,
+							pair.id1, 
+                            EngineCallback::CollisionResponse,
+                            (DT_ResponseType)resType, 
+							ev);
+		return ev;
+	}
+	return i->second;
 }
 
-irr::scene::ISceneManager* sgfPhysicDebugger::smgr;
+void sgfPhysicWorld::setDefaultCollision(bool value,EResponseType resType)
+{
+	if(defaultCollisionEnabled)
+	{
+		if(!value)
+			DT_RemoveDefaultResponse(respTable, EngineCallback::CollisionResponse);
+	}
+	else
+	{
+		if(value)
+			DT_AddDefaultResponse(respTable,
+                                EngineCallback::CollisionResponse,
+                                (DT_ResponseType)resType,
+                                &defaultCollision);
+	}
+	defaultCollisionEnabled=value;
+}
