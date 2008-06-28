@@ -46,7 +46,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="0"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
@@ -179,14 +179,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\CharSelectScreen.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\CharSelectScreen.h"
-				>
-			</File>
-			<File
 				RelativePath=".\D3(with SGF).cpp"
 				>
 			</File>
@@ -196,22 +188,6 @@
 			</File>
 			<File
 				RelativePath=".\Demo3.h"
-				>
-			</File>
-			<File
-				RelativePath=".\GameLevel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\GameLevel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\HealthManaBar.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\HealthManaBar.h"
 				>
 			</File>
 			<File
@@ -239,10 +215,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\StartMenu.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Terrain.h"
 				>
 			</File>
@@ -265,6 +237,14 @@
 			<Filter
 				Name="HUD"
 				>
+				<File
+					RelativePath=".\HealthManaBar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\HealthManaBar.h"
+					>
+				</File>
 				<File
 					RelativePath=".\HUDControler.cpp"
 					>
@@ -343,6 +323,30 @@
 				>
 				<File
 					RelativePath=".\Magic.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Level"
+				>
+				<File
+					RelativePath=".\CharSelectScreen.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CharSelectScreen.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GameLevel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GameLevel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\StartMenu.h"
 					>
 				</File>
 			</Filter>

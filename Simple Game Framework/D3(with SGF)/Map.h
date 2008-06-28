@@ -24,6 +24,13 @@ private:
 	IVideoDriver* driver;
 	ITexture* imgMap;
     ITexture* imgIcon[3];
+	
+	ITexture* borderImage;
+	position2d<s32> borderPosition;
+    rect<s32> borderRect;
+	rect<s32> borderOriginRect;
+	rect<s32> borderClippingRect;
+	
     dimension2d<s32> imgIconSize[3];
 	dimension2d<f32> worldSize;
 	dimension2d<s32> mapSize;
@@ -49,6 +56,7 @@ public:
 	void setIcon0Texture(c8 *fileName);//Icon texture kiểu 0
 	void setIcon1Texture(c8 *fileName);//Icon texture kiểu 1
 	void setIcon2Texture(c8 *fileName);//Icon texture kiểu 2
+	void setMapBorder(c8 *fileName);//Set image border for the map
 	void setTarget(Icon* targetIcon);
 	void setExpand(bool IsExpand);
 	void setWorld(ITerrainSceneNode* terrain);
