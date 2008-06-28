@@ -26,7 +26,7 @@ void Utility::setTxColor(sgfEntityManager *mgr, const irr::video::SColor col, ir
 	env->getSkin()->setColor(which, co);
 }
 
-irr::gui::IGUIButton* Utility::createGUIBtn(sgfEntityManager *mgr, irr::video::ITexture *tex, irr::core::position2df pos, wchar_t *tooltiptext)
+irr::gui::IGUIButton* Utility::createGUIBtn(sgfEntityManager *mgr, irr::video::ITexture *tex, irr::core::dimension2di bsize, irr::core::position2df pos, wchar_t *tooltiptext);
 {
 	irr::gui::IGUIButton* bt;
 			irr::gui::IGUIEnvironment* env=mgr->getCore()->getGraphicDevice()->getGUIEnvironment();

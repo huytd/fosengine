@@ -18,7 +18,7 @@ void CharSelectScreen::onEnter(sgfEntityManager *emgr)
 	bgimg = env->addImage(irr::core::rect<irr::s32>(0,0,screenSize.Width, screenSize.Height),0,-1,0);
 	bgimg->setImage(env->getVideoDriver()->getTexture("textures/CharSel.jpg"));
 	bgimg->setScaleImage(true);
-	
+	//Utility::createGUIBtn(emgr, 
 }
 
 void CharSelectScreen::onExit(sgfEntityManager *emgr)
