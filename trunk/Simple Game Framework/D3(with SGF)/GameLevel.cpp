@@ -32,11 +32,11 @@ void GameLevel::onGUIEvent(irr::SEvent::SGUIEvent& args)
 			}
 			else if(args.Caller == btn2)
 			{
-				map->setVisible(!map->isVisible());		
+				//map->setVisible(!map->isVisible());		
 			}
 			else if(args.Caller == btn3)
 			{
-				map->setExpand(!map->getIsExpand());
+				//map->setExpand(!map->getIsExpand());
 			}
 		}
 	}
@@ -52,43 +52,19 @@ void GameLevel::onEnter(sgfEntityManager* emgr)
 	emgr->getCore()->getGraphicDevice()->getGUIEnvironment()->addStaticText(L"Press esc to exit",core::rect<s32>(10,10,80,30));
 	emgr->getCore()->getInputManager()->getKeyboardEvent()->addDelegate(&keyDelegate);
 
-	
-	//HP and MP Bar.
-	HPBar = new HealthManaBar(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
-	MPBar = new HealthManaBar(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
-	HPBar->setTexture("bar/HP.png");
-	HPBar->setPosition(10,10);
-	HPBar->setMaxValue(300);
-	HPBar->setValue(190);
-	MPBar->setTexture("bar/MP.png");
-	MPBar->setPosition(10,36);
-	MPBar->setMaxValue(150);
-	MPBar->setValue(10);
-	
-	//Destroy object
-	HPBar->drop();
-	MPBar->drop();
-	
+
 	//! Get character node
 	irr::scene::ISceneNode* characterNode = emgr->getCore()->globalVars["characterNode"].getAs<irr::scene::ISceneNode*>();
-
-	//Map.
-	//map = new Map(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
-	//map->setMapTexture("map/Worldmap.png");
-	//map->setCharacterTexture("map/character.png");
-	//map->setWorldSize(512,512);
-	//map->setCharPosition(characterNode->getPosition());
-	//map->drop();
 
 	//! Get screen size
 	irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
 
 	//Toolbar in game.
-	toolbar = env->addImage(env->getVideoDriver()->getTexture("hud/toolbar.png"),position2d<s32>((screenSize.Width/2)-512,screenSize.Height-64),true);
-	btn1 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn1.png"),position2df(((screenSize.Width/2)-512) + 163, screenSize.Height - 35),L"Thoát game");
+	//toolbar = env->addImage(env->getVideoDriver()->getTexture("hud/toolbar.png"),position2d<s32>((screenSize.Width/2)-512,screenSize.Height-64),true);
+	/*btn1 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn1.png"),position2df(((screenSize.Width/2)-512) + 163, screenSize.Height - 35),L"Thoát game");
 	btn2 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn2.png"),position2df(((screenSize.Width/2)-512) + 193, screenSize.Height - 36),L"Ẩn/Hiện bản đồ");
 	btn3 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn3.png"),position2df(((screenSize.Width/2)-512) + 224, screenSize.Height - 35),L"Phóng to/Thu nhỏ bản đồ");
-	
+	*/
 	emgr->getCore()->getGUIEvent()->addDelegate(&onGUI);
 }
 void GameLevel::onExit(sgfEntityManager* emgr)

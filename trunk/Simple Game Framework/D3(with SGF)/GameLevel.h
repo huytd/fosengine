@@ -2,21 +2,18 @@
 #define _GAME_LEVEL_H_
 
 #include <SGF.h>
-#include "HealthManaBar.h"
-#include "Map.h"
 
 class GameLevel:public sgfIrrLevel
 {
 private:
 	sgfEntityManager* emgr;
 	irr::gui::IGUIEnvironment* env;
-	HealthManaBar* HPBar;
-	HealthManaBar* MPBar;
-	Map* map;
+	
 	irr::gui::IGUIImage* toolbar;
 	irr::gui::IGUIButton* btn1;
 	irr::gui::IGUIButton* btn2;
 	irr::gui::IGUIButton* btn3;
+
 	sgfMethodDelegate<GameLevel,irr::SEvent::SGUIEvent> onGUI;
 	sgfMethodDelegate<GameLevel,SKeyboardEvent> keyDelegate;
 

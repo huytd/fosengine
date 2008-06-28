@@ -51,7 +51,7 @@ Demo3::Demo3()
 	registerClass(Character);
 	registerClass(Terrain);
 	registerClass(NPC);
-	registerClass(Enemy);
+	//registerClass(Enemy);
 	
 	//set up collision
 	core.globalVars["worldCollision"]=(void*)(core.getGraphicDevice()->getSceneManager()->createMetaTriangleSelector());

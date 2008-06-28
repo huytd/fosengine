@@ -128,10 +128,14 @@ void Map::draw()
 {
 	if(!IsVisible)
 		return; 
+
 	if (targetIcon)//Nếu có cái để mà bám
 	{
-	calc();
-	driver->draw2DImage(imgMap,mapPosInScreen,minimapRect);//Vẽ map
+		calc();
+		driver->draw2DImage(imgMap,mapPosInScreen,minimapRect);//Vẽ map
+		driver->draw2DImage(borderImage, borderPosition, borderClippingRect,0, SColor(255,255,255,255), true);
+		//driver->draw2DImage(borderImage, mapPosInScreen, borderClippingRect);
+
 	}
 }
 
@@ -145,4 +149,22 @@ void Map::removeIcon(Icon* icon)
 void Map::setTarget(Icon* targetIcon)
 {
 	 this->targetIcon = targetIcon;
+}
+
+void Map::setMapBorder(c8 *fileName)
+{
+	borderImage = driver->getTexture(fileName);
+
+	borderOriginRect = core::rect<s32>(0, 
+										0, 
+										borderImage->getOriginalSize().Width, 
+										borderImage->getOriginalSize().Height);
+	
+	//Tam thoi hard code de test
+	borderClippingRect = core::rect<s32>(642, 
+										10,
+										789, 
+										156);
+
+	borderPosition = core::position2d<s32>(645,7);
 }

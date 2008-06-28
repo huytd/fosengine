@@ -15,6 +15,7 @@
 #include <irrlicht.h>
 #include "Icon.h" 
 #include "Map.h"
+#include "HealthManaBar.h"
 
 using namespace irr;
 using namespace scene;
@@ -26,7 +27,10 @@ public:
 	
 private:
 	//! Minimap in game
+	HealthManaBar* HPBar;
+	HealthManaBar* MPBar;
 	Map* map;
+
 	Icon* icon;
     ITerrainSceneNode* terrain;
 	void onAdd();
