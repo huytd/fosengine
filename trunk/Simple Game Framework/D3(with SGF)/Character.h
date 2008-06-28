@@ -10,6 +10,12 @@
 #include "Map.h"
 #include <irrlicht.h>
 
+struct SAttack
+{
+	sgfEntity* attacker;
+	int damage;
+};
+
 class Character: public sgfEntity, public LevelEntity<Character>//this entity is loadable from level
 {
 public:
@@ -22,13 +28,25 @@ public:
 		mouseDelegate.bind(this,&Character::onMouse);
 		startPos=node->getAbsolutePosition();
 		node->remove();
+		attackDelegate=new sgfMethodDelegate<Character,SAttack>(this,&Character::onAttack);
+		attackEvent.addDelegate(attackDelegate);
 	}
 
 	const char* getClassName() const
 	{
 		return "Character";
 	}
+
+	void receiveAttack(SAttack& atk)
+	{
+		attackEvent(atk);
+	}
+
 protected:
+	void onAttack(SAttack& atk)
+	{
+		printf("Attacked by %s , damage %d \n",atk.attacker->getClassName(),atk.damage);
+	}
 	void onLevelStart()
 	{
 		terrain=manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();//get the terrain from a global variable
@@ -38,26 +56,38 @@ protected:
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 		
 		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/thaycung/thaycung.b3d"));
-		//node->setDebugDataVisible(irr::scene::EDS_FULL);
+		const irr::core::aabbox3df& box=node->getBoundingBox();
+		irr::core::vector3df size=box.MaxEdge-box.getCenter();
+		irr::core::matrix4 m;
+		m.setTranslation(irr::core::vector3df(0,-size.Y,0));
+		sgfPhysicWorld* world=manager->getCore()->getPhysicWorld();
+		sgfPtr<sgfPhysicShape> shape=world->createSphere(size.X,size.Y,size.Z);
+		body=manager->getCore()->getPhysicWorld()->createBody(shape);
+		body->setMass(50.0f,shape);		
+		body->setNode(node);
+		body->setPosition(startPos);
+		body->setOffset(m);
+		new NewtonUpVector(world,body,irr::core::vector3df(0,-1,0));
+		//sgfPhysicDebugger::add(smgr,body);
+		
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
 		node->setTransitionTime(0.2f);
 		node->addAnimator(anim1);
 		anim1->drop();
-		//temporary work around
-		//node->setScale(irr::core::vector3df(0.01,0.01,-0.01));
+
 		node->setPosition(startPos);
 		node->setMaterialFlag(irr::video::EMF_LIGHTING,false);
 		manager->getCore()->globalVars["characterNode"] = node;
 		idle();
 		//collision
-		const irr::core::aabbox3df& box = node->getBoundingBox();
+		//const irr::core::aabbox3df& box = node->getBoundingBox();
 		irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 		
 		irr::scene::ISceneNodeAnimator* anim=new irr::scene::StandOnTerrainAnimator(manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::ITriangleSelector*>(),
 			manager->getCore()->getGraphicDevice()->getSceneManager()->getSceneCollisionManager(),
 			irr::core::vector3df(0,-1.0f,0)
 			);
-		node->addAnimator(anim);
+		//node->addAnimator(anim);
 		anim->drop();
 		//setup mouse
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
@@ -100,7 +130,6 @@ protected:
 				walk();
 				targetPos = collisionPoint;
 				goalReached=false;
-				node->setRotation(faceTarget(targetPos,node->getPosition()));
 				manager->setActive(this,true);//make update called every frame.
 			}
 		}
@@ -109,7 +138,7 @@ protected:
 	{
 		//printf_s("%f\n",deltaTime);
 		//deltaTime=15;
-		irr::core::vector3df diffVect=node->getPosition()-targetPos;
+		irr::core::vector3df diffVect=node->getPosition()+body->getVelocity()-targetPos;
 		diffVect.Y=0.0f;
 		float distance=diffVect.getLength();
 		if(distance<=(speed*deltaTime))//reached target
@@ -120,7 +149,9 @@ protected:
 		}
 		else
 		{
-			moveto(irr::core::vector3df(0,0,speed*deltaTime));
+			body->unfreeze();
+			body->setRotation(faceTarget(targetPos,node->getPosition()));
+			body->addLocalForce(irr::core::vector3df(0,0,500));
 		}
 	}
 
@@ -128,6 +159,7 @@ protected:
 	{
 		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
 		node->remove();
+		manager->getCore()->getPhysicWorld()->destroyBody(body);
 	}
 
 	irr::core::vector3df faceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
@@ -157,6 +189,9 @@ protected:
 	irr::core::vector3df targetPos;
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ITerrainSceneNode* terrain;
+	sgfPhysicBody* body;
+	sgfEvent<SAttack> attackEvent;
+	sgfPtr<sgfDelegate<SAttack>> attackDelegate;
 };
 
 #endif
