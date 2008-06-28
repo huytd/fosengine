@@ -178,18 +178,22 @@ public:
 
 	void hijack(sgfDelegate<T>* Delegate)
 	{
-		Delegates.push_front(TDelegate(Delegate));
+		TDelegate dele(Delegate);
+		Delegates.push_front(dele);
 	}
 
 	void addDelegate(sgfDelegate<T>* Delegate)
 	{
+		TDelegate dele;
 		if(iterating)
 		{
-			toAdd.push_back(TDelegate(Delegate));
+			dele=Delegate;
+			toAdd.push_back(dele);
 		}
 		else
 		{
-			Delegates.push_back(TDelegate(Delegate));
+			dele=Delegate;
+			Delegates.push_back(dele);
 		}
 	}
 

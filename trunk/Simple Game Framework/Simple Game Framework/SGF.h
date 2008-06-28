@@ -27,7 +27,7 @@
 #ifdef _MSC_VER
 #pragma comment(lib,"SGF.lib")
 #pragma comment(lib,"irrlicht.lib")
-#pragma comment(lib,"Newton.lib")
+#pragma comment(lib,"Solid.lib")
 #endif
 
 #include "Game.h"

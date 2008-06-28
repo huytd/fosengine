@@ -18,11 +18,11 @@ Demo3::Demo3()
 {
 	core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
 	core.init(this);//initialize the core
-	core.getPhysicWorld()->setWorldLimit(irr::core::aabbox3df(-10000.0f,-10000.0f,-10000.0f,10000.0f,10000.0f,10000.0f));//a big world
-	core.getPhysicWorld()->setGravity(core::vector3df(0,-9.8,0));
 	//set skin(use script to set skin)
 	//core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
 	//display fps
+	Character::colID=core.getPhysicWorld()->createCollisionClass();
+	Enemy::colID=core.getPhysicWorld()->createCollisionClass();
 	sgfEvent<SFrameEvent>* frameEnd=core.getFrameEndEvent();
 	frameEnd->addDelegate(new sgfMethodDelegate<Demo3,SFrameEvent>(this,&Demo3::showFPS));
 	//test script
@@ -51,7 +51,7 @@ Demo3::Demo3()
 	registerClass(Character);
 	registerClass(Terrain);
 	registerClass(NPC);
-	//registerClass(Enemy);
+	registerClass(Enemy);
 	
 	//set up collision
 	core.globalVars["worldCollision"]=(void*)(core.getGraphicDevice()->getSceneManager()->createMetaTriangleSelector());

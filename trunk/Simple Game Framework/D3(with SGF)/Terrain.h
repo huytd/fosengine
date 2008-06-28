@@ -31,7 +31,6 @@ public:
 		m.setRotationDegrees(node->getRotation());
 		m.setScale(node->getScale());
 		//printf("%f %f %f\n",m.getScale().X,m.getScale().Y,m.getScale().Z);
-		body=world->createBody(world->createLevelFromMeshBuffer(&mb,m));
 		
 		//(new sgfPhysicDebugger(manager->getCore()->getGraphicDevice()->getSceneManager(),body))->drop();
 		tri->drop();
@@ -40,10 +39,8 @@ public:
 	{
 		manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::IMetaTriangleSelector*>()->removeTriangleSelector(node->getTriangleSelector());
 		node->remove();
-		manager->getCore()->getPhysicWorld()->destroyBody(body);
 	}
 protected:
-	sgfPhysicBody* body;
 	irr::scene::ITerrainSceneNode* node;
 };
 

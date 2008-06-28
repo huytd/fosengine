@@ -42,6 +42,8 @@ public:
 
 	Magic()
 	{
+		collisionDelegate.addRef();
+		collisionDelegate.bind(this,&Magic::onCollision);
 	}
 
 	//! Set magic movement speed
@@ -79,6 +81,10 @@ private:
 	} 
 protected:
 	void onLevelStart()
+	{
+	}
+
+	void onCollision(SCollisionEvent& arg)
 	{
 	}
 
@@ -212,8 +218,7 @@ protected:
 	irr::scene::ISceneNode* bill;
 	irr::scene::ISceneNodeAnimator* anim;
 
-
-
+	sgfMethodDelegate<Magic,SCollisionEvent> collisionDelegate;
 };
 
 #endif

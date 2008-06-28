@@ -27,6 +27,7 @@ public:
 	{
 		return "Enemy";
 	}
+	static int colID;
 protected:
 	void onLevelStart()
 	{
@@ -37,6 +38,19 @@ protected:
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 
 		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/macay/macay.b3d"));
+
+		const irr::core::aabbox3df& box=node->getBoundingBox();
+		irr::core::vector3df size=box.MaxEdge-box.MinEdge;
+		irr::core::matrix4 m;
+		m.setTranslation(irr::core::vector3df(0,size.Y/2,0));
+		sgfPhysicWorld* world=manager->getCore()->getPhysicWorld();
+		sgfPtr<sgfPhysicShape> shape=world->createBox(size.X,size.Y,size.Z);
+		body=new sgfPhysicBody(shape);
+		body->setOffset(m);
+		body->userData=this;
+		world->attachNode(body,node);
+		world->addBody(body);
+		world->setBodyCollisionClass(body,colID);
 
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
 		node->setTransitionTime(0.2f);
@@ -49,7 +63,7 @@ protected:
 		idle();
 
 		//! collision
-		const irr::core::aabbox3df& box = node->getBoundingBox();
+//		const irr::core::aabbox3df& box = node->getBoundingBox();
 		irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 
 		irr::scene::ISceneNodeAnimator* anim=new irr::scene::StandOnTerrainAnimator(manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::ITriangleSelector*>(),
@@ -133,6 +147,7 @@ protected:
 
 	void onRemove()
 	{
+		manager->getCore()->getPhysicWorld()->removeBody(body);
 		node->remove();
 	}
 
@@ -171,6 +186,7 @@ protected:
 	irr::core::vector3df targetPos;
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ITerrainSceneNode* terrain;
+	sgfPhysicBody* body;
 };
-
+int Enemy::colID;
 #endif

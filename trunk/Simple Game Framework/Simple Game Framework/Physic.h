@@ -4,23 +4,30 @@
 #include "CoreComponent.h"
 #include <irrlicht.h>
 #include "StandardEvents.h"
+#include <list>
 #include <map>
 #include "Event.h"
-//---Newton specific----
-#include "Newton.h"
-
-#define ShapeType NewtonCollision
-#define WorldType NewtonWorld
-#define BodyType NewtonBody
+//---SOLID specific----
+#include <SOLID.h>
+#define ShapeType DT_ShapeHandle
+#define WorldType DT_SceneHandle
+#define BodyType DT_ObjectHandle
 //----------------------
 
 class sgfPhysicBody;
 class sgfPhysicShape;
 class EngineCallback;
 
-struct SMaterialPair
+struct SCollisionEvent
 {
-	inline SMaterialPair(int id0,int id1)
+	sgfPhysicBody* body1;
+	sgfPhysicBody* body2;
+	const DT_CollData* data;
+};
+
+struct SClassPair
+{
+	inline SClassPair(int id0,int id1)
 	{
 		if(id0<=id1)
 		{
@@ -33,16 +40,16 @@ struct SMaterialPair
 			this->id1=id0;
 		}
 	}
-	inline SMaterialPair(const SMaterialPair& other)
+	inline SClassPair(const SClassPair& other)
 	{
 		id0=other.id0;
 		id1=other.id1;
 	}
-	bool operator==(const SMaterialPair& other) const
+	bool operator==(const SClassPair& other) const
 	{
 		return((id0==other.id0)&&(id1==other.id1));
 	}
-	bool operator < (const SMaterialPair& other) const
+	bool operator < (const SClassPair& other) const
 	{
 		if(id0==other.id0)
 		{
@@ -50,7 +57,7 @@ struct SMaterialPair
 		}
 		return(id0<other.id0);
 	}
-	bool operator > (const SMaterialPair& other) const
+	bool operator > (const SClassPair& other) const
 	{
 		if(id0==other.id0)
 		{
@@ -62,50 +69,51 @@ struct SMaterialPair
 	int id1;
 };
 
-struct SCollisionEvent
-{
-	sgfPhysicBody* body0;
-	sgfPhysicBody* body1;
-};
+	enum EResponseType { 
+         ERT_NO_RESPONSE,
+         ERT_SIMPLE_RESPONSE, 
+         ERT_WITNESSED_RESPONSE,
+         ERT_DEPTH_RESPONSE
+     };
+
+class CollisionEvent;
 class sgfPhysicWorld:public sgfCoreComponent
 {
 friend class EngineCallback;
-	class colEvent:public sgfEvent<SCollisionEvent>,public sgfObject
-	{
-	public:
-		SCollisionEvent arg;
-	};
+
 public:
 	sgfPhysicWorld(sgfCore* core);
 	~sgfPhysicWorld();
 
-	sgfPhysicShape* createBox(float x, float y, float z, float* offsetMatrix=0);
-	sgfPhysicShape* createSphere(float x, float y, float z, float* offsetMatrix=0);
-	sgfPhysicShape* createCone(float radius, float height, float* offsetMatrix=0);
-	sgfPhysicShape* createCylinder(float radius, float height, float* offsetMatrix=0);
-	sgfPhysicShape* createLevelFromMesh(irr::scene::IMesh* mesh,const irr::core::matrix4& transform);
-	sgfPhysicShape* createLevelFromMeshBuffer(irr::scene::IMeshBuffer* mesh,const irr::core::matrix4& transform);
+	sgfPhysicShape* createBox(float x, float y, float z);
+	sgfPhysicShape* createSphere(float radius);
+	sgfPhysicShape* createCylinder(float radius, float height);
+	sgfPhysicShape* createCone(float radius, float height);
+	/*sgfPhysicShape* createComplexFromMesh(irr::scene::IMesh* mesh);
+	sgfPhysicShape* createComplexFromMeshBuffer(irr::scene::IMeshBuffer* mesh);*/
 
-	sgfPhysicBody* createBody(sgfPhysicShape* shape);
-	void destroyBody(sgfPhysicBody* body);
+	void addBody(sgfPhysicBody* body);
+	void removeBody(sgfPhysicBody* body);
+	void sgfPhysicWorld::attachNode(sgfPhysicBody* body,irr::scene::ISceneNode* node);
 
-	irr::core::vector3df getGravity() const;
-	void setGravity(irr::core::vector3df& gravity);
-	irr::core::aabbox3df getWorldLimit() const;
-	void setWorldLimit(irr::core::aabbox3df& limit);
+	int createCollisionClass();
+	void setBodyCollisionClass(sgfPhysicBody* body,int Class);
 
-	int getDefaultMaterial() const;
-	int createMaterial();
-
-	sgfEvent<SCollisionEvent>* getCollisionEvent(int material0,int material1);
+	sgfEvent<SCollisionEvent>* getClassCollisionEvent(int Class,EResponseType resType);
+	sgfEvent<SCollisionEvent>* getPairCollisionEvent(int class1,int class2,EResponseType resType);
+	void setDefaultCollision(bool value,EResponseType resType);
 
 	void update(SFrameEvent& arg);
-	inline WorldType* getPtr() const {return ptr;}
+	inline WorldType getHandle() const {return ptr;}
+	sgfEvent<DT_CollData> defaultCollision;
 private:
-	std::map<SMaterialPair,sgfPtr<colEvent>> collisionEvents;
-	irr::core::aabbox3df worldLimit;
-	irr::core::vector3df gravity;
-	WorldType* ptr;
+	bool defaultCollisionEnabled;
+	std::list<sgfPtr<sgfPhysicBody>> bodies;
+	std::map<int,sgfPtr<CollisionEvent>> classCollisionEvents;
+	std::map<SClassPair,sgfPtr<CollisionEvent>> pairCollisionEvents;
+	sgfEvent<char> updateEvent;
+	WorldType ptr;
+	DT_RespTableHandle respTable;
 };
 
 class sgfPhysicShape: public sgfObject
@@ -113,78 +121,40 @@ class sgfPhysicShape: public sgfObject
 friend class sgfPhysicWorld;
 public:
 	virtual ~sgfPhysicShape();
-	inline ShapeType* getPtr() const {return ptr;}
+	inline ShapeType getHandle() const {return ptr;}
 protected:
-	sgfPhysicShape(sgfPhysicWorld* world,ShapeType* innerPtr);
-	sgfPhysicWorld* world;
-	ShapeType* ptr;
+	sgfPhysicShape(ShapeType innerPtr);
+	ShapeType ptr;
 };
 
-class sgfPhysicBody
+class sgfPhysicBody:public sgfObject
 {
 friend class EngineCallback;
 friend class sgfPhysicWorld;
 public:
+	sgfPhysicBody(sgfPhysicShape* shape);
 	~sgfPhysicBody();
 
-	void setMass(float mass, float ixx, float iyy, float izz);
-	void setMass(float mass, sgfPhysicShape* shape);
-	float getMass() const;
-
-	void setRotation(irr::core::vector3df& rotation);
+	void setRotation(const irr::core::vector3df& rotation);
 	irr::core::vector3df getRotation() const;
-	void setPosition(irr::core::vector3df& position);
+	void setPosition(const irr::core::vector3df& position);
 	irr::core::vector3df getPosition() const;
-	void setTransform(irr::core::matrix4& transform);
+	void setTransform(const irr::core::matrix4& transform);
 	const irr::core::matrix4& getTransform()const;
-	void setVelocity(irr::core::vector3df& velocity);
-	irr::core::vector3df getVelocity() const;
-	void setNode(irr::scene::ISceneNode* node);
 	irr::scene::ISceneNode* getNode() const;
-	void setOffset(irr::core::matrix4& offset);
 
-	void addGlobalForce(irr::core::vector3df& force);
-	void addLocalForce(irr::core::vector3df force);
-	void addTorque(irr::core::vector3df& torque);
+	void sgfPhysicBody::setOffset(const irr::core::matrix4& offset);
 
-	void setControlled(bool controlled);
-	bool getControlled() const;
-
-	void unfreeze();
-	void setMaterial(int material);
-	int getMaterial() const;
-
-	inline BodyType* getPtr() const {return ptr;}
+	inline BodyType getHandle() const {return ptr;}
+	void update(char&);
 	void* userData;
 private:
-	sgfPhysicBody(sgfPhysicWorld* world, sgfPhysicShape* shape);
-
-	sgfPhysicWorld* world;//the world it belongs to
-	bool controlled;
-	float mass;
-	irr::scene::ISceneNode* node;
-	irr::core::vector3df forceToAdd;
-	irr::core::vector3df torqueToAdd;
+	sgfMethodDelegate<sgfPhysicBody,char> updateDelegate;
 	mutable irr::core::matrix4 transform;
 	irr::core::matrix4 offset;
-	BodyType* ptr;
+	BodyType ptr;
+	sgfPtr<sgfPhysicShape> shape;
+	irr::scene::ISceneNode* node;
 };
 
-class sgfPhysicDebugger:public irr::scene::ISceneNode
-{
-public:
-	sgfPhysicDebugger(irr::scene::ISceneManager* smgr,sgfPhysicBody* body);
-	static irr::scene::ISceneNode* add(irr::scene::ISceneManager* smgr,sgfPhysicBody* body);
-	virtual const irr::core::aabbox3df& getBoundingBox() const;
-	virtual void render();
-	virtual irr::u32 getMaterialCount() const;
-	virtual irr::video::SMaterial& getMaterial(irr::u32 num);
-	virtual void OnRegisterSceneNode();
-private:
-	static void PolyIterator(const NewtonBody* body, int vertexCount, const dFloat* FaceArray, int faceId);
-	sgfPhysicBody* body;
-	irr::core::aabbox3df box;
-	irr::video::SMaterial mat;
-	static irr::scene::ISceneManager* smgr;
-};
 #endif

@@ -265,18 +265,6 @@
 				Name="Physic"
 				>
 				<File
-					RelativePath=".\Constraint.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Constraint.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Newton.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Physic.cpp"
 					>
 				</File>

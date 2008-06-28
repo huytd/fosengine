@@ -27,9 +27,11 @@ void sgfGame::run()
 		(*frameEvent)(signal);
 		++frameCounted;
 		currentTime=timer->getTime();
+		int diff=currentTime-startTime;
 		if(frameCounted>=10)
 		{
-			deltaTime=((currentTime-startTime)/1000.0f)/frameCounted;
+			int fps=irr::core::ceil32 ( ( 1000 * frameCounted ) * irr::core::reciprocal(diff) );
+			deltaTime=1.0f/fps;
 			startTime=currentTime;
 			frameCounted=0;
 		}
