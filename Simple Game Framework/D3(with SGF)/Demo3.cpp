@@ -19,15 +19,18 @@ Demo3::Demo3()
 	core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
 	core.init(this);//initialize the core
 	//set skin(use script to set skin)
-	//core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
+	core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
+	
 	//display fps
 	Character::colID=core.getPhysicWorld()->createCollisionClass();
 	Enemy::colID=core.getPhysicWorld()->createCollisionClass();
 	sgfEvent<SFrameEvent>* frameEnd=core.getFrameEndEvent();
 	frameEnd->addDelegate(new sgfMethodDelegate<Demo3,SFrameEvent>(this,&Demo3::showFPS));
+	
 	//test script
 	sgfScriptVM* vm=core.getScriptVM();
 	vm->SetDebugMode(true);
+	
 	//bind CGUITexturedSkin class
 #define Typename irr::gui::CGUITexturedSkin
 	gmType guiSkinType=vm->Bind(
@@ -37,6 +40,7 @@ Demo3::Demo3()
 		);
 #undef Typename
 	vm->Bind(GLOBAL_NAMESPACE,FUNCTION(testException),END);
+	
 	//vm->UpdateTypeIds();//since there's no cross-reference between classes, this is not necessary
 	//pass our instance to script
 	core.globalVars["skin"].setAs<irr::gui::CGUITexturedSkin*>(core.getGUISkin(),guiSkinType);

@@ -49,8 +49,10 @@ class sgfInputManager:public sgfCoreComponent, public irr::IEventReceiver
 {
 public:
 	sgfInputManager(sgfCore* core);
+
 protected:
 	virtual ~sgfInputManager();
+
 public:
 	/// \return keyboard event
 	sgfEvent<SKeyboardEvent>* getKeyboardEvent() const;
@@ -60,6 +62,7 @@ public:
 	bool isKeyPressed(EKEY_CODE key) const;
 	/// \brief Event receiver for Irrlicht
 	virtual bool OnEvent(const irr::SEvent& event);
+
 private:
 	sgfEvent<SKeyboardEvent> keyboardEvent;
 	sgfEvent<SMouseEvent> mouseEvent;

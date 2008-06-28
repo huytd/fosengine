@@ -44,6 +44,7 @@ bool sgfInputManager::OnEvent(const irr::SEvent& event)
 			if(keyState[key])//if it was pressed before
 			{
 				keySignal.keyEvent=SKeyboardEvent::EKS_HELD;//it is held
+				
 			}
 			else
 			{

@@ -105,7 +105,7 @@ protected:
 	{
 		if(currentAction != "Idle")
 		{
-			node->setFrameLoop(1,40);
+			node->setFrameLoop(10,40);
 			currentAction = "Idle";
 		}
 	}
