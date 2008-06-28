@@ -9,6 +9,7 @@ GameLevel::GameLevel(const char* fileName)
 {
 	onGUI.addRef();
 	onGUI.bind(this,&GameLevel::onGUIEvent);
+	keyDelegate.addRef();
 	keyDelegate.bind(this,&GameLevel::onKey);
 }
 

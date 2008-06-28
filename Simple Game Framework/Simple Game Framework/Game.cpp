@@ -16,17 +16,22 @@ void sgfGame::run()
 	irr::IrrlichtDevice* graphicDevice=core.getGraphicDevice();
 	irr::ITimer* timer=graphicDevice->getTimer();
 	irr::video::IVideoDriver* vd=graphicDevice->getVideoDriver();
-	float deltaTime=0.0f;
-	unsigned int currentTime;
+	float deltaTime=0.01f;
+	unsigned int currentTime=timer->getTime();
+	unsigned int startTime=timer->getTime();
+	unsigned int frameCounted=0;
+	
 	while(graphicDevice->run()&&running)
 	{
-		currentTime=timer->getRealTime();
-		int fps=vd->getFPS();
-		if(fps)
+		SFrameEvent signal(currentTime,deltaTime);
+		(*frameEvent)(signal);
+		++frameCounted;
+		currentTime=timer->getTime();
+		if(frameCounted>=10)
 		{
-			deltaTime=1.0f/(float)fps;
-			SFrameEvent signal(currentTime,deltaTime);
-			(*frameEvent)(signal);
+			deltaTime=((currentTime-startTime)/1000.0f)/frameCounted;
+			startTime=currentTime;
+			frameCounted=0;
 		}
 	}
 	core.entityManager->endGame();

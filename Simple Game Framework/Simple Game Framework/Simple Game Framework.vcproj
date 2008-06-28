@@ -125,6 +125,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="Newton.lib"
 				OutputFile="$(OutDir)\SGF.lib"
 			/>
 			<Tool
@@ -184,7 +185,6 @@
 				RelativePath=".\DynamicVar.h"
 				>
 			</File>
-		
 			<File
 				RelativePath=".\Entity.cpp"
 				>
@@ -261,6 +261,30 @@
 				RelativePath=".\StandardEvents.h"
 				>
 			</File>
+			<Filter
+				Name="Physic"
+				>
+				<File
+					RelativePath=".\Constraint.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Constraint.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Newton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Physic.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Physic.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="GuiSkin"

@@ -54,10 +54,6 @@ const char* sgfEntity::getClassName() const
 {
 	return "unknown";
 }
-sgfEntityManager* sgfEntity::getManager() const
-{
-	return manager;
-}
 /*sgfEntityComponent* sgfEntity::getComponent(const char* name) const
 {
 	componentsType::const_iterator component;

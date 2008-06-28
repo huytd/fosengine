@@ -27,6 +27,7 @@
 #ifdef _MSC_VER
 #pragma comment(lib,"SGF.lib")
 #pragma comment(lib,"irrlicht.lib")
+#pragma comment(lib,"Newton.lib")
 #endif
 
 #include "Game.h"
@@ -37,6 +38,8 @@
 #include "Core.h"
 #include "InputManager.h"
 #include "IrrLevel.h"
+#include "Physic.h"
+#include "Constraint.h"
 //#include "StandardComponents.h"
 ///\def SGF_LAZY
 ///\brief define this symbol to make all namespace members of Irrlicht global(not recommended)

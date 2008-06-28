@@ -10,6 +10,7 @@
 #include "InputManager.h"
 #include "GuiSkin/CGUITexturedSkin.h"
 #include "DynamicVar.h"
+#include "Physic.h"
 
 /*! \brief The "heart" of the framework, provide access to all the components
  * \remarks It's not singleton, however, there should be only one core in a game
@@ -43,6 +44,8 @@ public:
 	irr::gui::CGUITexturedSkin* getGUISkin() const;
 	///\return script machine
 	sgfScriptVM* getScriptVM() const;
+	///\return physic world
+	sgfPhysicWorld* getPhysicWorld() const;
 	/// \return The game object
 	template <class gameClass>
 	inline gameClass* getGame() const
@@ -70,6 +73,7 @@ private:
 	sgfEventRelay<SFrameEvent> frameStartEvent;
 	sgfEventRelay<SFrameEvent> frameEndEvent;
 	sgfPtr<sgfInputManager> inputManager;
+	sgfPtr<sgfPhysicWorld> physicWorld;
 	irr::gui::CGUITexturedSkin* guiSkin;
 	sgfGame* game;
 };

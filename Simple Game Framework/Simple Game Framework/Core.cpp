@@ -43,11 +43,14 @@ void sgfCore::init(sgfGame* game)
 	//entity manager
 	entityManager=new sgfEntityManager(this);
 	fileSystem=graphicDevice->getFileSystem();
+	//physic
+	physicWorld=new sgfPhysicWorld(this);
 	//frame event
 	frameEvent.addDelegate(frameStartEvent.Delegate);
 	frameEvent.addDelegate(new sgfMethodDelegate<sgfEntityManager,SFrameEvent>(entityManager,&sgfEntityManager::update));
 	frameEvent.addDelegate(new sgfMethodDelegate<sgfScriptVM,SFrameEvent>(scriptVM,&sgfScriptVM::Update));
-	frameEvent.addDelegate(new sgfMethodDelegate<sgfGame,SFrameEvent>(game,&sgfGame::updateGraphic));//there's no leak here
+	frameEvent.addDelegate(new sgfMethodDelegate<sgfPhysicWorld,SFrameEvent>(physicWorld,&sgfPhysicWorld::update));
+	frameEvent.addDelegate(new sgfMethodDelegate<sgfGame,SFrameEvent>(game,&sgfGame::updateGraphic));
 	frameEvent.addDelegate(frameEndEvent.Delegate);
 
 	inited=true;
@@ -98,4 +101,8 @@ irr::gui::CGUITexturedSkin* sgfCore::getGUISkin() const
 sgfScriptVM* sgfCore::getScriptVM() const
 {
 	return scriptVM;
+}
+sgfPhysicWorld* sgfCore::getPhysicWorld() const
+{
+	return physicWorld;
 }
