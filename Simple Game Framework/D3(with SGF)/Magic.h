@@ -2,22 +2,17 @@
 #define _MAGIC_H_
 
 #include <SGF.h>
-#include "JointAnimator.h"
-#include "StandOnTerrainAnimator.h"
-#include "ThirdPersonCamera.h"
-#include "HUDControler.h"
-#include "Icon.h"
-#include "Map.h"
 #include <irrlicht.h>
 
 class Magic: public sgfEntity
 {
 public:
-
 	void attack( u32 startTime, irr::core::vector3df startPosition,
 		irr::core::vector3df StartTargetPostion,
-		float startIdleTime=1000.0f, float startPreTime=1000.0f, float startTTL=30000.0f,  float startBlowTime=1000.0f)
+		float startIdleTime=1000.0f, float startPreTime=1000.0f, float startTTL=30000.0f,  
+		float startBlowTime=1000.0f, float initSpeed = 70.0f, float initSpeedDelta = 10.0f)
 	{
+
 		
 		isAttack = true;
 
@@ -38,6 +33,10 @@ public:
 		TTL = startTTL;
 		preTime = startPreTime;
 		blowTime = startBlowTime;
+		speed = initSpeed;
+		speedDelta = initSpeedDelta;
+
+		CurrentAction = "Start";
 	}
 
 	Magic()
@@ -52,6 +51,11 @@ public:
 		speed = newspeed;
 	}
 
+	//! Set magic movement increase speed
+	void setSpeedDelta(float newspeeddelta)
+	{
+		speedDelta = newspeeddelta;
+	}
 	const char* getClassName() const
 	{
 		return "Magic";
@@ -60,6 +64,11 @@ public:
 	void setPosition(core::vector3df pos)
 	{
 		ps->setPosition(pos);
+	}
+	bool isEnd()
+	{
+		if(CurrentAction == "End") return true;
+		return false;
 	}
 private:
 	core::vector3df psfaceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
@@ -132,6 +141,7 @@ protected:
 
 		light2->setVisible(false);
 
+		CurrentAction = "End";
 		//! make update called every frame.
 		manager->setActive(this,true);
 	}
@@ -171,18 +181,21 @@ protected:
 		}
 		else if(subTime < TTL + preTime + idleTime)
 		{
-			if( light2->getPosition().getDistanceFrom(vTargetPostion) <= 50*deltaTime) 
+		if( light2->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
 			{
 				isAttack = false;	
 				light2->setVisible(false);
+				CurrentAction = "End";
 				return;
 			}
 
 			//Fly in TTL
 			light2->setRotation( psfaceTarget(vTargetPostion, light2->getPosition()));
 
+			speed += speedDelta;
+
 			//Change funtion to define magic's quy dao
-			psMoveTo(light2, core::vector3df(0.0f, 0.0f, 50*deltaTime));
+			psMoveTo(light2, core::vector3df(0.0f, 0.0f, speed*deltaTime));
 
 		}
 		else
@@ -198,7 +211,7 @@ protected:
 
 
 protected:
-	float speed;
+float speed, speedDelta;
 	bool goalReached;
 	char* CurrentAction;
 	irr::scene::ISceneNode* node;
