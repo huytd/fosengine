@@ -2,6 +2,12 @@
 #define _MAGIC_H_
 
 #include <SGF.h>
+#include "JointAnimator.h"
+#include "StandOnTerrainAnimator.h"
+#include "ThirdPersonCamera.h"
+#include "HUDControler.h"
+#include "Icon.h"
+#include "Map.h"
 #include <irrlicht.h>
 
 class Magic: public sgfEntity
@@ -10,10 +16,9 @@ public:
 
 	void attack( u32 startTime, irr::core::vector3df startPosition,
 		irr::core::vector3df StartTargetPostion,
-		float startIdleTime=1000.0f, float startPreTime=1000.0f, float startTTL=30000.0f,  
-		float startBlowTime=1000.0f, float initSpeed = 70.0f, float initSpeedDelta = 10.0f)
+		float startIdleTime=1000.0f, float startPreTime=1000.0f, float startTTL=30000.0f,  float startBlowTime=1000.0f)
 	{
-
+		
 		isAttack = true;
 
 		idleTime = startIdleTime;
@@ -33,11 +38,6 @@ public:
 		TTL = startTTL;
 		preTime = startPreTime;
 		blowTime = startBlowTime;
-
-		speed = initSpeed;
-		speedDelta = initSpeedDelta;
-
-		CurrentAction = "Start";
 	}
 
 	Magic()
@@ -50,12 +50,6 @@ public:
 		speed = newspeed;
 	}
 
-	//! Set magic movement increase speed
-	void setSpeedDelta(float newspeeddelta)
-	{
-		speedDelta = newspeeddelta;
-	}
-
 	const char* getClassName() const
 	{
 		return "Magic";
@@ -64,12 +58,6 @@ public:
 	void setPosition(core::vector3df pos)
 	{
 		ps->setPosition(pos);
-	}
-
-	bool isEnd()
-	{
-		if(CurrentAction == "End") return true;
-		return false;
 	}
 private:
 	core::vector3df psfaceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
@@ -119,9 +107,9 @@ protected:
 		em = ps->createBoxEmitter(
 			core::aabbox3d<f32>(-1,0,-1,1,1,1), 
 			core::vector3df(0.0f,0.0f,0.0f),
-			10,100, 
+			100,100, 
 			video::SColor(0,255,255,255), video::SColor(0,255,255,255),
-			10,500);
+			100,300);
 		ps->setEmitter(em);
 		em->drop();
 
@@ -138,13 +126,11 @@ protected:
 
 		light2->setVisible(false);
 
-		CurrentAction = "End";
-
 		//! make update called every frame.
 		manager->setActive(this,true);
 	}
 
-
+	
 	void onMouse(SMouseEvent& args)
 	{
 	}
@@ -179,11 +165,10 @@ protected:
 		}
 		else if(subTime < TTL + preTime + idleTime)
 		{
-			if( light2->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
+			if( light2->getPosition().getDistanceFrom(vTargetPostion) <= 50*deltaTime) 
 			{
 				isAttack = false;	
 				light2->setVisible(false);
-				CurrentAction = "End";
 				return;
 			}
 
@@ -191,9 +176,8 @@ protected:
 			light2->setRotation( psfaceTarget(vTargetPostion, light2->getPosition()));
 
 			//Change funtion to define magic's quy dao
-			psMoveTo(light2, core::vector3df(0.0f, 0.0f, speed*deltaTime));
+			psMoveTo(light2, core::vector3df(0.0f, 0.0f, 50*deltaTime));
 
-			speed += speedDelta;
 		}
 		else
 		{
@@ -202,20 +186,16 @@ protected:
 		}
 	}
 
-
-
 	void onRemove()
 	{
-		//bill->drop();
-		//light2->drop();
-		//ps->drop();
 	}
 
 
 protected:
-	float speed, speedDelta;
+	float speed;
 	bool goalReached;
 	char* CurrentAction;
+	irr::scene::ISceneNode* node;
 
 	irr::core::vector3df vTargetPostion, vPostition;
 	float TTL, preTime, blowTime, idleTime;
@@ -230,6 +210,10 @@ protected:
 	irr::scene::IParticleAffector* paf;
 
 	irr::scene::ISceneNode* bill;
+	irr::scene::ISceneNodeAnimator* anim;
+
+
+
 };
 
 #endif

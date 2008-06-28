@@ -10,6 +10,10 @@ private:
 	irr::gui::IGUIEnvironment* env;
 	sgfMethodDelegate<CharSelectScreen,irr::SEvent::SGUIEvent> onGUI;
 	irr::gui::IGUIImage* bgimg;
+	irr::gui::IGUIButton* btnNext;
+	irr::gui::IGUIButton* btnBack;
+	irr::gui::IGUIButton* btnSelect;
+	irr::scene::IAnimatedMeshSceneNode* node;
 public:
 
 	CharSelectScreen();
