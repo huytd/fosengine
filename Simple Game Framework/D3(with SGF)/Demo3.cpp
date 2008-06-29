@@ -16,7 +16,7 @@ void testException()
 
 Demo3::Demo3()
 {
-	core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
+	//core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
 	core.init(this);//initialize the core
 	//set skin(use script to set skin)
 	core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");

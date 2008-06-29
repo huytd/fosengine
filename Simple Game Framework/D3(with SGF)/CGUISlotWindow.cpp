@@ -1,6 +1,17 @@
+
+
+
+
 #include "CGUISlotWindow.h"
 #include "CGUIBringUpSlotWindowButton.h"
+
+
+
 #include "CGUIIconSlot.h"
+
+
+
+
 
 namespace irr
 {
@@ -18,6 +29,7 @@ CGUISlotWindow::CGUISlotWindow(IrrlichtDevice* device, IGUIElement* parent, s32 
 
 	IGUISkin* skin = 0;
 	if (Environment)
+
 		skin = Environment->getSkin();
 
 	IGUISpriteBank* sprites = 0;
@@ -35,6 +47,7 @@ CGUISlotWindow::CGUISlotWindow(IrrlichtDevice* device, IGUIElement* parent, s32 
 	CloseButton = Environment->addButton(core::rect<s32>(posx, 3, posx + buttonw, 3 + buttonw), this, -1,
 		L"", skin ? skin->getDefaultText(EGDT_WINDOW_CLOSE) : L"Close" );
 	CloseButton->setSubElement(true);
+CloseButton->setTabStop(false);
 	CloseButton->setAlignment(EGUIA_LOWERRIGHT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
 	if (sprites)
 	{
@@ -48,6 +61,7 @@ CGUISlotWindow::CGUISlotWindow(IrrlichtDevice* device, IGUIElement* parent, s32 
 		L"", skin ? skin->getDefaultText(EGDT_WINDOW_RESTORE) : L"Restore" );
 	RestoreButton->setVisible(false);
 	RestoreButton->setSubElement(true);
+RestoreButton->setTabStop(false);
 	RestoreButton->setAlignment(EGUIA_LOWERRIGHT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
 	if (sprites)
 	{
@@ -61,6 +75,7 @@ CGUISlotWindow::CGUISlotWindow(IrrlichtDevice* device, IGUIElement* parent, s32 
 		L"", skin ? skin->getDefaultText(EGDT_WINDOW_MINIMIZE) : L"Minimize" );
 	MinButton->setVisible(false);
 	MinButton->setSubElement(true);
+	MinButton->setTabStop(false);
 	MinButton->setAlignment(EGUIA_LOWERRIGHT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
 	if (sprites)
 	{
@@ -76,8 +91,14 @@ CGUISlotWindow::CGUISlotWindow(IrrlichtDevice* device, IGUIElement* parent, s32 
 
 
 
+
+
+
+
+
 //! destructor
 CGUISlotWindow::~CGUISlotWindow()
+
 {
 	if (MinButton)
 		MinButton->drop();
@@ -104,15 +125,29 @@ bool CGUISlotWindow::OnEvent(const SEvent& event)
 			return true;
 		}
 		else
+		if (event.GUIEvent.EventType == EGET_ELEMENT_FOCUSED)
+		{
+			if (event.GUIEvent.Caller == this && Parent)
+			{
+				Parent->bringToFront(this);
+			}
+		}
+		else
+
+
 		if (event.GUIEvent.EventType == EGET_BUTTON_CLICKED)
 		{
 			if (event.GUIEvent.Caller == CloseButton)
 			{
 				setVisible(false);
 				setEnabled(false);
+
 				return true;
+
 			}
 		}
+
+
 		break;
 	case EET_MOUSE_INPUT_EVENT:
 		switch(event.MouseInput.Event)
@@ -120,6 +155,7 @@ bool CGUISlotWindow::OnEvent(const SEvent& event)
 		case EMIE_LMOUSE_PRESSED_DOWN:
 			DragStart.X = event.MouseInput.X;
 			DragStart.Y = event.MouseInput.Y;
+			Dragging = true;
 			if (!Environment->hasFocus(this))
 			{
 				Dragging = true;
@@ -144,7 +180,6 @@ bool CGUISlotWindow::OnEvent(const SEvent& event)
 
 						return true;
 
-
 				move(core::position2d<s32>(event.MouseInput.X - DragStart.X, event.MouseInput.Y - DragStart.Y));
 				DragStart.X = event.MouseInput.X;
 				DragStart.Y = event.MouseInput.Y;
@@ -153,13 +188,16 @@ bool CGUISlotWindow::OnEvent(const SEvent& event)
 			break;
         //just to keep the compiler from posting warnings
         default:{}
+
 		}
     //just to keep the compiler from posting warnings
     default:{}
+
 	}
 
 	return Parent ? Parent->OnEvent(event) : false;
 }
+
 
 //! Updates the absolute position.
 void CGUISlotWindow::updateAbsolutePosition()
@@ -273,3 +311,6 @@ core::array<IGUIElement*> CGUISlotWindow::addSlotArray(core::rect<s32> slotRect,
 
 }//end namespace gui
 }//end namespace irr
+
+
+
