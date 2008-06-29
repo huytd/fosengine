@@ -70,6 +70,7 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                 //the mouse left button is pressed
                 case EMIE_LMOUSE_PRESSED_DOWN:
                 {
+					//printf ("hey");
                     //get the move position for dragging
                     DragStart.X = event.MouseInput.X;
                     DragStart.Y = event.MouseInput.Y;

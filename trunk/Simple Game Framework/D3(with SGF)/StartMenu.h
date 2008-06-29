@@ -13,12 +13,24 @@
 #include "CGUISlotWindow.h"
 #include "CGUIBringUpSlotWindowButton.h"
 
-class StartMenu:public sgfLevel
+class StartMenu : public sgfLevel
 {
+public:
+	CGUISlotWindow* window;
+	CGUIIcon *icon;
+
+	IGUIButton* button ;
+	ITexture* slotTex;
+	ITexture* iconTex ;
+	ITexture* iconTex2;
+	core::array<IGUIElement*> slotArray;
+
 private:
 	sgfMethodDelegate<StartMenu,irr::SEvent::SGUIEvent> onGUI;
+
 	sgfEntityManager* emgr;
 	irr::gui::IGUIImage* bgimg;
+	
 public:
 
 	StartMenu()
@@ -50,11 +62,13 @@ public:
 	{
 		this->emgr=emgr;
 
+
+
 		//! Loading unicode font
 		Utility::setFont(emgr,"font/myfont.xml");
 
 		//! Get Gui Environment Manager
-		irr::gui::IGUIEnvironment* env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
+		irr::gui::IGUIEnvironment* env = emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
 
 		//! Get mouse
 		irr::gui::ICursorControl* cursor = emgr->getCore()->getGraphicDevice()->getCursorControl();
@@ -95,28 +109,26 @@ public:
 		//
 
 		//! create a slot window
-		CGUISlotWindow* window = new CGUISlotWindow(emgr->getCore()->getGraphicDevice(), 
+		window = new CGUISlotWindow(emgr->getCore()->getGraphicDevice(), 
 													env->getRootGUIElement(),
 													-1, 
 													rect<s32>(25, 25, 300, 200));
-		window->drop();
+		
 
 		//! create a button to show/hide the window
-		IGUIButton* button = window->createBringUpButton(rect<s32>(10,210,110,242));
-		button->drop();
-
+		button = window->createBringUpButton(rect<s32>(10,210,110,242));
+		
 		//! load some very beautiful textures
-		ITexture* slotTex = env->getVideoDriver()->getTexture("hud\\slot.png");
-		ITexture* iconTex = env->getVideoDriver()->getTexture("hud\\icon.png");
-		ITexture* iconTex2 = env->getVideoDriver()->getTexture("hud\\icon2.png");
+		slotTex = env->getVideoDriver()->getTexture("hud\\slot.png");
+		iconTex = env->getVideoDriver()->getTexture("hud\\icon.png");
+		iconTex2 = env->getVideoDriver()->getTexture("hud\\icon2.png");
 
 		//! create an array of slots in the window
-		core::array<IGUIElement*> slotArray = window->addSlotArray(core::rect<s32>(0,0,32,32), slotTex, env->getRootGUIElement(), -1,
-		core::position2d<s32>(10,30),core::dimension2d<s32>(6,3),core::dimension2d<s32>(2,2));
+		slotArray = window->addSlotArray(core::rect<s32>(0,0,32,32), slotTex, env->getRootGUIElement(), -1,
+		core::position2d<s32>(80,40),core::dimension2d<s32>(6,6),core::dimension2d<s32>(2,2));
 
 		//! create an icon
-		CGUIIcon *icon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
-		icon->drop();
+		icon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));		
 		icon->setImage(iconTex);
 
 		//! create another icon
@@ -126,7 +138,8 @@ public:
 
 		//! let the icons know about the slots
 		icon->setUsableSlotArray(&slotArray);
-		icon2->setUsableSlotArray(&slotArray); 
+		icon2->setUsableSlotArray(&slotArray);
+
 
 		//! Add delegate
 		emgr->getCore()->getGUIEvent()->addDelegate(&onGUI);
@@ -135,8 +148,15 @@ public:
 	void onExit(sgfEntityManager* emgr)
 	{
 		irr::gui::IGUIEnvironment* env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
+	
 		env->clear();
 		emgr->getCore()->getGUIEvent()->removeDelegate(&onGUI);
+
+		//! Destroy drag and drop gui object
+		window->drop();
+		icon->drop();
+		button->drop();
+
 	}
 };
 

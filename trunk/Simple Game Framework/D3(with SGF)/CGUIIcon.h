@@ -64,6 +64,7 @@ private:
     core::array<gui::IGUIElement*>* UsableSlots;
 
     bool Dragging;
+
     core::position2di DragStart;
 
 };
