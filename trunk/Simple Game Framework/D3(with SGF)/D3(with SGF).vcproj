@@ -350,6 +350,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Controler"
+				>
+				<File
+					RelativePath=".\mouse.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

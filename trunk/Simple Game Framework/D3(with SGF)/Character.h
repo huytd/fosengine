@@ -10,6 +10,7 @@
 #include "Map.h"
 #include <irrlicht.h>
 #include "Enemy.h"
+#include "Magic.h"
 
 struct SAttack
 {
@@ -25,12 +26,15 @@ public:
 	{
 		speed=10.2f;
 		goalReached=false;
-		mouseDelegate.addRef();
-		mouseDelegate.bind(this,&Character::onMouse);
 		startPos=node->getAbsolutePosition();
 		node->remove();
+
+		mouseDelegate.addRef();
+		mouseDelegate.bind(this,&Character::onMouse);
+		
 		collisionDelegate.addRef();
 		collisionDelegate.bind(this,&Character::onCollision);
+
 		//attackDelegate=new sgfMethodDelegate<Character,SAttack>(this,&Character::onAttack);
 		//attackEvent.addDelegate(attackDelegate);
 	}
@@ -45,6 +49,9 @@ protected:
 	void onCollision(SCollisionEvent& arg)
 	{
 		printf("Touch enemy");
+		if(magic->isEnd())
+			magic->attack(0,node->getPosition(), mouse->getPosition(), 200.0f, 200.0f, 30000.0f, 200.0f);
+
 	}
 	void onLevelStart()
 	{
@@ -54,22 +61,37 @@ protected:
 	{
 		irr::scene::ISceneManager* smgr=manager->getCore()->getGraphicDevice()->getSceneManager();
 		
-		node=smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/thaycung/thaycung.b3d"));
+		node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/thaycung/thaycung.b3d"));
+		
 		const irr::core::aabbox3df& box=node->getBoundingBox();
 		irr::core::vector3df size=box.MaxEdge-box.MinEdge;
 		irr::core::matrix4 m;
 		m.setTranslation(irr::core::vector3df(0,size.Y/2,0));
 		sgfPhysicWorld* world=manager->getCore()->getPhysicWorld();
 		sgfPtr<sgfPhysicShape> shape=world->createBox(size.X,size.Y,size.Z);
-		body=new sgfPhysicBody(shape);
+		body=new sgfPhysicBody(shape); 
+
 		body->setOffset(m);
 		body->userData=this;
+		
 		world->attachNode(body,node);
 		world->addBody(body);
 		world->setBodyCollisionClass(body,colID);
 		world->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->addDelegate(&collisionDelegate);
 		//sgfPhysicDebugger::add(smgr,body);
 		
+		mouse = new sgfPhysicBody(shape);
+		mouse->setOffset(m);
+		mouse->userData=this;
+		
+		//world->attachNode(mouse,node);
+		world->addBody(mouse);
+		world->setBodyCollisionClass(mouse,colID);
+		world->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->addDelegate(&collisionDelegate);
+		
+		magic = new Magic();	
+		manager->addEntity(magic);
+
 		irr::scene::ISceneNodeAnimator* anim1=new irr::scene::JointAnimator;
 		node->setTransitionTime(0.2f);
 		node->addAnimator(anim1);
@@ -98,9 +120,8 @@ protected:
 		HUDControler* controler = new HUDControler();
         manager->addEntity(controler);
 
-		//node->setVisible(false);
-		//manager->getCore()->getGraphicDevice()->getSceneManager()->addCameraSceneNodeFPS()->setPosition(startPos);
 	}
+
 	void idle()
 	{
 		if(currentAction != "Idle")
@@ -109,6 +130,7 @@ protected:
 			currentAction = "Idle";
 		}
 	}
+
 	void walk()
 	{
 		if(currentAction != "Walking")
@@ -129,16 +151,16 @@ protected:
 			{
 				walk();
 				targetPos = collisionPoint;
+				mouse->setPosition(collisionPoint);
 				goalReached=false;
 				node->setRotation(faceTarget(targetPos,node->getPosition()));
 				manager->setActive(this,true);//make update called every frame.
+
 			}
 		}
 	}
 	void update(float deltaTime)
 	{
-		//printf_s("%f\n",deltaTime);
-		//deltaTime=15;
 		irr::core::vector3df diffVect=targetPos-node->getPosition();
 		diffVect.Y=0.0f;
 		float distance=diffVect.getLength();
@@ -162,6 +184,8 @@ protected:
 		manager->getCore()->getPhysicWorld()->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->removeDelegate(&collisionDelegate);
 		node->remove();
 		manager->getCore()->getPhysicWorld()->removeBody(body);
+		manager->getCore()->getPhysicWorld()->removeBody(mouse);
+		
 	}
 
 	irr::core::vector3df faceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
@@ -191,7 +215,9 @@ protected:
 	irr::core::vector3df targetPos;
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ITerrainSceneNode* terrain;
+	Magic* magic;
 	sgfPhysicBody* body;
+	sgfPhysicBody* mouse;
 	sgfMethodDelegate<Character,SCollisionEvent> collisionDelegate;
 };
 
