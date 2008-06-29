@@ -6,6 +6,7 @@
 #include "StandardEvents.h"
 #include <list>
 #include <map>
+#include <string>
 #include "Event.h"
 //---SOLID specific----
 #include <SOLID.h>
@@ -69,12 +70,13 @@ struct SClassPair
 	int id1;
 };
 
-	enum EResponseType { 
-         ERT_NO_RESPONSE,
-         ERT_SIMPLE_RESPONSE, 
-         ERT_WITNESSED_RESPONSE,
-         ERT_DEPTH_RESPONSE
-     };
+enum EResponseType
+{ 
+        ERT_NO_RESPONSE,
+        ERT_SIMPLE_RESPONSE, 
+        ERT_WITNESSED_RESPONSE,
+        ERT_DEPTH_RESPONSE
+};
 
 class CollisionEvent;
 class sgfPhysicWorld:public sgfCoreComponent
@@ -96,7 +98,7 @@ public:
 	void removeBody(sgfPhysicBody* body);
 	void sgfPhysicWorld::attachNode(sgfPhysicBody* body,irr::scene::ISceneNode* node);
 
-	int createCollisionClass();
+	int getCollisionClassID(const char* className);
 	void setBodyCollisionClass(sgfPhysicBody* body,int Class);
 
 	sgfEvent<SCollisionEvent>* getClassCollisionEvent(int Class,EResponseType resType);
@@ -111,6 +113,7 @@ private:
 	std::list<sgfPtr<sgfPhysicBody>> bodies;
 	std::map<int,sgfPtr<CollisionEvent>> classCollisionEvents;
 	std::map<SClassPair,sgfPtr<CollisionEvent>> pairCollisionEvents;
+	std::map<std::string,DT_ResponseClass> colClass;
 	sgfEvent<char> updateEvent;
 	WorldType ptr;
 	DT_RespTableHandle respTable;

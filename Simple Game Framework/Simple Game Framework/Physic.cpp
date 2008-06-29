@@ -135,8 +135,9 @@ void sgfPhysicBody::setPosition(const irr::core::vector3df& position)
 
 void sgfPhysicBody::update(char&)
 {
-	setPosition(node->getPosition());
-	setRotation(node->getRotation());
+	transform=node->getAbsoluteTransformation();
+	transform*=offset;
+	setTransform(transform);
 }
 
 irr::core::vector3df sgfPhysicBody::getPosition() const
@@ -146,13 +147,12 @@ irr::core::vector3df sgfPhysicBody::getPosition() const
 
 void sgfPhysicBody::setTransform(const irr::core::matrix4& transform)
 {
-	DT_SetMatrixf(ptr,transform.getTransposed().pointer());
+	DT_SetMatrixf(ptr,transform.pointer());
 }
 
 const irr::core::matrix4& sgfPhysicBody::getTransform()const
 {
 	DT_GetMatrixf(ptr,transform.pointer());
-	transform=transform.getTransposed();
 	return transform;
 }
 
@@ -241,9 +241,17 @@ void sgfPhysicWorld::update(SFrameEvent& arg)
 	DT_Test(ptr,respTable);
 }
 
-int sgfPhysicWorld::createCollisionClass()
+int sgfPhysicWorld::getCollisionClassID(const char* className)
 {
-	return DT_GenResponseClass(respTable);
+	std::string name(className);
+	std::map<std::string,DT_ResponseClass>::iterator i=colClass.find(name);
+	if(i==colClass.end())//not found
+	{
+		int newClass=DT_GenResponseClass(respTable);
+		colClass[name]=newClass;
+		return newClass;
+	}
+	return i->second;
 }
 
 void sgfPhysicWorld::setBodyCollisionClass(sgfPhysicBody* body,int Class)
