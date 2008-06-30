@@ -129,20 +129,20 @@ public:
 		icon->setImage(iconTex);
 
 		//! create another icon
-		/*CGUIIcon *icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
+		CGUIIcon *icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
 		icon2->drop();
-		icon2->setImage(iconTex2);*/
+		icon2->setImage(iconTex2);
 
 		//! Setup icon
 		icon->setMoveable(true);
-		//icon2->setMoveable(true);
+		icon2->setMoveable(true);
 
-		//icon->setCanBeOutsideSlot(true);
-		//icon2->setCanBeOutsideSlot(true);
+		/*icon->setCanBeOutsideSlot(true);
+		icon2->setCanBeOutsideSlot(true);*/
 
 		//! let the icons know about the slots
 		icon->setUsableSlotArray(&slotArray);
-		//icon2->setUsableSlotArray(&slotArray);
+		icon2->setUsableSlotArray(&slotArray);
 
 
 		//! Add delegate

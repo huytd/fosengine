@@ -56,13 +56,19 @@ bool CGUIIcon::OnEvent(const SEvent& event)
 		
         case EET_GUI_EVENT:
         {
-            if (event.GUIEvent.EventType == EGET_ELEMENT_FOCUS_LOST)
-            {
-                if (event.GUIEvent.Caller == (IGUIElement*)this)
-                    Dragging = false;
-                return true;
-            }
-            break;
+			if (event.GUIEvent.EventType == EGET_ELEMENT_FOCUS_LOST)
+				{
+					if (event.GUIEvent.Caller == (IGUIElement*)this)
+					//Dragging = false;
+					//printf("On h, on focus EET_GUI_EVENT ");
+					return true;					
+				}
+				else
+				if (event.GUIEvent.EventType == EGET_ELEMENT_FOCUSED)
+				{
+					/*if (Parent && ((event.GUIEvent.Caller == this) || isMyChild(event.GUIEvent.Caller)))
+						Parent->bringToFront(this);*/
+				}		
         }
         case EET_MOUSE_INPUT_EVENT:
         {
@@ -73,21 +79,24 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                 case EMIE_LMOUSE_PRESSED_DOWN:
                 {
 				
-					printf("Press down\n");
+					//printf("Press down\n");
                     //get the move position for dragging
                     DragStart.X = event.MouseInput.X;
                     DragStart.Y = event.MouseInput.Y;
 
                     //if the icon isn't in focus - put it in focus
-                    //if (!Environment->hasFocus(this))
+                    if (!Environment->hasFocus(this))
                     {
-						printf("Dragging\n");
+						//set the focus
+                        Environment->setFocus(this);
+					}
+					{
+						//printf("Dragging\n");
 
                         //if the icon is moveable - dragging is enabled
                         Dragging = true*Moveable;
 
-                        //set the focus
-                        Environment->setFocus(this);
+                        
 
                         if(Parent)
                         {
@@ -97,6 +106,8 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                             //if the icon is in a slot (if the parent isn't the gui root element)
                             if(!(Parent == Environment->getRootGUIElement()))
                             {
+								//printf("Parent == Environment->getRootGUIElement \n");
+
                                 //make the icon a child of the root element (removing it from the slot)
                                 Environment->getRootGUIElement()->addChild(this);
                                 //the current position
@@ -113,13 +124,15 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                 //the mouse left button is released
                 case EMIE_LMOUSE_LEFT_UP:
                 {
-					printf("Press up\n");
+					//printf("Press up\n");
 
                     //the icon is no longer being draged
                     Dragging = false;
 
                     //the icon is no longer in focus
                     Environment->removeFocus(this);
+					if(this->getParent())
+						Environment->removeFocus(this->getParent());
 
                     //bool to check if the icon is dropped in a slot
                     bool movedToSlot = false;
@@ -163,11 +176,11 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                 //the mouse is moved
                 case EMIE_MOUSE_MOVED:
                 {
-					printf("Mouse move\n");
+					//printf("Mouse move\n");
                     //if the icon is being dragged
                     if (Dragging)
                     {
-						printf("Draging when mouse move\n");
+						//printf("Draging when mouse move\n");
 
                         //move the icon
                         move(core::position2d<s32>(event.MouseInput.X - DragStart.X, event.MouseInput.Y - DragStart.Y));
