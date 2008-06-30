@@ -104,9 +104,6 @@ public:
 
 		//emgr->getCore()->getGraphicDevice()->getVideoDriver()
 		//emgr->getCore()->getGraphicDevice()->getGUIEnvironment()
-		
-		//
-		//
 
 		//! create a slot window
 		window = new CGUISlotWindow(emgr->getCore()->getGraphicDevice(), 
@@ -115,7 +112,7 @@ public:
 													rect<s32>(25, 25, 300, 200));
 		
 
-		//! create a button to show/hide the window
+		////! create a button to show/hide the window
 		button = window->createBringUpButton(rect<s32>(10,210,110,242));
 		
 		//! load some very beautiful textures
@@ -135,6 +132,13 @@ public:
 		CGUIIcon *icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
 		icon2->drop();
 		icon2->setImage(iconTex2);
+
+		//! Setup icon
+		icon->setMoveable(true);
+		icon2->setMoveable(true);
+
+		icon->setCanBeOutsideSlot(true);
+		icon2->setCanBeOutsideSlot(true);
 
 		//! let the icons know about the slots
 		icon->setUsableSlotArray(&slotArray);
