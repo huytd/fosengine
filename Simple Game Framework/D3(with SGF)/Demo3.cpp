@@ -22,8 +22,8 @@ Demo3::Demo3()
 	core.getGUISkin()->setSkin("guiSkin/guiSkin.xml");
 	
 	//display fps
-	Character::colID=core.getPhysicWorld()->createCollisionClass();
-	Enemy::colID=core.getPhysicWorld()->createCollisionClass();
+	Character::colID=core.getPhysicWorld()->getCollisionClassID("Character");
+	Enemy::colID=core.getPhysicWorld()->getCollisionClassID("Enemy");
 	sgfEvent<SFrameEvent>* frameEnd=core.getFrameEndEvent();
 	frameEnd->addDelegate(new sgfMethodDelegate<Demo3,SFrameEvent>(this,&Demo3::showFPS));
 	
