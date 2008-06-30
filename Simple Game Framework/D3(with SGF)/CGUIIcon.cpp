@@ -79,7 +79,7 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                     DragStart.Y = event.MouseInput.Y;
 
                     //if the icon isn't in focus - put it in focus
-                    if (!Environment->hasFocus(this))
+                    //if (!Environment->hasFocus(this))
                     {
 						printf("Dragging\n");
 

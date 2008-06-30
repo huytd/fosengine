@@ -47,7 +47,7 @@ CGUISlotWindow::CGUISlotWindow(IrrlichtDevice* device, IGUIElement* parent, s32 
 	CloseButton = Environment->addButton(core::rect<s32>(posx, 3, posx + buttonw, 3 + buttonw), this, -1,
 		L"", skin ? skin->getDefaultText(EGDT_WINDOW_CLOSE) : L"Close" );
 	CloseButton->setSubElement(true);
-CloseButton->setTabStop(false);
+//CloseButton->setTabStop(false);
 	CloseButton->setAlignment(EGUIA_LOWERRIGHT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
 	if (sprites)
 	{
@@ -61,7 +61,7 @@ CloseButton->setTabStop(false);
 		L"", skin ? skin->getDefaultText(EGDT_WINDOW_RESTORE) : L"Restore" );
 	RestoreButton->setVisible(false);
 	RestoreButton->setSubElement(true);
-RestoreButton->setTabStop(false);
+//RestoreButton->setTabStop(false);
 	RestoreButton->setAlignment(EGUIA_LOWERRIGHT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
 	if (sprites)
 	{
@@ -75,7 +75,7 @@ RestoreButton->setTabStop(false);
 		L"", skin ? skin->getDefaultText(EGDT_WINDOW_MINIMIZE) : L"Minimize" );
 	MinButton->setVisible(false);
 	MinButton->setSubElement(true);
-	MinButton->setTabStop(false);
+//MinButton->setTabStop(false);
 	MinButton->setAlignment(EGUIA_LOWERRIGHT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
 	if (sprites)
 	{
@@ -120,20 +120,17 @@ bool CGUISlotWindow::OnEvent(const SEvent& event)
 	case EET_GUI_EVENT:
 		if (event.GUIEvent.EventType == EGET_ELEMENT_FOCUS_LOST)
 		{
-			if (event.GUIEvent.Caller == (IGUIElement*)this)
+			//if (event.GUIEvent.Caller == (IGUIElement*)this)
 				Dragging = false;
-			return true;
+			//return true;
 		}
 		else
 		if (event.GUIEvent.EventType == EGET_ELEMENT_FOCUSED)
 		{
-			if (event.GUIEvent.Caller == this && Parent)
-			{
+			if (Parent && ((event.GUIEvent.Caller == this) || isMyChild(event.GUIEvent.Caller)))
 				Parent->bringToFront(this);
-			}
 		}
 		else
-
 
 		if (event.GUIEvent.EventType == EGET_BUTTON_CLICKED)
 		{
@@ -195,7 +192,8 @@ bool CGUISlotWindow::OnEvent(const SEvent& event)
 
 	}
 
-	return Parent ? Parent->OnEvent(event) : false;
+	//return Parent ? Parent->OnEvent(event) : false;
+	return IGUIElement::OnEvent(event);
 }
 
 
