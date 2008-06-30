@@ -322,6 +322,10 @@
 				Name="Effect"
 				>
 				<File
+					RelativePath=".\Magic.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Magic.h"
 					>
 				</File>
