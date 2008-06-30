@@ -355,7 +355,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Controler"
+				Name="Controller"
 				>
 				<File
 					RelativePath=".\mouse.h"
