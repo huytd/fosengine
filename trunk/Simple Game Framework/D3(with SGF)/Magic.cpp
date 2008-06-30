@@ -10,8 +10,9 @@ Magic::Magic()
 //	collisionDelegate.bind(this,&Magic::onCollision);
 }
 
-void Magic::attack( u32 startTime, irr::core::vector3df startPosition,
-				   irr::core::vector3df StartTargetPostion,
+void Magic::attack( u32 startTime, //don't use param
+				   irr::core::vector3df startPosition, //the magic start position
+				   irr::core::vector3df StartTargetPostion, //the target position
 				   float startIdleTime, float startPreTime, float startTTL,  
 				   float startBlowTime, float initSpeed, float initSpeedDelta)
 {
@@ -29,8 +30,8 @@ void Magic::attack( u32 startTime, irr::core::vector3df startPosition,
 	vTargetPostion.Y += 2.0f;
 	vPostition.Y += 6.0f;
 
-	light2->setPosition(vPostition);
-	light2->setVisible(false);
+	magicLight->setPosition(vPostition);
+	magicLight->setVisible(false);
 
 	TTL = startTTL;
 	preTime = startPreTime;
@@ -40,8 +41,6 @@ void Magic::attack( u32 startTime, irr::core::vector3df startPosition,
 
 	CurrentAction = "Start";
 }
-
-
 
 //! Set magic movement speed
 void Magic::setSpeed(float newspeed)
@@ -54,6 +53,7 @@ void Magic::setSpeedDelta(float newspeeddelta)
 {
 	speedDelta = newspeeddelta;
 }
+
 const char* Magic::getClassName() const
 {
 	return "Magic";
@@ -61,8 +61,9 @@ const char* Magic::getClassName() const
 
 void Magic::setPosition(core::vector3df pos)
 {
-	ps->setPosition(pos);
+	//ps->setPosition(pos);
 }
+
 bool Magic::isEnd()
 {
 	if(CurrentAction == "End") return true;
@@ -76,7 +77,7 @@ core::vector3df Magic::psfaceTarget(irr::core::vector3df targetpos, irr::core::v
 	return posDiff.getHorizontalAngle();
 } 
 
-//! arras code
+//! Arras's code
 void Magic::psMoveTo(irr::scene::ISceneNode *node, //node to move
 					 irr::core::vector3df vel) //velocity vector
 {
@@ -101,18 +102,18 @@ void Magic::onAdd()
 	isAttacking = false;
 
 	// add light 2 (gray)
-	light2 = manager->getCore()->getGraphicDevice()->getSceneManager()->addLightSceneNode(0, core::vector3df(0,0,0),
+	magicLight = manager->getCore()->getGraphicDevice()->getSceneManager()->addLightSceneNode(0, core::vector3df(0,0,0),
 		video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), 100.0f);
 
 	// attach billboard to light
-	bill = manager->getCore()->getGraphicDevice()->getSceneManager()->addBillboardSceneNode(light2, core::dimension2d<f32>(8, 8));
+	bill = manager->getCore()->getGraphicDevice()->getSceneManager()->addBillboardSceneNode(magicLight, core::dimension2d<f32>(8, 8));
 	bill->setMaterialFlag(video::EMF_LIGHTING, false);
 	bill->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
 	bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	bill->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\particlewhite.bmp"));
 
 	// add particle system
-	ps = manager->getCore()->getGraphicDevice()->getSceneManager()->addParticleSystemSceneNode(false, light2);
+	ps = manager->getCore()->getGraphicDevice()->getSceneManager()->addParticleSystemSceneNode(false, magicLight);
 	ps->setParticleSize(core::dimension2d<f32>(5.0f, 5.0f));
 
 	// create and set emitter
@@ -133,7 +134,7 @@ void Magic::onAdd()
 	// adjust some material settings	
 	ps->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\lighteffect.bmp"));
 	
-	light2->setVisible(false);
+	magicLight->setVisible(false);
 
 	CurrentAction = "End";
 	
@@ -156,47 +157,48 @@ void Magic::update(float deltaTime)
 	u32 tickTime = device->getTimer()->getRealTime();
 	u32 subTime = tickTime - beginTime;
 
-	if(subTime < idleTime)
+	if(subTime < idleTime) //Do nothing
 	{
 		//Do nothing in idle time
-		if(light2->isVisible())
-			light2->setVisible(false);
+		if(magicLight->isVisible())
+			magicLight->setVisible(false);
 	}
-	else if(subTime < preTime + idleTime)
+	else if(subTime < preTime + idleTime) //Make the magic bigger or change color or animated it
 	{
 		//Scalar
 
-		//light2->setScale(newScale);
-		if(!light2->isVisible())
-			light2->setVisible(true);
+		//magicLight->setScale(newScale);
+		if(!magicLight->isVisible())
+			magicLight->setVisible(true);
 
 		//Rotate
 
 		//Animation
 	}
-	else if(subTime < TTL + preTime + idleTime)
+	else if(subTime < TTL + preTime + idleTime) //The magic is fired, fly to the enemy
 	{
-		if( light2->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
+		//! Target is reached
+		if( magicLight->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
 		{
 			isAttacking = false;	
-			light2->setVisible(false);
+			magicLight->setVisible(false);
 			CurrentAction = "End";
 			return;
 		}
 
-		//Fly in TTL
-		light2->setRotation( psfaceTarget(vTargetPostion, light2->getPosition()));
+		//! Fly until TTL
+		magicLight->setRotation( psfaceTarget(vTargetPostion, magicLight->getPosition()));
 
 		speed += speedDelta;
 
-		//Change funtion to define magic's quy dao
-		psMoveTo(light2, core::vector3df(0.0f, 0.0f, speed*deltaTime));
+		//! TODO: Change funtion to define magic's quy dao
+		psMoveTo(magicLight, core::vector3df(0.0f, 0.0f, speed*deltaTime));
 
 	}
 	else
 	{
 		isAttacking = false;	
-		light2->setVisible(false);
+		magicLight->setVisible(false);
 	}
 }
 
@@ -215,18 +217,14 @@ void Magic::onRemove()
 		//bill->drop();
 	}
 
-	if(light2)
+	if(magicLight)
 	{
-		light2->remove();
-		//light2->drop();
+		magicLight->remove();
+		//magicLight->drop();
 	}
 
-	if(anim)
+	//if(anim)
 	{
 		//anim->remove();
 	}
-
-
 }
-
-

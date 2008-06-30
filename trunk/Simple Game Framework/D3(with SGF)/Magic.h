@@ -35,13 +35,13 @@ protected:
 	irr::u32 beginTime;
 
 	//! The magic element :)
-	irr::scene::ISceneNode* light2;
+	irr::scene::ISceneNode* magicLight;
 	irr::scene::IParticleSystemSceneNode* ps;
 
 	irr::scene::IParticleEmitter* em;
 	irr::scene::IParticleAffector* paf;
 	irr::scene::ISceneNode* bill;
-	irr::scene::ISceneNodeAnimator* anim;
+	//irr::scene::ISceneNodeAnimator* anim;
 
 	//sgfMethodDelegate<Magic,SCollisionEvent> collisionDelegate;
 
