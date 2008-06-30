@@ -54,16 +54,21 @@ public:
 private:
     //the texture of the icon
     video::ITexture *Texture;
-    //can the icon move
+    
+	//can the icon move
     bool Moveable;
-    //can the icon exist outside a slot
+    
+	//can the icon exist outside a slot
     bool CanBeOutsideSlot;
-    //the slot the is in
+    
+	//the slot the is in
     IGUIElement* Slot;
+
     //the usable slots
     core::array<gui::IGUIElement*>* UsableSlots;
 
-    bool Dragging;
+    //! 
+	bool Dragging;
 
     core::position2di DragStart;
 

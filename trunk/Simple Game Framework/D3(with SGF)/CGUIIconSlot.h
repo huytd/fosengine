@@ -55,7 +55,6 @@ public:
 
 private:
     video::ITexture* Texture;
-
 };
 
 }//end namespace gui

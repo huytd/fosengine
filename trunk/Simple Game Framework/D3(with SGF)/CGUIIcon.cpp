@@ -41,8 +41,8 @@ void CGUIIcon::draw()
 
     if (Texture)
     {
-        driver->draw2DImage(Texture, AbsoluteRect.UpperLeftCorner,
-            core::rect<s32>(core::position2d<s32>(0,0), Texture->getOriginalSize()));
+		driver->draw2DImage(Texture, AbsoluteRect.UpperLeftCorner,
+				core::rect<s32>(core::position2d<s32>(0,0), Texture->getOriginalSize()));
 
         IGUIElement::draw();
     }
@@ -53,6 +53,7 @@ bool CGUIIcon::OnEvent(const SEvent& event)
 {
     switch(event.EventType)
     {
+		
         case EET_GUI_EVENT:
         {
             if (event.GUIEvent.EventType == EGET_ELEMENT_FOCUS_LOST)
@@ -67,10 +68,12 @@ bool CGUIIcon::OnEvent(const SEvent& event)
         {
             switch(event.MouseInput.Event)
             {
+			
                 //the mouse left button is pressed
                 case EMIE_LMOUSE_PRESSED_DOWN:
                 {
-					//printf ("hey");
+				
+					printf("Press down\n");
                     //get the move position for dragging
                     DragStart.X = event.MouseInput.X;
                     DragStart.Y = event.MouseInput.Y;
@@ -78,8 +81,11 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                     //if the icon isn't in focus - put it in focus
                     if (!Environment->hasFocus(this))
                     {
+						printf("Dragging\n");
+
                         //if the icon is moveable - dragging is enabled
                         Dragging = true*Moveable;
+
                         //set the focus
                         Environment->setFocus(this);
 
@@ -103,11 +109,15 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                     }
                     return true;
                 }
+
                 //the mouse left button is released
                 case EMIE_LMOUSE_LEFT_UP:
                 {
+					printf("Press up\n");
+
                     //the icon is no longer being draged
                     Dragging = false;
+
                     //the icon is no longer in focus
                     Environment->removeFocus(this);
 
@@ -153,15 +163,20 @@ bool CGUIIcon::OnEvent(const SEvent& event)
                 //the mouse is moved
                 case EMIE_MOUSE_MOVED:
                 {
+					printf("Mouse move\n");
                     //if the icon is being dragged
                     if (Dragging)
                     {
+						printf("Draging when mouse move\n");
+
                         //move the icon
                         move(core::position2d<s32>(event.MouseInput.X - DragStart.X, event.MouseInput.Y - DragStart.Y));
-                        //update the position
+
+						//update the position
                         DragStart.X = event.MouseInput.X;
                         DragStart.Y = event.MouseInput.Y;
-                        return true;
+
+						return true;
                     }
                     break;
                 }
