@@ -11,29 +11,42 @@ using namespace core;
 class Magic: public sgfEntity
 {
 protected:
-	float speed, speedDelta;
-	bool goalReached;
-	char* CurrentAction;
-	irr::scene::ISceneNode* node;
 
+	//! The magic speed and increase speed degree
+	float speed, speedDelta;
+
+	//! Is gold reached?
+	bool goalReached;
+
+	//! The string store current magic phase
+	//! TODO: replace this string with enum type
+	char* CurrentAction;
+
+	//! Magic position and enemy position
 	irr::core::vector3df vTargetPostion, vPostition;
+
+	//! The time in each magic phase
 	float TTL, preTime, blowTime, idleTime;
-	bool isAttack;
+
+	//! Is the magic in attacking status
+	bool isAttacking;
 
 	//Real time when start magic
 	irr::u32 beginTime;
 
+	//! The magic element :)
 	irr::scene::ISceneNode* light2;
 	irr::scene::IParticleSystemSceneNode* ps;
+
 	irr::scene::IParticleEmitter* em;
 	irr::scene::IParticleAffector* paf;
-
 	irr::scene::ISceneNode* bill;
 	irr::scene::ISceneNodeAnimator* anim;
 
-	sgfMethodDelegate<Magic,SCollisionEvent> collisionDelegate;
+	//sgfMethodDelegate<Magic,SCollisionEvent> collisionDelegate;
 
 private:
+	//! Get the rotation to face target to enemy
 	core::vector3df psfaceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos);
 
 	//! arras code
@@ -41,9 +54,9 @@ private:
 		irr::core::vector3df vel); //velocity vector
 
 public:
+	//! Default constructor
 	Magic();
-	
-
+		
 	void attack( u32 startTime, irr::core::vector3df startPosition,
 		irr::core::vector3df StartTargetPostion,
 		float startIdleTime=1000.0f, float startPreTime=1000.0f, float startTTL=30000.0f,  
@@ -59,6 +72,7 @@ public:
 
 	void setPosition(core::vector3df pos);
 
+	//! Is the magic end, mean it has been reached the target
 	bool isEnd();
 
 protected:

@@ -6,8 +6,8 @@
 
 Magic::Magic()
 {
-	collisionDelegate.addRef();
-	collisionDelegate.bind(this,&Magic::onCollision);
+//	collisionDelegate.addRef();
+//	collisionDelegate.bind(this,&Magic::onCollision);
 }
 
 void Magic::attack( u32 startTime, irr::core::vector3df startPosition,
@@ -16,8 +16,7 @@ void Magic::attack( u32 startTime, irr::core::vector3df startPosition,
 				   float startBlowTime, float initSpeed, float initSpeedDelta)
 {
 
-
-	isAttack = true;
+	isAttacking = true;
 
 	idleTime = startIdleTime;
 
@@ -99,7 +98,7 @@ void Magic::onCollision(SCollisionEvent& arg)
 void Magic::onAdd()
 {
 
-	isAttack = false;
+	isAttacking = false;
 
 	// add light 2 (gray)
 	light2 = manager->getCore()->getGraphicDevice()->getSceneManager()->addLightSceneNode(0, core::vector3df(0,0,0),
@@ -150,7 +149,7 @@ void Magic::onMouse(SMouseEvent& args)
 void Magic::update(float deltaTime)
 {
 
-	if (!isAttack) return;
+	if (!isAttacking) return;
 
 	irr::IrrlichtDevice* device = manager->getCore()->getGraphicDevice();
 
@@ -179,7 +178,7 @@ void Magic::update(float deltaTime)
 	{
 		if( light2->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
 		{
-			isAttack = false;	
+			isAttacking = false;	
 			light2->setVisible(false);
 			CurrentAction = "End";
 			return;
@@ -196,7 +195,7 @@ void Magic::update(float deltaTime)
 	}
 	else
 	{
-		isAttack = false;	
+		isAttacking = false;	
 		light2->setVisible(false);
 	}
 }
@@ -207,31 +206,27 @@ void Magic::onRemove()
 	if(ps)
 	{
 		ps->remove();
-		ps->drop();
+		//ps->drop();
 	}
 
 	if(bill)
 	{
 		bill->remove();
-		bill->drop();
+		//bill->drop();
 	}
 
 	if(light2)
 	{
 		light2->remove();
-		light2->drop();
+		//light2->drop();
 	}
 
 	if(anim)
 	{
-		anim->drop();
+		//anim->remove();
 	}
 
-	if(node)
-	{
-		node->remove();
-		node->drop();
-	}
+
 }
 
 
