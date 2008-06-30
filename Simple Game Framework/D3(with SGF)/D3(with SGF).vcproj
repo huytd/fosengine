@@ -190,50 +190,6 @@
 				RelativePath=".\Demo3.h"
 				>
 			</File>
-			<File
-				RelativePath=".\JointAnimator.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\JointAnimator.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MemMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MemMgr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\StandOnTerrainAnimator.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\StandOnTerrainAnimator.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Terrain.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ThirdPersonCamera.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ThirdPersonCamera.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Utility.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Utility.h"
-				>
-			</File>
 			<Filter
 				Name="HUD"
 				>
@@ -359,6 +315,62 @@
 				>
 				<File
 					RelativePath=".\mouse.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Terrain"
+				>
+				<File
+					RelativePath=".\StandOnTerrainAnimator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\StandOnTerrainAnimator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Terrain.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Camera"
+				>
+				<File
+					RelativePath=".\ThirdPersonCamera.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ThirdPersonCamera.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="System"
+				>
+				<File
+					RelativePath=".\JointAnimator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\JointAnimator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\MemMgr.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\MemMgr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Utility.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Utility.h"
 					>
 				</File>
 			</Filter>
