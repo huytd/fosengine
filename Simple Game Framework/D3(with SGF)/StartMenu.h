@@ -134,12 +134,12 @@ public:
 
 		//! create another icon
 		icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
-		icon2->drop();
+		
 		icon2->setImage(iconTex2);
 
 		//! create another icon
 		bigIcon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,64,64));
-		bigIcon->drop();
+		
 		bigIcon->setImage(bigIconTex);
 
 		//! Setup icon
@@ -171,8 +171,8 @@ public:
 		window->drop();
 		icon->drop();
 		button->drop();
-		/*bigIcon->drop();
-		icon2->drop();*/
+		bigIcon->drop();
+		icon2->drop();
 
 	}
 };
