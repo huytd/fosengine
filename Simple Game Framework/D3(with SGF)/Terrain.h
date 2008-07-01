@@ -15,8 +15,10 @@ public:
 
 	void onAdd()
 	{
-		manager->getCore()->globalVars["terrain"]=(void*)node;			
-		
+		manager->getCore()->globalVars["terrain"] = (void*)node;
+
+		manager->getCore()->getGraphicDevice()->getVideoDriver()->setFog(irr::video::SColor(0,155,155,155), true, 100, 500, 0.1, false, false);
+
 		irr::scene::IMetaTriangleSelector* worldCollision=manager->getCore()->globalVars["worldCollision"].getAs<irr::scene::IMetaTriangleSelector*>();
 		irr::scene::ITriangleSelector* tri=manager->getCore()->getGraphicDevice()->getSceneManager()->createTerrainTriangleSelector(node,0);
 		worldCollision->addTriangleSelector(tri);
@@ -25,7 +27,7 @@ public:
 		tri->drop();
 		
 		irr::scene::SMeshBufferLightMap mb;
-		node->getMeshBufferForLOD(mb,5);
+		node->getMeshBufferForLOD(mb,2);
 		
 		node->updateAbsolutePosition();
 		

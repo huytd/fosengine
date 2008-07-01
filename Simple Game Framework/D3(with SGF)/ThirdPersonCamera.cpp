@@ -22,6 +22,7 @@ ThirdPersonCamera::ThirdPersonCamera(ISceneNode* targetNode)
 		Mouse[0] = false;
 		Mouse[1] = false;
 		rotation = vector3df(0,15,-25);//Default rotation on level enter.
+		
 		mouseDelegate.addRef();
 		mouseDelegate.bind(this,&ThirdPersonCamera::onMouse);
 } 
@@ -34,7 +35,8 @@ void ThirdPersonCamera::onLevelStart()
 		cursor = manager->getCore()->getGraphicDevice()->getCursorControl();
 		ISceneManager* smgr = manager->getCore()->getGraphicDevice()->getSceneManager();
 		camera = smgr->addCameraSceneNode();//add camera.
-	 //terrain.
+		camera->setFarValue(500);
+		//terrain.
 		terrain = manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
 		manager->setActive(this,true);

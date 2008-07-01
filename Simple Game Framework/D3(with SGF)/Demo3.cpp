@@ -24,6 +24,7 @@ Demo3::Demo3()
 	//display fps
 	Character::colID=core.getPhysicWorld()->getCollisionClassID("Character");
 	Enemy::colID=core.getPhysicWorld()->getCollisionClassID("Enemy");
+
 	sgfEvent<SFrameEvent>* frameEnd=core.getFrameEndEvent();
 	frameEnd->addDelegate(new sgfMethodDelegate<Demo3,SFrameEvent>(this,&Demo3::showFPS));
 	
@@ -68,32 +69,26 @@ Demo3::~Demo3()
 	core.globalVars["worldCollision"].getAs<scene::IMetaTriangleSelector*>()->drop();
 }
 
-int lastFPS=0, lastMaximalPrimitive=0, lastPrimitive=0;
+int lastFPS=0, lastPrimitive=0;
 int FPS=0;
-int MaximalPrimitive = 0;
 int Primitive = 0;
 void Demo3::showFPS(SFrameEvent&)
 {
 	IrrlichtDevice* device=core.getGraphicDevice();
 	FPS=device->getVideoDriver()->getFPS();
-	MaximalPrimitive = device->getVideoDriver()->getMaximalPrimitiveCount();
 	Primitive  = device->getVideoDriver()->getPrimitiveCountDrawn();
 
-	if(FPS!=lastFPS || MaximalPrimitive!=lastMaximalPrimitive || Primitive!=lastPrimitive)
+	if(FPS!=lastFPS || Primitive!=lastPrimitive)
 	{
 		core::stringw str = L"FPS: ";
 		str+=FPS;
-
-		str+= L" - MaxPrimitive: ";
-		str+=MaximalPrimitive;
 		
 		str+= L" - PrimitiveCountDrawn: ";
 		str+=Primitive;
 				
 		lastFPS=FPS;
 		lastPrimitive = Primitive;
-		lastMaximalPrimitive = MaximalPrimitive;
-
+		
 		device->setWindowCaption(str.c_str());
 	}
 }

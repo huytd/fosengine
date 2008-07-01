@@ -48,9 +48,12 @@ public:
 protected:
 	void onCollision(SCollisionEvent& arg)
 	{
-		printf("Touch enemy");
+		//printf("Touch enemy");
 		if(magic->isEnd())
+		{
 			magic->attack(0,node->getPosition(), mouse->getPosition(), 200.0f, 200.0f, 30000.0f, 200.0f);
+			//mouse->setPosition(core::vector3df(0.0f,10.0f,0.0f) + mouse->getPosition());
+		}
 
 	}
 	void onLevelStart()
@@ -113,12 +116,14 @@ protected:
 		anim->drop();
 		//setup mouse
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
+		
 		//add camera
-		ThirdPersonCamera* cam = new ThirdPersonCamera(node);
+		cam = new ThirdPersonCamera(node);
 		manager->addEntity(cam);
 
-		HUDControler* controler = new HUDControler();
+		controler = new HUDControler();
         manager->addEntity(controler);
+		
 
 	}
 
@@ -158,10 +163,30 @@ protected:
 
 			}
 		}
+		else if(args.mouseEvent==irr::EMIE_RMOUSE_PRESSED_DOWN)
+		{
+			irr::core::line3df ray(smgr->getSceneCollisionManager()->getRayFromScreenCoordinates(
+				manager->getCore()->getGraphicDevice()->getCursorControl()->getPosition()));
+			irr::scene::ISceneNode* enemynode = smgr->getSceneCollisionManager()->getSceneNodeFromRayBB(ray);
+			
+			if(enemynode)
+			{
+				if(enemynode->getType() == ESCENE_NODE_TYPE::ESNT_ANIMATED_MESH)
+				{
+					
+					idle();
+					mouse->setPosition(enemynode->getAbsolutePosition());
+					targetPos = node->getPosition();
+					node->setRotation(faceTarget(enemynode->getAbsolutePosition(),node->getPosition()));
+					manager->setActive(this,true);//make update called every frame.
+				}
+			}
+		}
 	}
+
 	void update(float deltaTime)
 	{
-		irr::core::vector3df diffVect=targetPos-node->getPosition();
+		irr::core::vector3df diffVect = targetPos - node->getPosition();
 		diffVect.Y=0.0f;
 		float distance=diffVect.getLength();
 		if(distance<=(speed*deltaTime))//reached target
@@ -181,6 +206,7 @@ protected:
 	void onRemove()
 	{
 		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
+		manager->getCore()->getPhysicWorld()->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->removeDelegate(&collisionDelegate);
 		manager->getCore()->getPhysicWorld()->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->removeDelegate(&collisionDelegate);
 		node->remove();
 		manager->getCore()->getPhysicWorld()->removeBody(body);
@@ -219,6 +245,9 @@ protected:
 	sgfPhysicBody* body;
 	sgfPhysicBody* mouse;
 	sgfMethodDelegate<Character,SCollisionEvent> collisionDelegate;
+
+	ThirdPersonCamera* cam;
+	HUDControler* controler;
 };
 
 int Character::colID;

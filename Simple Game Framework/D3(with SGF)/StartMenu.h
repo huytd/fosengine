@@ -18,11 +18,14 @@ class StartMenu : public sgfLevel
 public:
 	CGUISlotWindow* window;
 	CGUIIcon *icon;
+	CGUIIcon *icon2;
+	CGUIIcon *bigIcon;
 
 	IGUIButton* button ;
 	ITexture* slotTex;
 	ITexture* iconTex ;
 	ITexture* iconTex2;
+	ITexture* bigIconTex;
 	core::array<IGUIElement*> slotArray;
 
 private:
@@ -119,23 +122,30 @@ public:
 		slotTex = env->getVideoDriver()->getTexture("hud\\slot.png");
 		iconTex = env->getVideoDriver()->getTexture("hud\\icon.png");
 		iconTex2 = env->getVideoDriver()->getTexture("hud\\icon2.png");
+		bigIconTex = env->getVideoDriver()->getTexture("hud\\bigicon.png");
 
 		//! create an array of slots in the window
 		slotArray = window->addSlotArray(core::rect<s32>(0,0,32,32), slotTex, env->getRootGUIElement(), -1,
-		core::position2d<s32>(80,40),core::dimension2d<s32>(6,6),core::dimension2d<s32>(2,2));
+		core::position2d<s32>(80,40),core::dimension2d<s32>(6,6),core::dimension2d<s32>(0,0));
 
 		//! create an icon
 		icon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));		
 		icon->setImage(iconTex);
 
 		//! create another icon
-		CGUIIcon *icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
+		icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
 		icon2->drop();
 		icon2->setImage(iconTex2);
+
+		//! create another icon
+		bigIcon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,64,64));
+		bigIcon->drop();
+		bigIcon->setImage(bigIconTex);
 
 		//! Setup icon
 		icon->setMoveable(true);
 		icon2->setMoveable(true);
+		bigIcon->setMoveable(true);
 
 		/*icon->setCanBeOutsideSlot(true);
 		icon2->setCanBeOutsideSlot(true);*/
@@ -143,6 +153,7 @@ public:
 		//! let the icons know about the slots
 		icon->setUsableSlotArray(&slotArray);
 		icon2->setUsableSlotArray(&slotArray);
+		bigIcon->setUsableSlotArray(&slotArray);
 
 
 		//! Add delegate
@@ -160,6 +171,8 @@ public:
 		window->drop();
 		icon->drop();
 		button->drop();
+		/*bigIcon->drop();
+		icon2->drop();*/
 
 	}
 };

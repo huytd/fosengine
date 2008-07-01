@@ -88,14 +88,6 @@ void Magic::psMoveTo(irr::scene::ISceneNode *node, //node to move
 	node->updateAbsolutePosition();
 } 
 
-void Magic::onLevelStart()
-{
-}
-
-void Magic::onCollision(SCollisionEvent& arg)
-{
-}
-
 void Magic::onAdd()
 {
 
@@ -115,6 +107,12 @@ void Magic::onAdd()
 	// add particle system
 	ps = manager->getCore()->getGraphicDevice()->getSceneManager()->addParticleSystemSceneNode(false, magicLight);
 	ps->setParticleSize(core::dimension2d<f32>(5.0f, 5.0f));
+	
+	// adjust some material settings
+	ps->setMaterialFlag(video::EMF_LIGHTING, false);
+	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	ps->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\lighteffect.bmp"));
+	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
 
 	// create and set emitter
 	em = ps->createBoxEmitter(
@@ -140,11 +138,6 @@ void Magic::onAdd()
 	
 	//! make update called every frame.
 	manager->setActive(this,true);
-}
-
-
-void Magic::onMouse(SMouseEvent& args)
-{
 }
 
 void Magic::update(float deltaTime)
@@ -207,19 +200,19 @@ void Magic::onRemove()
 
 	if(ps)
 	{
-		ps->remove();
+		//ps->remove();
 		//ps->drop();
 	}
 
 	if(bill)
 	{
-		bill->remove();
+		//bill->remove();
 		//bill->drop();
 	}
 
 	if(magicLight)
 	{
-		magicLight->remove();
+		//magicLight->remove();
 		//magicLight->drop();
 	}
 
