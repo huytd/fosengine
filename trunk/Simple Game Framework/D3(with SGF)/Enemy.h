@@ -190,7 +190,6 @@ protected:
 	bool goalReached;
 	char* currentAction;
 	Magic* magic;
-	sgfMethodDelegate<Enemy,SMouseEvent> mouseDelegate;
 	irr::core::vector3df startPos;
 	irr::core::vector3df targetPos;
 	irr::scene::IAnimatedMeshSceneNode* node;

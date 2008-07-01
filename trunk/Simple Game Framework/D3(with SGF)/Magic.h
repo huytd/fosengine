@@ -76,10 +76,7 @@ public:
 	bool isEnd();
 
 protected:
-	void onLevelStart();
-	void onCollision(SCollisionEvent& arg);
 	void onAdd();	
-	void onMouse(SMouseEvent& args);
 	void update(float deltaTime);
 	void onRemove();
 
