@@ -374,6 +374,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="GrassAndWind"
+				>
+				<File
+					RelativePath=".\CGrassPatchSceneNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CGrassPatchSceneNode.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Controler.h"
+					>
+				</File>
+				<File
+					RelativePath=".\CWindGenerator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\IWindGenerator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\readme.txt"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
