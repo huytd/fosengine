@@ -16,6 +16,9 @@ void testException()
 
 Demo3::Demo3()
 {
+	//! IMPORTANCE
+	//core.getGraphicDevice()->getVideoDriver()->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+
 	//core.config.getIrrlichtParams().DriverType=irr::video::EDT_DIRECT3D9;//override default setting
 	core.init(this);//initialize the core
 	//set skin(use script to set skin)

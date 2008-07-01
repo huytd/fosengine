@@ -94,8 +94,11 @@ void Magic::onAdd()
 	isAttacking = false;
 
 	// add light 2 (gray)
-	magicLight = manager->getCore()->getGraphicDevice()->getSceneManager()->addLightSceneNode(0, core::vector3df(0,0,0),
-		video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), 100.0f);
+	magicLight = manager->getCore()->getGraphicDevice()->getSceneManager()->addLightSceneNode(
+		0, //parent
+		core::vector3df(0,0,0), //position
+		video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), //color
+		100.0f);//radius
 
 	// attach billboard to light
 	bill = manager->getCore()->getGraphicDevice()->getSceneManager()->addBillboardSceneNode(magicLight, core::dimension2d<f32>(8, 8));
@@ -106,21 +109,21 @@ void Magic::onAdd()
 
 	// add particle system
 	ps = manager->getCore()->getGraphicDevice()->getSceneManager()->addParticleSystemSceneNode(false, magicLight);
-	ps->setParticleSize(core::dimension2d<f32>(5.0f, 5.0f));
+	ps->setParticleSize(core::dimension2d<f32>(2.0f, 2.0f));
 	
 	// adjust some material settings
 	ps->setMaterialFlag(video::EMF_LIGHTING, false);
 	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	ps->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\lighteffect.bmp"));
+	ps->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\particlewhite.bmp"));
 	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
 
 	// create and set emitter
 	em = ps->createBoxEmitter(
 		core::aabbox3d<f32>(-1,0,-1,1,1,1), 
 		core::vector3df(0.0f,0.0f,0.0f),
-		100,100, 
+		10,30, 
 		video::SColor(0,255,255,255), video::SColor(0,255,255,255),
-		100,300);
+		500,500);
 	ps->setEmitter(em);
 	em->drop();
 

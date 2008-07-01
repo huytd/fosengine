@@ -161,9 +161,9 @@ void Map::setMapBorder(c8 *fileName)
 										borderImage->getOriginalSize().Height);
 	
 	//Tam thoi hard code de test
-	borderClippingRect = core::rect<s32>(screenSize.Width- (800-642), 
+	borderClippingRect = core::rect<s32>(642, 
 										10,
-										screenSize.Width- (800-789), 
+										789, 
 										156);
 
 	borderPosition = core::position2d<s32>(screenSize.Width-(800-645),7);

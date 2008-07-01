@@ -49,19 +49,15 @@ void GameLevel::onEnter(sgfEntityManager* emgr)
 	env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
 	Utility::setFont(emgr, "font/myfont.xml");
 
-	emgr->getCore()->getGraphicDevice()->getGUIEnvironment()->addStaticText(L"Press esc to exit",core::rect<s32>(10,10,80,30));
+	//emgr->getCore()->getGraphicDevice()->getGUIEnvironment()->addStaticText(L"Press esc to exit",core::rect<s32>(10,10,80,30));
 	emgr->getCore()->getInputManager()->getKeyboardEvent()->addDelegate(&keyDelegate);
-
-
-	//! Get character node
-	irr::scene::ISceneNode* characterNode = emgr->getCore()->globalVars["characterNode"].getAs<irr::scene::ISceneNode*>();
 
 	//! Get screen size
 	irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
 
 	//Toolbar in game.
-	//toolbar = env->addImage(env->getVideoDriver()->getTexture("hud/toolbar.png"),position2d<s32>((screenSize.Width/2)-512,screenSize.Height-64),true);
-	/*btn1 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn1.png"),position2df(((screenSize.Width/2)-512) + 163, screenSize.Height - 35),L"Thoát game");
+	/*toolbar = env->addImage(env->getVideoDriver()->getTexture("hud/toolbar.png"),position2d<s32>((screenSize.Width/2)-512,screenSize.Height-64),true);
+	btn1 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn1.png"),position2df(((screenSize.Width/2)-512) + 163, screenSize.Height - 35),L"Thoát game");
 	btn2 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn2.png"),position2df(((screenSize.Width/2)-512) + 193, screenSize.Height - 36),L"Ẩn/Hiện bản đồ");
 	btn3 = Utility::createGUIBtn(emgr, env->getVideoDriver()->getTexture("hud/btn3.png"),position2df(((screenSize.Width/2)-512) + 224, screenSize.Height - 35),L"Phóng to/Thu nhỏ bản đồ");
 	*/
