@@ -240,6 +240,8 @@ void CGUIIcon::setUsableSlotArray(core::array<IGUIElement*>* slotArray)
     UsableSlots = slotArray;
 }
 
+
+
 //! Moves the icon to the passed slot
 void CGUIIcon::moveToSlot(IGUIElement* slot)
 {
