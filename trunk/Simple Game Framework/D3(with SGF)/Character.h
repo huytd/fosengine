@@ -80,7 +80,7 @@ protected:
 		world->attachNode(body,node);
 		world->addBody(body);
 		world->setBodyCollisionClass(body,colID);
-		world->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->addDelegate(&collisionDelegate);
+		//world->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->addDelegate(&collisionDelegate);
 		//sgfPhysicDebugger::add(smgr,body);
 		
 		mouse = new sgfPhysicBody(shape);
@@ -114,6 +114,7 @@ protected:
 			);
 		node->addAnimator(anim);
 		anim->drop();
+
 		//setup mouse
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);
 		
@@ -207,11 +208,9 @@ protected:
 	{
 		manager->getCore()->getInputManager()->getMouseEvent()->removeDelegate(&mouseDelegate);
 		manager->getCore()->getPhysicWorld()->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->removeDelegate(&collisionDelegate);
-		manager->getCore()->getPhysicWorld()->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->removeDelegate(&collisionDelegate);
 		node->remove();
 		manager->getCore()->getPhysicWorld()->removeBody(body);
-		manager->getCore()->getPhysicWorld()->removeBody(mouse);
-		
+		manager->getCore()->getPhysicWorld()->removeBody(mouse);		
 	}
 
 	irr::core::vector3df faceTarget(irr::core::vector3df targetpos, irr::core::vector3df nodepos)
