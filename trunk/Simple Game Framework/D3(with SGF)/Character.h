@@ -12,6 +12,10 @@
 #include "Enemy.h"
 #include "Magic.h"
 
+
+//! Testing
+#include "GrassEntity.h"
+
 struct SAttack
 {
 	sgfEntity* attacker;
@@ -125,6 +129,10 @@ protected:
 		controler = new HUDControler();
         manager->addEntity(controler);
 		
+
+		//! Add here for testing purpose
+		grass = new Grass();
+		manager->addEntity(grass);
 
 	}
 
@@ -247,6 +255,9 @@ protected:
 
 	ThirdPersonCamera* cam;
 	HUDControler* controler;
+
+	//! Testing
+	Grass* grass;
 };
 
 int Character::colID;

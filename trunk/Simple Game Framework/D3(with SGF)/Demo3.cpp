@@ -47,6 +47,7 @@ Demo3::Demo3()
 	
 	//vm->UpdateTypeIds();//since there's no cross-reference between classes, this is not necessary
 	//pass our instance to script
+
 	core.globalVars["skin"].setAs<irr::gui::CGUITexturedSkin*>(core.getGUISkin(),guiSkinType);
 	//vm->ExecuteFile("testScript.gm");//a script can be executed directly, I just want to test compiling
 	//vm->CompileFile("testScript.gm","testScript.lib");
@@ -60,9 +61,11 @@ Demo3::Demo3()
 	registerClass(Terrain);
 	registerClass(NPC);
 	registerClass(Enemy);
+
 	
 	//set up collision
 	core.globalVars["worldCollision"]=(void*)(core.getGraphicDevice()->getSceneManager()->createMetaTriangleSelector());
+
 	//load first level
 	core.getEntityManager()->loadLevel(new StartMenu);
 }
