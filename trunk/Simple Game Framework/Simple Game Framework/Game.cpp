@@ -21,7 +21,7 @@ void sgfGame::run()
 	unsigned int startTime=timer->getTime();
 	unsigned int frameCounted=0;
 	
-	while(graphicDevice->run()&&running)
+	while(graphicDevice->run() && running && graphicDevice->isWindowActive())
 	{
 		SFrameEvent signal(currentTime,deltaTime);
 		(*frameEvent)(signal);
