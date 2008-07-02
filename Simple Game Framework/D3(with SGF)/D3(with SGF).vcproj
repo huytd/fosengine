@@ -394,6 +394,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\GrassEntity.h"
+					>
+				</File>
+				<File
 					RelativePath=".\IWindGenerator.h"
 					>
 				</File>
