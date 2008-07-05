@@ -131,8 +131,8 @@ protected:
 		
 
 		//! Add here for testing purpose
-		grass = new Grass();
-		manager->addEntity(grass);
+		//grass = new Grass();
+		//manager->addEntity(grass);
 
 	}
 
