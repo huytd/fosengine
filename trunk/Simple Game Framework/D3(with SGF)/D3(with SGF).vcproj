@@ -266,10 +266,6 @@
 				Name="Character"
 				>
 				<File
-					RelativePath=".\Character.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Character.h"
 					>
 				</File>
