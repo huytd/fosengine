@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="SimpleGameEditor"
+	Name="Simple Game Editor"
 	ProjectGUID="{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}"
 	RootNamespace="SimpleGameEditor"
 	Keyword="Win32Proj"
