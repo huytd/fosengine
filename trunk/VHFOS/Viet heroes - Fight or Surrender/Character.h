@@ -127,8 +127,7 @@ protected:
 		manager->addEntity(cam);
 
 		controler = new HUDControler();
-        manager->addEntity(controler);
-		
+        manager->addEntity(controler);		
 
 		//! Add here for testing purpose
 		//grass = new Grass();
