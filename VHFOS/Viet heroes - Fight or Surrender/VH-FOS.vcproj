@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="D3(with SGF)"
+	Name="Viet Heroes - Fight or Surrender"
 	ProjectGUID="{D3466873-AEA8-4996-964D-167B2DCD742F}"
 	RootNamespace="D3withSGF"
 	Keyword="Win32Proj"
