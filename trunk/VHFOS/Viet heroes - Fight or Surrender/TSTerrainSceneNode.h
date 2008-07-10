@@ -1,4 +1,3 @@
-
 /*
    Programmed by Do-young Chung
 
@@ -9,6 +8,8 @@
    TSTerrain(Texture Splatting Height Terrain) Mesh and SceneNode
 
 */
+
+#ifdef TS_TERRAIN_IN_USE 
 
 #pragma once
 
@@ -109,3 +110,5 @@ private:
    f32                  my_text4Scale;
 
 }; 
+
+#endif

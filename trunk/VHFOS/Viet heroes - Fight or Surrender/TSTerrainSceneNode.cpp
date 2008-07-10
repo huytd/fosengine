@@ -14,6 +14,7 @@
 
 #include "TSTerrainSceneNode.h"
 
+#ifdef TS_TERRAIN_IN_USE 
 
 // Constructor and Deconstructor ------------------------------------------------//
 
@@ -723,3 +724,4 @@ void TSTerrainSceneNode::calculateNormals(scene::SMeshBufferLightMap* pMeshBuffe
          pMeshBuffer->Vertices[x * terrainData.Width + z].Normal = normal;
       }
 } 
+#endif
