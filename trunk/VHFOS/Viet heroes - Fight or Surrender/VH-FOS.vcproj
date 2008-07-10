@@ -434,6 +434,38 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="XEffect"
+				>
+				<File
+					RelativePath=".\CScreenQuad.h"
+					>
+				</File>
+				<File
+					RelativePath=".\CShaderPre.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CShaderPre.h"
+					>
+				</File>
+				<File
+					RelativePath=".\effectWrapper.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\effectWrapper.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Example.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\readme - XEffect.txt"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
