@@ -22,8 +22,32 @@ public:
 
 	void onAdd()
 	{
+		
+		////! Temporary  adding skydome here for testing only
+		//manager->getCore()->getGraphicDevice()->getSceneManager()->addSkyDomeSceneNode(
+		//					manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures/skydom/testskydome.jpg"), // this is the path to the texture you want to use for your sphere
+  //                          16,          // 16 rows from top to bottom
+  //                          16,          // rectangles each row
+  //                          1.0f,        // percent of the texture used, example 0.9f will only use the top 90% of the image file (range 0.0f-1.0f)
+  //                          1.0f);       // percent of the sphere to cover 1.0f covers the top half of the sphere, while 2.0f covers the entire sphere
+
+	
+	
+		////Try playing around with the values and increase and decrease the rows and rectangles each row to see the effect 
+		////it has on your skydome,, also try to adjust the last value from 0.1f to 2.0f to see how the skydome covers which portion of the sky. 
+		//manager->getCore()->getGraphicDevice()->getSceneManager()->addSkyDomeSceneNode(
+		//	manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures/skydom/testskydome.jpg"),
+		//	16,
+		//	16,
+		//	1.0f,
+		//	1.0f);
+
+		
+		/**
+		 *	Test grass
+ 		 */
 		//IrrlichtDevice         *irrDevice         = manager->getCore()->getGraphicDevice();
-		//video::IVideoDriver      *videoDriver      = manager->getCore()->getGraphicDevice()->getVideoDriver();
+		//video::IVideoDriver    *videoDriver      = manager->getCore()->getGraphicDevice()->getVideoDriver();
 		//scene::ISceneManager   *sceneManager      = manager->getCore()->getGraphicDevice()->getSceneManager();
 
 		//// Create TSTerrainSceneNode
@@ -50,6 +74,7 @@ public:
 
 		manager->getCore()->globalVars["terrain"] = (void*)node;
 
+		//! Test fog
 		manager->getCore()->getGraphicDevice()->getVideoDriver()->setFog(
 			irr::video::SColor(0,155,155,155),  // fog color
 			true, //linear fog
@@ -66,6 +91,7 @@ public:
 		sgfPhysicWorld* world=manager->getCore()->getPhysicWorld();
 		tri->drop();
 
+		//! TODO: Bo hai dong nay di vi khong dung nua
 		irr::scene::SMeshBufferLightMap mb;
 		node->getMeshBufferForLOD(mb,2);
 

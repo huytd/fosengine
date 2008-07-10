@@ -319,7 +319,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Controller"
+				Name="InputDevice"
 				>
 				<File
 					RelativePath=".\mouse.h"
