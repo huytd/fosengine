@@ -341,6 +341,14 @@
 					RelativePath=".\Terrain.h"
 					>
 				</File>
+				<File
+					RelativePath=".\TSTerrainSceneNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TSTerrainSceneNode.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Camera"
@@ -411,6 +419,18 @@
 				</File>
 				<File
 					RelativePath=".\Readme-GrassSceneNode.txt"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Shader"
+				>
+				<File
+					RelativePath=".\textureSplatting_ps.hlsl"
+					>
+				</File>
+				<File
+					RelativePath=".\textureSplatting_vs.hlsl"
 					>
 				</File>
 			</Filter>
