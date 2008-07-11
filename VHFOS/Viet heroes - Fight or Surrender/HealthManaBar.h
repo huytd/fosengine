@@ -10,7 +10,7 @@ using namespace gui;
 //! Class Define
 class HealthManaBar : public IGUIElement 
 {
-private:
+protected:
 	IVideoDriver* driver;
 
 	//! Max status value
@@ -18,6 +18,12 @@ private:
 
 	//! Current status value
 	int value; 
+
+	ITexture* borderImage;
+	position2d<s32> borderPosition;
+    rect<s32> borderRect;
+	rect<s32> borderOriginRect;
+	rect<s32> borderClippingRect;
 
 	short int transparent;
 
@@ -42,6 +48,8 @@ public:
 	void setTexture(c8 *fileName);
 	void setPosition(int X,int Y);
 	void setTransparent(short int Transparent);
+
+	void setMapBorder(c8 *fileName);//Set image border for the map
 
 	//Render the bar
 	void draw();

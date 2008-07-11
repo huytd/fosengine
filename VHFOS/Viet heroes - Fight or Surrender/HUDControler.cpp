@@ -72,9 +72,12 @@ void HUDControler::onAdd()
 		HPBar->setPosition(10,10);
 		HPBar->setMaxValue(300);
 		HPBar->setValue(190);
+		HPBar->setMapBorder("hud/hud.png");
 
 		MPBar->setTexture("bar/MP.png");
 		MPBar->setPosition(10,36);
 		MPBar->setMaxValue(150);
-		MPBar->setValue(10);	
+		MPBar->setValue(10);
+		
+
 }

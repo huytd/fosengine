@@ -1,4 +1,4 @@
-#ifndef _NPC_H_
+﻿#ifndef _NPC_H_
 #define _NPC_H_
 
 #include <SGF.h>
@@ -61,6 +61,15 @@ protected:
 		//HUDControler* controler = new HUDControler();
 		//manager->addEntity(controler);
 
+		core::stringw strEnemyName = L"Đệ tử ruột của tớ";
+		charName = manager->getCore()->getGraphicDevice()->getSceneManager()->addTextSceneNode(
+			manager->getCore()->getGraphicDevice()->getSceneManager()->getGUIEnvironment()->getFont("font/myfont.xml"),
+            strEnemyName.c_str(),
+            video::SColor(100, 255, 255, 255),
+            node,
+			node->getPosition(),
+            -1); 
+
 		//! make update called every frame.
 		manager->setActive(this,true);
 
@@ -111,6 +120,8 @@ protected:
 			goalReached=false;
 			node->setRotation(faceTarget(targetPos,node->getPosition()));				
 			moveto(irr::core::vector3df(0,0,speed*deltaTime));
+
+			charName->setPosition( core::vector3df(0.0f, 12.3f, 0.0f));
 		}
 	}
 
@@ -154,6 +165,8 @@ protected:
 	irr::core::vector3df targetPos;
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ITerrainSceneNode* terrain;
+
+	irr::scene::ITextSceneNode* charName;
 };
 
 #endif

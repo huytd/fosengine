@@ -8,7 +8,6 @@
 #include <Irrlicht.h>
 #include "IWindGenerator.h"
 
-
 namespace irr
 {
 namespace scene

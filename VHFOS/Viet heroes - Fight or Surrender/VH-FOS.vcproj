@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="Viet Heroes - Fight or Surrender"
 	ProjectGUID="{D3466873-AEA8-4996-964D-167B2DCD742F}"
 	RootNamespace="D3withSGF"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -20,6 +21,8 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfMFC="2"
+			UseOfATL="2"
 			CharacterSet="1"
 			>
 			<Tool
@@ -61,10 +64,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="true"
+				UseLibraryDependencyInputs="false"
 				AdditionalDependencies="kernel32.lib $(NOINHERIT)"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -84,9 +91,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -142,6 +146,8 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -161,9 +167,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -322,7 +325,11 @@
 				Name="InputDevice"
 				>
 				<File
-					RelativePath=".\mouse.h"
+					RelativePath=".\CCursorController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CCursorController.h"
 					>
 				</File>
 			</Filter>
@@ -423,7 +430,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Shader"
+				Name="Shaders"
 				>
 				<File
 					RelativePath=".\textureSplatting_ps.hlsl"
@@ -463,6 +470,22 @@
 				</File>
 				<File
 					RelativePath=".\readme - XEffect.txt"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Water"
+				>
+				<File
+					RelativePath=".\RealisticWater.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\RealisticWater.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Water - LICENSE.txt"
 					>
 				</File>
 			</Filter>

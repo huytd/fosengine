@@ -5,6 +5,7 @@ HealthManaBar::HealthManaBar(const rect<s32>& rect, IGUIEnvironment* env, IGUIEl
 :IGUIElement(EGUIET_ELEMENT, env, parent, -1, rect)
 {
 	transparent = 30;
+	
 }
 //Hủy đối tượng.
 HealthManaBar::~HealthManaBar()
@@ -48,4 +49,29 @@ void HealthManaBar::draw()
 	//Draw Background.
 	driver->draw2DRectangle(SColor(transparent,0,0,0),core::rect<s32>(pos.X,pos.Y,pos.X + BarSize.Width,pos.Y + BarSize.Height));
 	driver->draw2DImage(imgBar,pos,rect<s32>(0,0,(BarSize.Width*value)/maxValue,BarSize.Height));
+
+	//! draw the boder
+	if(borderPosition.X != 0)
+	driver->draw2DImage(borderImage, borderPosition, borderClippingRect,0, SColor(255,255,255,255), true);
+
+}
+
+void HealthManaBar::setMapBorder(c8 *fileName)
+{
+	IVideoDriver* driver = Environment->getVideoDriver();	
+
+	borderImage = driver->getTexture(fileName);
+
+	borderOriginRect = core::rect<s32>(0, 
+										0, 
+										borderImage->getOriginalSize().Width, 
+										borderImage->getOriginalSize().Height);
+	
+	//Tam thoi hard code de test
+	borderClippingRect = core::rect<s32>(8, 
+										24,
+										240, 
+										80);
+
+	borderPosition = core::position2d<s32>(8,24);
 }

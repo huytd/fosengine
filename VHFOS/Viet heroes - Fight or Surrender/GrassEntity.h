@@ -13,8 +13,8 @@ using namespace core;
 #include "CWindGenerator.h"
 
 
-#define width  10
-#define height 10
+#define width  5
+#define height 5
 #define total  width*height
 
 class Grass: public sgfEntity
@@ -62,7 +62,7 @@ public:
 			{   
 				// add a grass node        
 				grass[x*width + z] = new scene::CGrassPatchSceneNode(
-					terrain, 
+					manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>(), 
 					manager->getCore()->getGraphicDevice()->getSceneManager(), 
 					-1, 
 					core::vector3d<s32>(x,0,z), 
