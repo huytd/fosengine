@@ -16,6 +16,8 @@ void Magic::attack( u32 startTime, //don't use param
 				   float startIdleTime, float startPreTime, float startTTL,  
 				   float startBlowTime, float initSpeed, float initSpeedDelta)
 {
+	//! Reconize attack type to process update
+	attackType = POINT_TO_POINT_ATTACK;
 
 	isAttacking = true;
 
@@ -40,6 +42,48 @@ void Magic::attack( u32 startTime, //don't use param
 	speedDelta = initSpeedDelta;
 
 	CurrentAction = "Start";
+}
+
+/**
+ * \Summary: Node to point magic attack
+ *
+ */
+void Magic::attack( irr::scene::ISceneNode* attackerSceneNode,
+					irr::core::vector3df targetPostion,
+					float startIdleTime, float startPreTime, float startTTL,  
+					float startBlowTime, float initSpeed, float initSpeedDelta)
+{
+	//! Reconize attack type to process update
+	attackType = NODE_TO_POINT_ATTACK;
+
+	//! Set magic status
+	CurrentAction = MAGIC_STARTED;
+
+	//! Turn on attacking flag
+	isAttacking = true;
+	
+	//! Set target node
+	targetNode = attackerSceneNode;
+
+	vTargetPostion = targetPostion;
+	vTargetPostion.Y += 2.0f;
+	
+	magicLight->setPosition(targetNode->getAbsolutePosition());
+	magicLight->setVisible(false);
+
+	//! Set idle time
+	idleTime = startIdleTime;
+
+	//! Set magic begin time
+	irr::IrrlichtDevice* device = manager->getCore()->getGraphicDevice();
+	beginTime =  device->getTimer()->getRealTime();	
+
+	//! Setting magic timer
+	TTL = startTTL;
+	preTime = startPreTime;
+	blowTime = startBlowTime;
+	speed = initSpeed;
+	speedDelta = initSpeedDelta;
 }
 
 //! Set magic movement speed
@@ -77,7 +121,12 @@ core::vector3df Magic::psfaceTarget(irr::core::vector3df targetpos, irr::core::v
 	return posDiff.getHorizontalAngle();
 } 
 
-//! Arras's code
+void Magic::setStartPosition(irr::core::vector3df newStartPosition)
+{
+	vPostition = newStartPosition;
+}
+
+//! This method is Arras's code, many thank to Arras at Irrlicht Forum
 void Magic::psMoveTo(irr::scene::ISceneNode *node, //node to move
 					 irr::core::vector3df vel) //velocity vector
 {
@@ -91,6 +140,7 @@ void Magic::psMoveTo(irr::scene::ISceneNode *node, //node to move
 void Magic::onAdd()
 {
 
+	//! Turn off attacking flag
 	isAttacking = false;
 
 	// add light 2 (gray)
@@ -121,9 +171,9 @@ void Magic::onAdd()
 	em = ps->createBoxEmitter(
 		core::aabbox3d<f32>(-1,0,-1,1,1,1), 
 		core::vector3df(0.0f,0.0f,0.0f),
-		10,30, 
+		70,70, 
 		video::SColor(0,255,255,255), video::SColor(0,255,255,255),
-		500,500);
+		500,1100);
 	ps->setEmitter(em);
 	em->drop();
 
@@ -135,92 +185,137 @@ void Magic::onAdd()
 	// adjust some material settings	
 	ps->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\lighteffect.bmp"));
 	
+	//! Turn off magic light
 	magicLight->setVisible(false);
 
-	CurrentAction = "End";
+	//! Set magic statud
+	CurrentAction = MAGIC_ENDED;
 	
 	//! make update called every frame.
 	manager->setActive(this,true);
 }
+
+
 
 void Magic::update(float deltaTime)
 {
 
 	if (!isAttacking) return;
 
-	irr::IrrlichtDevice* device = manager->getCore()->getGraphicDevice();
-
-	u32 tickTime = device->getTimer()->getRealTime();
-	u32 subTime = tickTime - beginTime;
-
-	if(subTime < idleTime) //Do nothing
+	switch(attackType)
 	{
-		//Do nothing in idle time
-		if(magicLight->isVisible())
-			magicLight->setVisible(false);
-	}
-	else if(subTime < preTime + idleTime) //Make the magic bigger or change color or animated it
-	{
-		//Scalar
-
-		//magicLight->setScale(newScale);
-		if(!magicLight->isVisible())
-			magicLight->setVisible(true);
-
-		//Rotate
-
-		//Animation
-	}
-	else if(subTime < TTL + preTime + idleTime) //The magic is fired, fly to the enemy
-	{
-		//! Target is reached
-		if( magicLight->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
+		case POINT_TO_POINT_ATTACK:
 		{
-			isAttacking = false;	
-			magicLight->setVisible(false);
-			CurrentAction = "End";
-			return;
-		}
+				device = manager->getCore()->getGraphicDevice();
 
-		//! Fly until TTL
-		magicLight->setRotation( psfaceTarget(vTargetPostion, magicLight->getPosition()));
+				tickTime = device->getTimer()->getRealTime();
+				subTime = tickTime - beginTime;
 
-		speed += speedDelta;
+				if(subTime < idleTime) //Do nothing
+				{
+					//Do nothing in idle time
+					if(magicLight->isVisible())
+						magicLight->setVisible(false);
+				}
+				else if(subTime < preTime + idleTime) //Make the magic bigger or change color or animated it
+				{
+					//Scalar
 
-		//! TODO: Change funtion to define magic's quy dao
-		psMoveTo(magicLight, core::vector3df(0.0f, 0.0f, speed*deltaTime));
+					//magicLight->setScale(newScale);
+					if(!magicLight->isVisible())
+						magicLight->setVisible(true);
 
+					//Rotate
+
+					//Animation
+					magicLight->setPosition(this->vPostition);
+				}
+				else if(subTime < TTL + preTime + idleTime) //The magic is fired, fly to the enemy
+				{
+					//! Target is reached
+					if( magicLight->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
+					{
+						isAttacking = false;	
+						magicLight->setVisible(false);
+						CurrentAction = "End";
+						return;
+					}
+
+					//! Fly until TTL
+					magicLight->setRotation( psfaceTarget(vTargetPostion, magicLight->getPosition()));
+
+					speed += speedDelta;
+
+					//! TODO: Change funtion to define magic's quy dao
+					psMoveTo(magicLight, core::vector3df(0.0f, 0.0f, speed*deltaTime));
+
+				}
+				else
+				{
+					isAttacking = false;	
+					magicLight->setVisible(false);
+				}			
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////////////////	
+			case NODE_TO_POINT_ATTACK:
+			{
+				device = manager->getCore()->getGraphicDevice();
+
+				tickTime = device->getTimer()->getRealTime();
+				subTime = tickTime - beginTime;
+
+				if(subTime < idleTime) //Do nothing
+				{
+					//Do nothing in idle time
+					if(magicLight->isVisible())
+						magicLight->setVisible(false);
+				}
+				else if(subTime < preTime + idleTime) //Make the magic bigger or change color or animated it
+				{
+					//Scalar
+
+					//magicLight->setScale(newScale);
+					if(!magicLight->isVisible())
+						magicLight->setVisible(true);
+
+					//Rotate
+
+					//Animation
+					//magicLight->setPosition(targetNode->getAbsolutePosition());
+				}
+				else if(subTime < TTL + preTime + idleTime) //The magic is fired, fly to the enemy
+				{
+					//! Target is reached
+					if( magicLight->getPosition().getDistanceFrom(vTargetPostion) <= speed*deltaTime) 
+					{
+						isAttacking = false;	
+						magicLight->setVisible(false);
+						CurrentAction = "End";
+						return;
+					}
+
+					//! Fly until TTL
+					magicLight->setRotation( psfaceTarget(vTargetPostion, magicLight->getPosition()));
+
+					speed += speedDelta;
+
+					//! TODO: Change funtion to define magic's quy dao
+					psMoveTo(magicLight, core::vector3df(0.0f, 0.0f, speed*deltaTime));
+
+				}
+				else
+				{
+					isAttacking = false;	
+					magicLight->setVisible(false);
+				}		
+
+			}
 	}
-	else
-	{
-		isAttacking = false;	
-		magicLight->setVisible(false);
-	}
+	
 }
 
 void Magic::onRemove()
 {
-
-	if(ps)
-	{
-		//ps->remove();
-		//ps->drop();
-	}
-
-	if(bill)
-	{
-		//bill->remove();
-		//bill->drop();
-	}
-
-	if(magicLight)
-	{
-		//magicLight->remove();
-		//magicLight->drop();
-	}
-
-	//if(anim)
-	{
-		//anim->remove();
-	}
 }
