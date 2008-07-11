@@ -12,10 +12,6 @@
 #include "Enemy.h"
 #include "Magic.h"
 
-
-//! Testing
-#include "GrassEntity.h"
-
 struct SAttack
 {
 	sgfEntity* attacker;
@@ -129,9 +125,7 @@ protected:
 		controler = new HUDControler();
         manager->addEntity(controler);		
 
-		//! Add here for testing purpose
-		//grass = new Grass();
-		//manager->addEntity(grass);
+		
 
 	}
 
@@ -252,11 +246,11 @@ protected:
 	sgfPhysicBody* mouse;
 	sgfMethodDelegate<Character,SCollisionEvent> collisionDelegate;
 
+	void setMapBorder(c8 *fileName);//Set image border for the map
+
 	ThirdPersonCamera* cam;
 	HUDControler* controler;
 
-	//! Testing
-	Grass* grass;
 };
 
 int Character::colID;

@@ -15,6 +15,7 @@
 
 class StartMenu : public sgfLevel
 {
+
 public:
 	CGUISlotWindow* window;
 	CGUIIcon *icon;
@@ -35,7 +36,6 @@ private:
 	irr::gui::IGUIImage* bgimg;
 	
 public:
-
 	StartMenu()
 	{
 		onGUI.addRef();
@@ -61,11 +61,10 @@ public:
 			}
 		}
 	}
+	
 	void onEnter(sgfEntityManager* emgr)
 	{
 		this->emgr=emgr;
-
-
 
 		//! Loading unicode font
 		Utility::setFont(emgr,"font/myfont.xml");
@@ -160,6 +159,7 @@ public:
 		emgr->getCore()->getGUIEvent()->addDelegate(&onGUI);
 
 	}
+	
 	void onExit(sgfEntityManager* emgr)
 	{
 		irr::gui::IGUIEnvironment* env=emgr->getCore()->getGraphicDevice()->getGUIEnvironment();

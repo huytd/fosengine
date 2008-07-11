@@ -35,7 +35,7 @@ void ThirdPersonCamera::onLevelStart()
 		cursor = manager->getCore()->getGraphicDevice()->getCursorControl();
 		ISceneManager* smgr = manager->getCore()->getGraphicDevice()->getSceneManager();
 		camera = smgr->addCameraSceneNode();//add camera.
-		camera->setFarValue(700);
+		//camera->setFarValue(700);
 		//terrain.
 		terrain = manager->getCore()->globalVars["terrain"].getAs<irr::scene::ITerrainSceneNode*>();
 		manager->getCore()->getInputManager()->getMouseEvent()->addDelegate(&mouseDelegate);

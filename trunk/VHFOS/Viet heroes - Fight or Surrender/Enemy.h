@@ -1,4 +1,4 @@
-#ifndef _ENEMY_H_
+﻿#ifndef _ENEMY_H_
 #define _ENEMY_H_
 
 #include <SGF.h>
@@ -79,6 +79,16 @@ protected:
 		//! make update called every frame.
 		manager->setActive(this,true);
 
+		//
+		core::stringw strEnemyName = L"Ma cây";
+		charName = manager->getCore()->getGraphicDevice()->getSceneManager()->addTextSceneNode(
+			manager->getCore()->getGraphicDevice()->getSceneManager()->getGUIEnvironment()->getFont("font/myfont.xml"),
+            strEnemyName.c_str(),
+            video::SColor(100, 255, 255, 255),
+            node,
+			node->getPosition(),
+            -1); 
+
 	}
 
 	void idle()
@@ -151,8 +161,14 @@ protected:
 			goalReached=false;
 			node->setRotation(faceTarget(targetPos,node->getPosition()));				
 			moveto(irr::core::vector3df(0,0,speed*deltaTime));			
+
+			charName->setPosition( core::vector3df(0.0f, 12.3f, 0.0f));
 		}
+
+		
+		
 	}
+
 
 	void onRemove()
 	{
@@ -195,6 +211,8 @@ protected:
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ITerrainSceneNode* terrain;
 	sgfPhysicBody* body;
+
+	irr::scene::ITextSceneNode* charName;
 };
 int Enemy::colID;
 #endif
