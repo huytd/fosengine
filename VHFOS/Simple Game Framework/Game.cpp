@@ -20,20 +20,23 @@ void sgfGame::run()
 	unsigned int currentTime=timer->getTime();
 	unsigned int startTime=timer->getTime();
 	unsigned int frameCounted=0;
-	
-	while(graphicDevice->run() && running && graphicDevice->isWindowActive())
+
+	while(graphicDevice->run() && running)
 	{
-		SFrameEvent signal(currentTime,deltaTime);
-		(*frameEvent)(signal);
-		++frameCounted;
-		currentTime=timer->getTime();
-		int diff=currentTime-startTime;
-		if(frameCounted>=10)
+		if(graphicDevice->isWindowActive())
 		{
-			int fps=irr::core::ceil32 ( ( 1000 * frameCounted ) * irr::core::reciprocal(diff) );
-			deltaTime=1.0f/fps;
-			startTime=currentTime;
-			frameCounted=0;
+			SFrameEvent signal(currentTime,deltaTime);
+			(*frameEvent)(signal);
+			++frameCounted;
+			currentTime=timer->getTime();
+			int diff=currentTime-startTime;
+			if(frameCounted>=10)
+			{
+				int fps=irr::core::ceil32 ( ( 1000 * frameCounted ) * irr::core::reciprocal(diff) );
+				deltaTime=1.0f/fps;
+				startTime=currentTime;
+				frameCounted=0;
+			}
 		}
 	}
 	core.entityManager->endGame();
