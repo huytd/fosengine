@@ -47,13 +47,18 @@ void HealthManaBar::draw()
 	IVideoDriver* driver = Environment->getVideoDriver();	
 
 	//Draw Background.
-	driver->draw2DRectangle(SColor(transparent,0,0,0),core::rect<s32>(pos.X,pos.Y,pos.X + BarSize.Width,pos.Y + BarSize.Height));
-	driver->draw2DImage(imgBar,pos,rect<s32>(0,0,(BarSize.Width*value)/maxValue,BarSize.Height));
+	driver->draw2DRectangle(
+				SColor(transparent,0,0,0),
+				core::rect<s32>(pos.X,pos.Y,pos.X + BarSize.Width,pos.Y + BarSize.Height) );
+
+	driver->draw2DImage(
+				imgBar,
+				pos,
+				rect<s32>(0,0,(BarSize.Width*value)/maxValue,BarSize.Height));
 
 	//! draw the boder
 	if(borderPosition.X != 0)
 	driver->draw2DImage(borderImage, borderPosition, borderClippingRect,0, SColor(255,255,255,255), true);
-
 }
 
 void HealthManaBar::setMapBorder(c8 *fileName)

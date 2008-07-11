@@ -69,15 +69,13 @@ void HUDControler::onAdd()
 		MPBar = new HealthManaBar(rect<s32>(0,0,800,600),env,env->getRootGUIElement());
 
 		HPBar->setTexture("bar/HP.png");
-		HPBar->setPosition(10,10);
-		HPBar->setMaxValue(300);
-		HPBar->setValue(190);
+		HPBar->setPosition(62,36);
+		HPBar->setMaxValue(100);
+		HPBar->setValue(10);
 		HPBar->setMapBorder("hud/hud.png");
 
 		MPBar->setTexture("bar/MP.png");
-		MPBar->setPosition(10,36);
-		MPBar->setMaxValue(150);
+		MPBar->setPosition(62,52);
+		MPBar->setMaxValue(100);
 		MPBar->setValue(10);
-		
-
 }
