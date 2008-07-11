@@ -1,12 +1,12 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Viet Heroes - Fight or Surrender", "Viet heroes - Fight or Surrender\VH-FOS.vcproj", "{D3466873-AEA8-4996-964D-167B2DCD742F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{12939A64-29F2-4B27-8683-0A611798876A} = {12939A64-29F2-4B27-8683-0A611798876A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleGameEditor", "Simple Game Editor\SimpleGameEditor.vcproj", "{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple Game Editor", "Simple Game Editor\SimpleGameEditor.vcproj", "{B73BA73F-8890-40F5-BB78-D7899E7CBBEF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{12939A64-29F2-4B27-8683-0A611798876A} = {12939A64-29F2-4B27-8683-0A611798876A}
 	EndProjectSection
