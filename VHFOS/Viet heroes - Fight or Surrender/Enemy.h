@@ -142,6 +142,9 @@ protected:
 		
 		float distance = diffVect.getLength();
 
+		//! Update joint6 position for magic
+		magic->setStartPosition(node->getJointNode("joint6")->getAbsolutePosition());
+
 		if(distance <= 55 )//reached target
 		{			
 			if(magic->isEnd())
@@ -149,7 +152,18 @@ protected:
 				node->setRotation(faceTarget(targetPos,node->getPosition()));	
 				attack();
 				if(currentAction == "Attacking")
-					magic->attack(0, node->getPosition(), Enemynode->getPosition(), 200.0f, 200.0f, 30000.0f, 200.0f);
+				{
+					//currentAction = "Unknown";
+					magic->attack(
+						0,  // currently not use 
+						node->getPosition(), 
+						Enemynode->getPosition(), 
+						200.0f,  // Idle time
+						300.0f,  // Prepair time
+						30000.0f,// Time to life
+						200.0f   // Blow up time
+						);
+				}
 				
 			}
 
@@ -205,6 +219,7 @@ protected:
 	float speed;
 	bool goalReached;
 	char* currentAction;
+	char* lastAction;
 	Magic* magic;
 	irr::core::vector3df startPos;
 	irr::core::vector3df targetPos;
