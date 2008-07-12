@@ -66,6 +66,56 @@ protected:
 		
 		node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/thaycung/thaycung.b3d"));
 		
+
+		//Attack the weapon
+		{
+			
+			//Load staff mesh
+			weapon = smgr->addAnimatedMeshSceneNode(smgr->getMesh("models/thaycung/gay1.b3d"));
+
+			//Lighting and get joint
+			weapon->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+			hand = node->getXJointNode("Bip01 R Hand");
+
+			if(hand)
+			{
+				//Set relative postion
+				weapon->setPosition(core::vector3df(-1.0f,-5.0f,0.0f));
+
+				ps = smgr->addParticleSystemSceneNode(false, weapon);//parent
+				ps->setMaterialFlag(video::EMF_LIGHTING, false);
+				ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+				ps->setMaterialTexture(0, manager->getCore()->getGraphicDevice()->getVideoDriver()->getTexture("textures\\particlewhite.bmp"));
+				ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
+
+				em = ps->createMeshEmitter(
+										weapon->getMesh(),
+										true, // is normal direction in used
+										core::vector3df(0,1,0),//direction
+										100,///normaldirection modifier
+										-1, //mb number
+										false, //every mesh vertex
+										100, //minpartical per second
+										200, //max partical per second
+										video::SColor(0,255,255,255), // start color
+										video::SColor(0,255,255,255), // max color
+										1, // min life time
+										50, //max life time
+										180 //max angle degree
+										);
+				ps->setEmitter(em);
+				em->drop();
+
+				// create and set affector
+				paf = ps->createFadeOutParticleAffector();
+				ps->addAffector(paf);
+				paf->drop();
+				 
+				//Attack weapon to joint
+				hand->addChild(weapon);
+			}
+		}
+		
 		const irr::core::aabbox3df& box=node->getBoundingBox();
 		irr::core::vector3df size=box.MaxEdge-box.MinEdge;
 		irr::core::matrix4 m;
@@ -83,7 +133,8 @@ protected:
 		//world->getPairCollisionEvent(colID,Enemy::colID,ERT_SIMPLE_RESPONSE)->addDelegate(&collisionDelegate);
 		//sgfPhysicDebugger::add(smgr,body);
 		
-		mouse = new sgfPhysicBody(shape);
+		sgfPtr<sgfPhysicShape> shapeMouse=world->createBox(size.X*2,size.Y*2,size.Z*2);
+		mouse = new sgfPhysicBody(shapeMouse);
 		mouse->setOffset(m);
 		mouse->userData=this;
 		
@@ -175,12 +226,12 @@ protected:
 			{
 				if(enemynode->getType() == ESCENE_NODE_TYPE::ESNT_ANIMATED_MESH)
 				{
-					
 					idle();
 					mouse->setPosition(enemynode->getAbsolutePosition());
 					targetPos = node->getPosition();
 					node->setRotation(faceTarget(enemynode->getAbsolutePosition(),node->getPosition()));
 					manager->setActive(this,true);//make update called every frame.
+					printf("Enemy selected\n");
 				}
 			}
 		}
@@ -250,6 +301,15 @@ protected:
 
 	ThirdPersonCamera* cam;
 	HUDControler* controler;
+
+	// weapon scene node
+	irr::scene::IAnimatedMeshSceneNode* weapon ;
+	irr::scene::ISceneNode* hand;
+
+	//Partical system for weapon
+	irr::scene::IParticleSystemSceneNode* ps;
+	irr::scene::IParticleEmitter* em;
+	irr::scene::IParticleAffector* paf;
 
 };
 

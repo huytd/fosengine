@@ -320,6 +320,22 @@
 					RelativePath=".\StartMenu.h"
 					>
 				</File>
+				<Filter
+					Name="LoadingScreen"
+					>
+					<File
+						RelativePath=".\LoadingScreen.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\LoadingScreen.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="BeginGameScreen"
+					>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="InputDevice"

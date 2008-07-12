@@ -4,6 +4,24 @@ Utility::Utility()
 {
 }
 
+void Utility::drawImage(sgfEntityManager *emgr, irr::c8 *imagePath)
+{
+	irr::gui::IGUIImage* bgimg;
+
+	//! Loading unicode font
+	Utility::setFont(emgr,"font/myfont.xml");
+
+	//! Get Gui Environment Manager
+	irr::gui::IGUIEnvironment* env = emgr->getCore()->getGraphicDevice()->getGUIEnvironment();
+
+	//! Get screen size
+	irr::core::dimension2d<s32> screenSize = env->getVideoDriver()->getScreenSize();
+
+	bgimg = env->addImage(irr::core::rect<irr::s32>(0,0,screenSize.Width, screenSize.Height),0,-1,0);
+	bgimg->setImage(env->getVideoDriver()->getTexture(imagePath));
+	bgimg->setScaleImage(true);
+	//bgimg->drop();
+}
 
 void Utility::setFont(sgfEntityManager *mgr, const irr::c8 *fileName)
 {
