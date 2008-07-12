@@ -1,5 +1,12 @@
 #pragma once
 #include <SGF.h>
+#include "Irrlicht.h"
+
+#include "GameLevel.h"
+#include "GameLevel.h"
+#include "Utility.h"
+
+using namespace irr;
 
 class Utility
 {
@@ -12,4 +19,6 @@ public:
 
 	static irr::s32 SX(sgfEntityManager *mgr, irr::s32 x);
 	static irr::s32 SY(sgfEntityManager *mgr, irr::s32 y);
+
+	static void drawImage(sgfEntityManager* emgr, char* imagePath);
 };

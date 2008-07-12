@@ -173,7 +173,7 @@ void Magic::onAdd()
 		core::vector3df(0.0f,0.0f,0.0f),
 		70,70, 
 		video::SColor(0,255,255,255), video::SColor(0,255,255,255),
-		500,1100);
+		499,499);
 	ps->setEmitter(em);
 	em->drop();
 

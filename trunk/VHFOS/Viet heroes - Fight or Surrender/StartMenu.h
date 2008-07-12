@@ -8,26 +8,28 @@
 
 #include "CharSelectScreen.h"
 
-#include "CGUIIconSlot.h"
-#include "CGUIIcon.h"
-#include "CGUISlotWindow.h"
-#include "CGUIBringUpSlotWindowButton.h"
+#include "Utility.h"
+
+//#include "CGUIIconSlot.h"
+//#include "CGUIIcon.h"
+//#include "CGUISlotWindow.h"
+//#include "CGUIBringUpSlotWindowButton.h"
 
 class StartMenu : public sgfLevel
 {
 
 public:
-	CGUISlotWindow* window;
-	CGUIIcon *icon;
-	CGUIIcon *icon2;
-	CGUIIcon *bigIcon;
+	//CGUISlotWindow* window;
+	//CGUIIcon *icon;
+	//CGUIIcon *icon2;
+	//CGUIIcon *bigIcon;
 
-	IGUIButton* button ;
-	ITexture* slotTex;
-	ITexture* iconTex ;
-	ITexture* iconTex2;
-	ITexture* bigIconTex;
-	core::array<IGUIElement*> slotArray;
+	//IGUIButton* button ;
+	//ITexture* slotTex;
+	//ITexture* iconTex ;
+	//ITexture* iconTex2;
+	//ITexture* bigIconTex;
+	//core::array<IGUIElement*> slotArray;
 
 private:
 	sgfMethodDelegate<StartMenu,irr::SEvent::SGUIEvent> onGUI;
@@ -47,13 +49,14 @@ public:
 		if(args.EventType==irr::gui::EGET_BUTTON_CLICKED)
 		{
 			if(args.Caller->getID()==1)//start
-			{				
+			{
 				emgr->loadLevel(new GameLevel("levels/start.irr"));
-				//emgr->loadLevel(new CharSelectScreen());
 			}
 			else if(args.Caller->getID()==2)
 			{
+				//Utility::drawImage(emgr, "textures/CharSel.jpg");
 				emgr->loadLevel(new GameLevel("levels/levelOne.irr"));
+				//emgr->loadLevel(new LoadingScreen());
 			}
 			else if(args.Caller->getID()==3)
 			{
@@ -107,52 +110,52 @@ public:
 		//emgr->getCore()->getGraphicDevice()->getVideoDriver()
 		//emgr->getCore()->getGraphicDevice()->getGUIEnvironment()
 
-		//! create a slot window
-		window = new CGUISlotWindow(emgr->getCore()->getGraphicDevice(), 
-													env->getRootGUIElement(),
-													-1, 
-													rect<s32>(25, 25, 300, 200));
-		
+		////! create a slot window
+		//window = new CGUISlotWindow(emgr->getCore()->getGraphicDevice(), 
+		//											env->getRootGUIElement(),
+		//											-1, 
+		//											rect<s32>(25, 25, 300, 200));
+		//
 
-		////! create a button to show/hide the window
-		button = window->createBringUpButton(rect<s32>(10,210,110,242));
-		
-		//! load some very beautiful textures
-		slotTex = env->getVideoDriver()->getTexture("hud\\slot.png");
-		iconTex = env->getVideoDriver()->getTexture("hud\\icon.png");
-		iconTex2 = env->getVideoDriver()->getTexture("hud\\icon2.png");
-		bigIconTex = env->getVideoDriver()->getTexture("hud\\bigicon.png");
+		//////! create a button to show/hide the window
+		//button = window->createBringUpButton(rect<s32>(10,210,110,242));
+		//
+		////! load some very beautiful textures
+		//slotTex = env->getVideoDriver()->getTexture("hud\\slot.png");
+		//iconTex = env->getVideoDriver()->getTexture("hud\\icon.png");
+		//iconTex2 = env->getVideoDriver()->getTexture("hud\\icon2.png");
+		//bigIconTex = env->getVideoDriver()->getTexture("hud\\bigicon.png");
 
-		//! create an array of slots in the window
-		slotArray = window->addSlotArray(core::rect<s32>(0,0,32,32), slotTex, env->getRootGUIElement(), -1,
-		core::position2d<s32>(80,40),core::dimension2d<s32>(6,6),core::dimension2d<s32>(0,0));
+		////! create an array of slots in the window
+		//slotArray = window->addSlotArray(core::rect<s32>(0,0,32,32), slotTex, env->getRootGUIElement(), -1,
+		//core::position2d<s32>(80,40),core::dimension2d<s32>(6,6),core::dimension2d<s32>(0,0));
 
-		//! create an icon
-		icon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));		
-		icon->setImage(iconTex);
+		////! create an icon
+		//icon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));		
+		//icon->setImage(iconTex);
 
-		//! create another icon
-		icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
-		
-		icon2->setImage(iconTex2);
+		////! create another icon
+		//icon2 = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,32,32));
+		//
+		//icon2->setImage(iconTex2);
 
-		//! create another icon
-		bigIcon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,64,64));
-		
-		bigIcon->setImage(bigIconTex);
+		////! create another icon
+		//bigIcon = new CGUIIcon(env, env->getRootGUIElement(), -1, rect<s32>(0,0,64,64));
+		//
+		//bigIcon->setImage(bigIconTex);
 
-		//! Setup icon
-		icon->setMoveable(true);
-		icon2->setMoveable(true);
-		bigIcon->setMoveable(true);
+		////! Setup icon
+		//icon->setMoveable(true);
+		//icon2->setMoveable(true);
+		//bigIcon->setMoveable(true);
 
-		/*icon->setCanBeOutsideSlot(true);
-		icon2->setCanBeOutsideSlot(true);*/
+		///*icon->setCanBeOutsideSlot(true);
+		//icon2->setCanBeOutsideSlot(true);*/
 
-		//! let the icons know about the slots
-		icon->setUsableSlotArray(&slotArray);
-		icon2->setUsableSlotArray(&slotArray);
-		bigIcon->setUsableSlotArray(&slotArray);
+		////! let the icons know about the slots
+		//icon->setUsableSlotArray(&slotArray);
+		//icon2->setUsableSlotArray(&slotArray);
+		//bigIcon->setUsableSlotArray(&slotArray);
 
 
 		//! Add delegate
@@ -168,11 +171,11 @@ public:
 		emgr->getCore()->getGUIEvent()->removeDelegate(&onGUI);
 
 		//! Destroy drag and drop gui object
-		window->drop();
-		icon->drop();
-		button->drop();
-		bigIcon->drop();
-		icon2->drop();
+		//window->drop();
+		//icon->drop();
+		//button->drop();
+		//bigIcon->drop();
+		//icon2->drop();
 
 	}
 };
